@@ -182,6 +182,8 @@ namespace Ant_test
                             ants[a]._dir %= 4;
                         }
                         break;
+
+
                     //Light blue
                     case -16711681:
                         //Ändrar riktning
@@ -198,6 +200,8 @@ namespace Ant_test
                             ants[a]._dir %= 4;
                         }
                         break;
+
+
                     //Ljusare rosa
                     case -392966:
                         ants[a].step();
@@ -207,14 +211,18 @@ namespace Ant_test
                         ants[a]._dir %= 4;
 
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        if (!antcheck(a))
-                        {
-                            passthrough = false;
-                            ants[a]._dir--;
-                            ants[a]._dir += 4;
-                            ants[a]._dir %= 4;
-                        }
+                        ants[a].step();
+                        ants[a]._dir--;
+                        // if (!antcheck(a))
+                        // {
+                        //     passthrough = false;
+                        //     ants[a]._dir--;
+                        //     ants[a]._dir += 4;
+                        //     ants[a]._dir %= 4;
+                        // }
                         break;
+
+
                     //Rosa/lila
                     case -393016:
 
@@ -223,13 +231,13 @@ namespace Ant_test
                         ants[a]._dir %= 4;
 
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        if (!antcheck(a))
-                        {
-                            passthrough = false;
-                            ants[a]._dir++;
-                            ants[a]._dir += 4;
-                            ants[a]._dir %= 4;
-                        }
+                      //  if (!antcheck(a))
+                      //  {
+                      //      passthrough = false;
+                      //      ants[a]._dir++;
+                      //      ants[a]._dir += 4;
+                      //      ants[a]._dir %= 4;
+                      //  }
                         ants[a].step();
 
 
@@ -238,13 +246,13 @@ namespace Ant_test
                         ants[a]._dir %= 4;
 
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        if (!antcheck(a))
-                        {
-                            passthrough = false;
-                            ants[a]._dir--;
-                            ants[a]._dir += 4;
-                            ants[a]._dir %= 4;
-                        }
+                     //  if (!antcheck(a))
+                     //  {
+                     //      passthrough = false;
+                     //      ants[a]._dir--;
+                     //      ants[a]._dir += 4;
+                     //      ants[a]._dir %= 4;
+                     //  }
                         break;
 
                 }
@@ -257,7 +265,7 @@ namespace Ant_test
                     mapAVC.Setpixel(ants[a].getPos(), ants[a].Color);
                     pictureBox.Image = mapAVC.get();
                 }
-
+                richTextBox1.Text = ants[12]._dir.ToString();
             }
 
 
