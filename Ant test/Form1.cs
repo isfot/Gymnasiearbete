@@ -11,7 +11,7 @@ namespace Ant_test
 {
     public partial class Form1 : Form
     {
-        static string path = @"C:\Users\Filip\Desktop\pic.png"; // Sökväg i hårdisken till kartan
+        static string path = Environment.CurrentDirectory + "pic.png"; // Sökväg i hårdisken till kartan
         static Bitmap map; // Kartan som en bitmap
         static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         static List<Ant> ants = new List<Ant>(); // En lista med alla myror
@@ -231,13 +231,13 @@ namespace Ant_test
                         ants[a]._dir %= 4;
 
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                      //  if (!antcheck(a))
-                      //  {
-                      //      passthrough = false;
-                      //      ants[a]._dir++;
-                      //      ants[a]._dir += 4;
-                      //      ants[a]._dir %= 4;
-                      //  }
+                        //  if (!antcheck(a))
+                        //  {
+                        //      passthrough = false;
+                        //      ants[a]._dir++;
+                        //      ants[a]._dir += 4;
+                        //      ants[a]._dir %= 4;
+                        //  }
                         ants[a].step();
 
 
@@ -246,13 +246,13 @@ namespace Ant_test
                         ants[a]._dir %= 4;
 
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                     //  if (!antcheck(a))
-                     //  {
-                     //      passthrough = false;
-                     //      ants[a]._dir--;
-                     //      ants[a]._dir += 4;
-                     //      ants[a]._dir %= 4;
-                     //  }
+                        //  if (!antcheck(a))
+                        //  {
+                        //      passthrough = false;
+                        //      ants[a]._dir--;
+                        //      ants[a]._dir += 4;
+                        //      ants[a]._dir %= 4;
+                        //  }
                         break;
 
                 }
