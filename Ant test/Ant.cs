@@ -10,7 +10,7 @@ namespace Ant_test
     class Ant
     {
         private Point _pos;
-        public int _dir;        
+        public int _dir;        // variabel för myrans riktning
         public Color Color;
         private readonly Color ORGcolor;
         public Ant(Point pos, int dir, Color color)
