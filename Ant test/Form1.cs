@@ -17,7 +17,7 @@ namespace Ant_test
         static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); // Hej
             map = new Bitmap(path);
             mapAVC = new BitmapAVC(map);
         }
