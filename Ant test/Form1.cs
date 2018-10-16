@@ -18,7 +18,7 @@ namespace Ant_test
         public Form1()
         {
             InitializeComponent();
-            map = new Bitmap(path); //HEJSAN
+            map = new Bitmap(path);
             mapAVC = new BitmapAVC(map);
         }
 
