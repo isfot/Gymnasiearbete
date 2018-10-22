@@ -70,3 +70,4 @@ C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant test.cspro
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant test.exe
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant test.pdb
+D:\C Sharp\GymnasieArbete\Ant test\bin\Debug\pic.png

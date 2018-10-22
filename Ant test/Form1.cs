@@ -15,10 +15,18 @@ namespace Ant_test
         static Bitmap map; // Kartan som en bitmap
         static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         static List<Ant> ants = new List<Ant>(); // En lista med alla myror
+        //Default initializer för porgramet
         public Form1()
         {
             InitializeComponent();
             map = new Bitmap(path);
+            mapAVC = new BitmapAVC(map);
+        }
+        //Inizialiser ifall man öppnar programmet med en fil (Tex drar och släpper en png på programet)
+        public Form1(string[] args)
+        {
+            InitializeComponent();
+            map = new Bitmap(args[0]);
             mapAVC = new BitmapAVC(map);
         }
 
@@ -30,7 +38,7 @@ namespace Ant_test
 
         private void Timer_button_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = !timer1.Enabled;
+            timer1.Enabled = !timer1.Enabled; //Sätter på timer
         }
 
         private void Ant_button_Click(object sender, EventArgs e)
@@ -106,6 +114,7 @@ namespace Ant_test
             richTextBox2.Text = ants[3]._dir.ToString();
         }
 
+        //Kollar att variabeln _dir int blir mer än 3 eller mindre än 0 
         private int dirOverFlowCorr(int _dir)
         {
             if (_dir > 3)
@@ -118,14 +127,18 @@ namespace Ant_test
             }
             return _dir;
         }
+        //Kommer antagligen inte kunna användas för nagel schereckenberg metoden :) (obs felstavningar)
+        //Kollar ifall det finns någon myra på rutan framför myran som anges med ett index nummer som en int
         private bool antcheck(int a)
         {
             bool output = true;
+            //Loopar ignom alla myror i listan
             foreach (Ant x in ants)
             {
 
-                int xplus = 0;
+                int xplus = 0; //Variabel för att ange en position framför myran
                 int yplus = 0;
+                //Sätter variabeln beroende på myrans riktning
                 switch (ants[a]._dir)
                 {
                     case 0:
@@ -141,6 +154,7 @@ namespace Ant_test
                         xplus--;
                         break;
                 }
+                //Ifall myran för i variabeln x har samma postition kommer output sättas till false för att indikera att det inte går att gå frammåt.
                 if (x.getPosX() == ants[a].getPosX() + xplus && x.getPosY() == ants[a].getPosY() + yplus)
                 {
                     output = false;
@@ -158,6 +172,7 @@ namespace Ant_test
             {
                 bool passthrough = antcheck(a); ;
                 bool exists = true;
+                //Kollar färger som myran står på
                 switch (map.GetPixel(ants[a].getPosX(), ants[a].getPosY()).ToArgb())
                 {
                     //red
@@ -360,6 +375,12 @@ namespace Ant_test
             ants.Add(new Ant(13, 1, 2, Color.Red));
         }
 
+
+
+        /// <summary>
+        /// En ensam myra som kan styras och inte påverkar de andra eller blir påverkad
+        /// Endast till för att kolla färgkoder på bilden.
+        /// </summary>
         static Ant independent;
         private void button8_Click(object sender, EventArgs e)
         {

@@ -12,11 +12,19 @@ namespace Ant_test
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Ifall ett argument har givits kommer programmet att köras med detta argument (Dra och släppa bild på programmet)
+            if(args == null || args.Length == 0)
+            {
+                Application.Run(new Form1());
+            }
+            else
+            {
+                Application.Run(new Form1(args));
+            }
         }
     }
 }
