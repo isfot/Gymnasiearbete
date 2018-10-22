@@ -11,16 +11,16 @@ namespace Ant_test
     {
         private Point _pos;
         public int _dir;        // variabel för myrans riktning
-        public Color Color;
-        private readonly Color ORGcolor;
-        public Ant(Point pos, int dir, Color color)
+        public Color Color;     // variabel för myrans färg
+        private readonly Color ORGcolor; // myrans orginalfärg
+        public Ant(Point pos, int dir, Color color) // Default Constructor 
         {
             _pos = pos;
             _dir = dir;
             Color = color;
             ORGcolor = color;
         }
-        public Ant(int X, int Y, int dir, Color color)
+        public Ant(int X, int Y, int dir, Color color) // Constructor med position som 2 int
         {
             _pos = new Point(X, Y);
             _dir = dir;
