@@ -15,24 +15,44 @@ namespace Ant_test
         static Bitmap map; // Kartan som en bitmap
         static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         static List<Ant> ants = new List<Ant>(); // En lista med alla myror
+        /// <summary>
+        /// Inititerar UI och bitmapen
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
             map = new Bitmap(path);
             mapAVC = new BitmapAVC(map);
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Overload
+        /// </summary>
+        public Form1(string[] args)
+        {
+            InitializeComponent();
+            map = new Bitmap(args[0]);
+            mapAVC = new BitmapAVC(map);
+        }
+        /// <summary>
+        /// Skalar upp kartan och sätter den i en picturebox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Load(object sender, EventArgs e) 
         {
             mapAVC.Upscale(10); // Skala upp kartan
             pictureBox.Image = mapAVC.get(); // Sätter kartan i picturebox
         }
-
+        //Sätter på timer eventet som körs med ett intervall
         private void Timer_button_Click(object sender, EventArgs e)
         {
             timer1.Enabled = !timer1.Enabled;
         }
-
+        /// <summary>
+        /// Skapar myror i alla startfält :) som inte finn än :)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ant_button_Click(object sender, EventArgs e)
         {
             ants.Add(new Ant(9, 1, 2, Color.Red));
@@ -52,12 +72,7 @@ namespace Ant_test
             ants.Add(new Ant(26, 10, 3, Color.Chocolate));
             ants.Add(new Ant(26, 11, 3, Color.Chocolate));
 
-            richTextBox3.Text = (ants.Count.ToString());
-            richTextBox4.Clear();
-            foreach (Ant x in ants)
-            {
-                richTextBox4.AppendText(x.getPosX() + " : " + x.getPosY() + "\n");
-            }
+            richTextBox3.Text = ants.Count.ToString();
             foreach (Ant x in ants)
             {
                 mapAVC.Setpixel(x.getPos(), x.Color);
@@ -66,6 +81,9 @@ namespace Ant_test
         }
         static int counter;
         static Random rand = new Random();
+        /// <summary>
+        /// Startar myror ramdomiserat
+        /// </summary>
         private void spawnrandom()
         {
             switch (rand.Next(1, 13))
@@ -84,10 +102,16 @@ namespace Ant_test
                 case 12: ants.Add(new Ant(26, 9, 3, Color.Chocolate)); break;
             }
         }
+        /// <summary>
+        /// Timer event som körs med ett fast intervall
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
             counter++;
             antstep();
+            richTextBox3.Text = ants.Count.ToString();
             if (counter % 3 == 0 && checkBox1.Checked)
             {
                 for (int i = 0; i < 5; i++)
@@ -100,12 +124,16 @@ namespace Ant_test
 
         //Step
         static List<int> ClearList = new List<int>();
-        private void button1_Click(object sender, EventArgs e)
+        private void Steg_Button_Click(object sender, EventArgs e)
         {
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
         }
-
+        /// <summary>
+        /// Funktion som avgör ifall en int är större är 3 och sätter till 0 ifall det är så, eller ifall den är mindre en 0 och sätter till 3 ifall det är så
+        /// </summary>
+        /// <param name="_dir">Variabel för myrans riktning</param>
+        /// <returns>Justerad riktning</returns>
         private int dirOverFlowCorr(int _dir)
         {
             if (_dir > 3)
@@ -266,100 +294,24 @@ namespace Ant_test
                     pictureBox.Image = mapAVC.get();
                 }
             }
-
-
-
-
-
-            //     richTextBox4.Clear();
-            //
-            //     textBox1.BackColor = Color.White;
-            //     textBox2.BackColor = Color.White;
-            //     mapAVC.reset();
-            //     mapAVC.Upscale(3);
-            //     for (int i = 0; i < ants.Count(); i++)
-            //     {
-            //         if (!ants[i].step(map, ants, i))
-            //         {
-            //             if (ants[i].Delete)
-            //             {
-            //                 ClearList.Add(i);
-            //             }
-            //         }
-            //         mapAVC.Setpixel(ants[i].getPos(), ants[i].Color);
-            //     }
-            //     ClearList.Sort();
-            //     for (int x = 0; x < ClearList.Count; x++)
-            //     {
-            //         try
-            //         {
-            //             ants.RemoveAt(ClearList[x]);
-            //         }
-            //         catch { }
-            //     }
-            //     ClearList.Clear();
-            //     foreach (Ant x in ants)
-            //     {
-            //         richTextBox4.AppendText(x.getPosX() + " : " + x.getPosY() + "\n");
-            //     }
-            //     try
-            //     {
-            //
-            //         richTextBox1.Text = map.GetPixel(ants[0].getPosX(), ants[0].getPosY()).ToArgb().ToString();
-            //     }
-            //     catch { }
-            //     pictureBox.Image = mapAVC.get();
         }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                checkant();
-                richTextBox2.Clear();
-            }
-            catch (Exception exe)
-            {
-                richTextBox2.Text = exe.ToString();
-            }
-        }
+        
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                checkant();
-                richTextBox2.Clear();
-            }
-            catch (Exception exe)
-            {
-                richTextBox2.Text = exe.ToString();
-            }
-        }
 
-        private void checkant()
-        {
-            // if (Ant.Antonpixel(Convert.ToInt32(textBox1.Text), Convert.ToInt32(textBox2.Text)))
-            // {
-            //     textBox1.BackColor = Color.Green;
-            //     textBox2.BackColor = Color.Green;
-            // }
-            // else
-            // {
-            //     textBox1.BackColor = Color.Red;
-            //     textBox2.BackColor = Color.Red;
-            // }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+    
+        /// <summary>
+        /// Tar bort alla myror och återställer 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Reset_button_Click(object sender, EventArgs e)
         {
             ants.Clear();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ants.Add(new Ant(13, 1, 2, Color.Red));
-        }
+        
 
+        #region KODSOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
         static Ant independent;
         private void button8_Click(object sender, EventArgs e)
         {
@@ -409,5 +361,8 @@ namespace Ant_test
         {
             richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
         }
+
+       
     }
+    #endregion
 }
