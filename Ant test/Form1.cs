@@ -13,8 +13,9 @@ namespace Ant_test
     {
         static string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
         static Bitmap map; // Kartan som en bitmap
-        static BitmapAVC mapAVC; // Kartan som en AVC bitmap
+      static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         static List<Ant> ants = new List<Ant>(); // En lista med alla myror
+        readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -184,12 +185,12 @@ namespace Ant_test
             mapAVC.Upscale(3);
             for (int a = 0; a < ants.Count; a++)
             {
-                bool passthrough = antcheck(a); ;
+                bool passthrough = antcheck(a); 
                 bool exists = true;
                 switch (map.GetPixel(ants[a].getPosX(), ants[a].getPosY()).ToArgb())
                 {
-                    //red
-                    case -65536:
+                    //Case röd har ihjäl myran
+                    case -65536://Röd
                         passthrough = false;
                         ants.RemoveAt(a);
                         exists = false;
@@ -200,7 +201,7 @@ namespace Ant_test
                         ants[a]._dir++;
                         ants[a]._dir += 4;
                         ants[a]._dir %= 4;
-
+                                                                            // Total Kaos plz förklara.
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                         if (!antcheck(a))
                         {

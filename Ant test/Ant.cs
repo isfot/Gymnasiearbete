@@ -13,6 +13,7 @@ namespace Ant_test
         public int _dir;        //Variabel för myrans riktning
         public Color Color;     //Variabel för myrans fårg
         private readonly Color ORGcolor;
+        public int hastighet = 0;
         /// <summary>
         /// Inizialerar en ny myra
         /// </summary>
