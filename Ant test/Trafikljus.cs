@@ -13,6 +13,7 @@ namespace Ant_test
         private Point pos;
         public Color color;
         private readonly int dir;
+        private readonly int v_max;
 
         /// <summary>
         /// Inizialerar ett nytt trafikljus
@@ -42,7 +43,21 @@ namespace Ant_test
 
         public void Rödljus() // Metoden kräver kod från andra delar av programmet.
         {
-           
+            int[] redlights = new int[2];
+
+            for (int i=0; i<Math.Pow(v_max,2)*v_max/2; i++)
+            {
+                switch (dir)
+                {
+                    case 0: break;
+                    redlights.SetValue
+                    case 1: break;
+                    case 2: break;
+                    case 3: break;
+                }
+                
+            }
+            
 
                  
         }

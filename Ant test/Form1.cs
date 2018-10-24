@@ -15,7 +15,7 @@ namespace Ant_test
         static Bitmap map; // Kartan som en bitmap
       static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         static List<Ant> ants = new List<Ant>(); // En lista med alla myror
-        readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
+       public readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
