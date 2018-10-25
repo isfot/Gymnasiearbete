@@ -82,7 +82,7 @@ namespace Ant_test
             timer1.Enabled = !timer1.Enabled;
         }
         /// <summary>
-        /// Skapar myror i alla startfält :) som inte finn än :)
+        /// Skapar myror i alla startfält :)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
