@@ -11,11 +11,12 @@ namespace Ant_test
 {
     public partial class Form1 : Form
     {
-        static string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
-        static Bitmap map; // Kartan som en bitmap
-      static BitmapAVC mapAVC; // Kartan som en AVC bitmap
-        static List<Ant> ants = new List<Ant>(); // En lista med alla myror
-       public readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
+        private static string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
+        private static Bitmap map; // Kartan som en bitmap
+        private static BitmapAVC mapAVC; // Kartan som en AVC bitmap
+        private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
+        public readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
+        private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -24,6 +25,7 @@ namespace Ant_test
             InitializeComponent();
             map = new Bitmap(path);
             mapAVC = new BitmapAVC(map);
+            startField_Finder();
         }
         /// <summary>
         /// Overload
@@ -33,13 +35,43 @@ namespace Ant_test
             InitializeComponent();
             map = new Bitmap(args[0]);
             mapAVC = new BitmapAVC(map);
+            startField_Finder();
+        }
+
+        private void startField_Finder()
+        {
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    //2: -1536
+                    //3: -14336
+                    //0: -27136
+                    //1: -39936
+                    switch (map.GetPixel(x, y).ToArgb())
+                    {
+                        case -1536:
+                            Start_Fields[2].Add(new Point(x, y));
+                            break;
+                        case -14336:
+                            Start_Fields[3].Add(new Point(x, y));
+                            break;
+                        case -27136:
+                            Start_Fields[0].Add(new Point(x, y));
+                            break;
+                        case -39936:
+                            Start_Fields[1].Add(new Point(x, y));
+                            break;
+                    }
+                }
+            }
         }
         /// <summary>
         /// Skalar upp kartan och sätter den i en picturebox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e) 
+        private void Form1_Load(object sender, EventArgs e)
         {
             mapAVC.Upscale(10); // Skala upp kartan
             pictureBox.Image = mapAVC.get(); // Sätter kartan i picturebox
@@ -56,24 +88,16 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Ant_button_Click(object sender, EventArgs e)
         {
-            ants.Add(new Ant(9, 1, 2, Color.Red));
-            ants.Add(new Ant(10, 1, 2, Color.Red));
-            ants.Add(new Ant(11, 1, 2, Color.Red));
-            ants.Add(new Ant(12, 1, 2, Color.Red));
-            ants.Add(new Ant(15, 26, 0, Color.Pink));
-            ants.Add(new Ant(16, 26, 0, Color.Pink));
-            ants.Add(new Ant(17, 26, 0, Color.Pink));
-            ants.Add(new Ant(18, 26, 0, Color.Pink));
-            ants.Add(new Ant(1, 16, 1, Color.Black));
-            ants.Add(new Ant(1, 17, 1, Color.Black));
-            ants.Add(new Ant(1, 18, 1, Color.Black));
-            ants.Add(new Ant(1, 19, 1, Color.Black));
-            ants.Add(new Ant(26, 8, 3, Color.Chocolate));
-            ants.Add(new Ant(26, 9, 3, Color.Chocolate));
-            ants.Add(new Ant(26, 10, 3, Color.Chocolate));
-            ants.Add(new Ant(26, 11, 3, Color.Chocolate));
-
+            for (int i = 0; i < Start_Fields.Length; i++)
+            {
+                foreach (Point pos in Start_Fields[i])
+                {
+                    ants.Add(new Ant(pos, i, Color.Black));
+                }
+            }
+            //Skriver ut antalet aktiva myror
             richTextBox3.Text = ants.Count.ToString();
+            //Renderar alla myror
             foreach (Ant x in ants)
             {
                 mapAVC.Setpixel(x.getPos(), x.Color);
@@ -87,21 +111,9 @@ namespace Ant_test
         /// </summary>
         private void spawnrandom()
         {
-            switch (rand.Next(1, 13))
-            {
-                case 1: ants.Add(new Ant(10, 1, 2, Color.Red)); break;
-                case 2: ants.Add(new Ant(11, 1, 2, Color.Red)); break;
-                case 3: ants.Add(new Ant(12, 1, 2, Color.Red)); break;
-                case 4: ants.Add(new Ant(15, 26, 0, Color.Pink)); break;
-                case 5: ants.Add(new Ant(16, 26, 0, Color.Pink)); break;
-                case 6: ants.Add(new Ant(17, 26, 0, Color.Pink)); break;
-                case 7: ants.Add(new Ant(1, 18, 1, Color.Black)); break;
-                case 8: ants.Add(new Ant(1, 16, 1, Color.Black)); break;
-                case 9: ants.Add(new Ant(1, 17, 1, Color.Black)); break;
-                case 10: ants.Add(new Ant(26, 10, 3, Color.Chocolate)); break;
-                case 11: ants.Add(new Ant(26, 11, 3, Color.Chocolate)); break;
-                case 12: ants.Add(new Ant(26, 9, 3, Color.Chocolate)); break;
-            }
+            int index = rand.Next(0, 4);
+            //Ha så kul med att försöka tyda detta :)
+            ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black));
         }
         /// <summary>
         /// Timer event som körs med ett fast intervall
@@ -185,7 +197,7 @@ namespace Ant_test
             mapAVC.Upscale(3);
             for (int a = 0; a < ants.Count; a++)
             {
-                bool passthrough = antcheck(a); 
+                bool passthrough = antcheck(a);
                 bool exists = true;
                 switch (map.GetPixel(ants[a].getPosX(), ants[a].getPosY()).ToArgb())
                 {
@@ -201,7 +213,7 @@ namespace Ant_test
                         ants[a]._dir++;
                         ants[a]._dir += 4;
                         ants[a]._dir %= 4;
-                                                                            // Total Kaos plz förklara.
+                        // Total Kaos plz förklara.
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                         if (!antcheck(a))
                         {
@@ -296,10 +308,10 @@ namespace Ant_test
                 }
             }
         }
-        
 
 
-    
+
+
         /// <summary>
         /// Tar bort alla myror och återställer 
         /// </summary>
@@ -310,7 +322,7 @@ namespace Ant_test
             ants.Clear();
         }
 
-        
+
 
         #region KODSOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
         static Ant independent;
@@ -363,7 +375,7 @@ namespace Ant_test
             richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
         }
 
-       
+
     }
     #endregion
 }
