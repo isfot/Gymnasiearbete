@@ -11,9 +11,10 @@ namespace Ant_test
     class Trafikljus
     {
         private Point pos;
-        public Color color;
+        
         private readonly int dir;
         private readonly int v_max;
+       
 
         /// <summary>
         /// Inizialerar ett nytt trafikljus
@@ -21,12 +22,12 @@ namespace Ant_test
         /// <param name="pos">Position</param>
         /// <param name="dir">Riktning 0-3</param>
         /// <param name="color">Färg</param>
-        public Trafikljus(Point pos, int dir,  Color color,int v_max)
+        public Trafikljus(Point pos, int dir,  int v_max)
         {
             this.pos = pos;
-           this.color = color;
+           
             this.dir = dir;
-            Point[,] rutor = new Point[1,(int) Math.Pow(v_max, 2) * v_max / 2];
+            Point[,] rutor = new Point[1, (int)((Math.Pow(v_max, 2) + v_max )/ 2)];
         }
         /// <summary>
         ///  Inizialerar en ny trafikljus
@@ -35,17 +36,24 @@ namespace Ant_test
         /// <param name="Y">Y postition</param>
         /// <param name="dir">Riktning g0-3</param>
         /// <param name="color">Färg</param>
-        public Trafikljus(int X, int Y, int dir, Color color, int v_max)
+        public Trafikljus(int X, int Y, int dir, int v_max)
         {
             pos = new Point(X, Y);
-            this.color = color;
+           
             this.dir = dir;
+            Point[,] rutor = new Point[1, (int)(Math.Pow(v_max, 2) + v_max  )/2];
         }
 
         public void Rödljus() // Metoden kräver kod från andra delar av programmet.
         {
             
-
+            switch (dir)
+            {
+                case 0:break;
+                case 1:break;
+                case 2:break;
+                case 3:break;
+            }
             
             
 
