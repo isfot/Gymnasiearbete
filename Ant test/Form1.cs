@@ -17,6 +17,8 @@ namespace Ant_test
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
+        static int counter;
+        static Random rand = new Random();
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -104,8 +106,7 @@ namespace Ant_test
             }
             pictureBox.Image = mapAVC.get();
         }
-        static int counter;
-        static Random rand = new Random();
+        
         /// <summary>
         /// Startar myror ramdomiserat
         /// </summary>
