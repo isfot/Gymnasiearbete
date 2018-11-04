@@ -45,6 +45,10 @@
             this.button_LEFT = new System.Windows.Forms.Button();
             this.button_DOWN = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.checkBox_Field_1 = new System.Windows.Forms.CheckBox();
+            this.checkBox_Field_2 = new System.Windows.Forms.CheckBox();
+            this.checkBox_Field_3 = new System.Windows.Forms.CheckBox();
+            this.checkBox_Field_4 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -216,11 +220,67 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // checkBox_Field_1
+            // 
+            this.checkBox_Field_1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_Field_1.AutoSize = true;
+            this.checkBox_Field_1.Checked = true;
+            this.checkBox_Field_1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_Field_1.Location = new System.Drawing.Point(417, 42);
+            this.checkBox_Field_1.Name = "checkBox_Field_1";
+            this.checkBox_Field_1.Size = new System.Drawing.Size(32, 17);
+            this.checkBox_Field_1.TabIndex = 21;
+            this.checkBox_Field_1.Text = "1";
+            this.checkBox_Field_1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_Field_2
+            // 
+            this.checkBox_Field_2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_Field_2.AutoSize = true;
+            this.checkBox_Field_2.Checked = true;
+            this.checkBox_Field_2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_Field_2.Location = new System.Drawing.Point(417, 65);
+            this.checkBox_Field_2.Name = "checkBox_Field_2";
+            this.checkBox_Field_2.Size = new System.Drawing.Size(32, 17);
+            this.checkBox_Field_2.TabIndex = 22;
+            this.checkBox_Field_2.Text = "2";
+            this.checkBox_Field_2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_Field_3
+            // 
+            this.checkBox_Field_3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_Field_3.AutoSize = true;
+            this.checkBox_Field_3.Checked = true;
+            this.checkBox_Field_3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_Field_3.Location = new System.Drawing.Point(417, 88);
+            this.checkBox_Field_3.Name = "checkBox_Field_3";
+            this.checkBox_Field_3.Size = new System.Drawing.Size(32, 17);
+            this.checkBox_Field_3.TabIndex = 23;
+            this.checkBox_Field_3.Text = "3";
+            this.checkBox_Field_3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_Field_4
+            // 
+            this.checkBox_Field_4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_Field_4.AutoSize = true;
+            this.checkBox_Field_4.Checked = true;
+            this.checkBox_Field_4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_Field_4.Location = new System.Drawing.Point(417, 111);
+            this.checkBox_Field_4.Name = "checkBox_Field_4";
+            this.checkBox_Field_4.Size = new System.Drawing.Size(32, 17);
+            this.checkBox_Field_4.TabIndex = 24;
+            this.checkBox_Field_4.Text = "4";
+            this.checkBox_Field_4.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 567);
+            this.Controls.Add(this.checkBox_Field_4);
+            this.Controls.Add(this.checkBox_Field_3);
+            this.Controls.Add(this.checkBox_Field_2);
+            this.Controls.Add(this.checkBox_Field_1);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button_DOWN);
             this.Controls.Add(this.button_LEFT);
@@ -237,7 +297,7 @@
             this.Controls.Add(this.Timer_button);
             this.Controls.Add(this.pictureBox);
             this.Name = "Form1";
-            this.Text = ",,,,";
+            this.Text = "Trafik simulering";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
@@ -263,6 +323,10 @@
         private System.Windows.Forms.Button button_LEFT;
         private System.Windows.Forms.Button button_DOWN;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.CheckBox checkBox_Field_1;
+        private System.Windows.Forms.CheckBox checkBox_Field_2;
+        private System.Windows.Forms.CheckBox checkBox_Field_3;
+        private System.Windows.Forms.CheckBox checkBox_Field_4;
     }
 }
 

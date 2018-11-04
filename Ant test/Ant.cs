@@ -13,7 +13,7 @@ namespace Ant_test
         public int _dir;        //Variabel för myrans riktning
         public Color Color;     //Variabel för myrans fårg
         private readonly Color ORGcolor;
-        public int hastighet = 0;
+        private int hastighet = 0;
         /// <summary>
         /// Inizialerar en ny myra
         /// </summary>
@@ -26,6 +26,7 @@ namespace Ant_test
             _dir = dir;
             Color = color;
             ORGcolor = color;
+            Form1.karta[pos.X, pos.Y] = true;
         }
         /// <summary>
         ///  Inizialerar en ny myra
@@ -40,6 +41,7 @@ namespace Ant_test
             _dir = dir;
             Color = color;
             ORGcolor = color;
+            Form1.karta[X, Y] = true;
         }
         /// <summary>
         /// Hämtar positionen
@@ -83,15 +85,16 @@ namespace Ant_test
             _pos = new Point(X, Y);
         }
 
-      //  int mod(int x, int m)
-      //  {
-      //      return (x % m + m) % m;
-      //  }
-      /// <summary>
-      /// Ökar myrans postion i den riktning som riktnings variabeln anger
-      /// </summary>
+        //  int mod(int x, int m)
+        //  {
+        //      return (x % m + m) % m;
+        //  }
+        /// <summary>
+        /// Ökar myrans postion i den riktning som riktnings variabeln anger
+        /// </summary>
         public void step()
         {
+            Form1.karta[getPos().X, getPos().Y] = false;
             switch (_dir % 4) // Switch med resten av dir mod 4.
             {
                 case 0:
@@ -107,9 +110,9 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            
+            Form1.karta[getPos().X, getPos().Y] = true;
         }
-		/// <summary>
+        /// <summary>
         /// En metod för att myran ej skall få en odefinierad riktning. dir är enbart definierad för 0-3.
         /// </summary>
         private void dirOverFlowCorr()

@@ -15,11 +15,15 @@ namespace Ant_test
         private static Bitmap map; // Kartan som en bitmap
         private static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
-        public readonly int hastighet_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
+        public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
+        private static Point[] Turn_fields = new Point[4];
+        private static List<Point> Kill_Fields = new List<Point>();
         static int counter;
         static Random rand = new Random();
-        private static bool[,] karta = new bool[1,1]; // Initieraren skall ändras så att den matchar kartans storlek. 
+        public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek. 
+        private static int[,] map_elements;
+
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -27,8 +31,10 @@ namespace Ant_test
         {
             InitializeComponent();
             map = new Bitmap(path);
-            mapAVC = new BitmapAVC(map);
+            karta = new bool[map.Width, map.Height];
+            map_elements = new int[map.Width, map.Height];
             startField_Finder();
+            mapAVC = new BitmapAVC(map);
         }
         /// <summary>
         /// Overload
@@ -37,8 +43,11 @@ namespace Ant_test
         {
             InitializeComponent();
             map = new Bitmap(args[0]);
-            mapAVC = new BitmapAVC(map);
+            karta = new bool[map.Width, map.Height];
+            map_elements = new int[map.Width, map.Height];
             startField_Finder();
+            mapAVC = new BitmapAVC(map);
+           
         }
 
         private void startField_Finder()
@@ -53,21 +62,70 @@ namespace Ant_test
                     //1: -39936
                     switch (map.GetPixel(x, y).ToArgb())
                     {
+                        //Startfields
                         case -1536:
                             Start_Fields[2].Add(new Point(x, y));
+                            hide_pixel(x, y);
                             break;
                         case -14336:
                             Start_Fields[3].Add(new Point(x, y));
+                            hide_pixel(x, y);
                             break;
                         case -27136:
                             Start_Fields[0].Add(new Point(x, y));
+                            hide_pixel(x, y);
                             break;
                         case -39936:
                             Start_Fields[1].Add(new Point(x, y));
+                            hide_pixel(x, y);
                             break;
+                        //Turnfields
+                        case -16711681:
+                            Turn_fields[0] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        case -13434881:
+                            Turn_fields[1] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        case -10158081:
+                            Turn_fields[2] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        case -6881281:
+                            Turn_fields[3] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        //Killfields
+                        case -65536:
+                            map_elements[x, y] = -1;
+                            hide_pixel(x, y);
+                            break;
+                        //Trafikljus
+                        //0
+                        case -39786:
+                            hide_pixel(x, y);
+                            break;
+                        //1
+                        case -39736:
+                            hide_pixel(x, y);
+                            break;
+                        //2
+                        case -39886:
+                            hide_pixel(x, y);
+                            break;
+                        //3
+                        case -39836:
+                            hide_pixel(x, y);
+                            break;
+
                     }
                 }
             }
+        }
+        private void hide_pixel(int x, int y)
+        {
+            map.SetPixel(x, y, Color.White);
         }
         /// <summary>
         /// Skalar upp kartan och sätter den i en picturebox
@@ -91,13 +149,18 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Ant_button_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < Start_Fields.Length; i++)
+            for(int u = 0; u < 50; u++)
             {
-                foreach (Point pos in Start_Fields[i])
+
+                for (int i = 0; i < Start_Fields.Length - 1; i++)
                 {
-                    ants.Add(new Ant(pos, i, Color.Black));
+                    foreach (Point pos in Start_Fields[i])
+                    {
+                        ants.Add(new Ant(pos, i, Color.Black));
+                    }
                 }
             }
+           
             //Skriver ut antalet aktiva myror
             richTextBox3.Text = ants.Count.ToString();
             //Renderar alla myror
@@ -107,7 +170,7 @@ namespace Ant_test
             }
             pictureBox.Image = mapAVC.get();
         }
-        
+
         /// <summary>
         /// Startar myror ramdomiserat
         /// </summary>
@@ -115,7 +178,23 @@ namespace Ant_test
         {
             int index = rand.Next(0, 4);
             //Ha så kul med att försöka tyda detta :)
-            ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black));
+            if (index == 0 && checkBox_Field_3.Checked)
+            {
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black));
+            }
+            if (index == 1 && checkBox_Field_4.Checked)
+            {
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black));
+            }
+            if (index == 2 && checkBox_Field_1.Checked)
+            {
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black));
+            }
+            if (index == 3 && checkBox_Field_2.Checked)
+            {
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black));
+            }
+
         }
         /// <summary>
         /// Timer event som körs med ett fast intervall
@@ -161,144 +240,57 @@ namespace Ant_test
             }
             return _dir;
         }
-        private bool antcheck(int a)// metoden kan ersättas med en array som säger huruvida en rutan är okuperad.
-        {
-            bool output = true;
-            foreach (Ant x in ants)
-            {
 
-                int xplus = 0;
-                int yplus = 0;
-                switch (ants[a]._dir)
-                {
-                    case 0:
-                        yplus--;
-                        break;
-                    case 1:
-                        xplus++;
-                        break;
-                    case 2:
-                        yplus++;
-                        break;
-                    case 3:
-                        xplus--;
-                        break;
-                }
-                if (x.getPosX() == ants[a].getPosX() + xplus && x.getPosY() == ants[a].getPosY() + yplus)
-                {
-                    output = false;
-                }
+        private bool is_ant_in_front(Ant greger)// metoden kan ersättas med en array som säger huruvida en rutan är okuperad.
+        {
+            bool output = false;
+            switch (greger._dir)
+            {
+                case 0:
+                    output = karta[greger.getPosX(), greger.getPosY() - 1];
+                    break;
+                case 1:
+                    output = karta[greger.getPosX() + 1, greger.getPosY()];
+                    break;
+                case 2:
+                    output = karta[greger.getPosX(), greger.getPosY() + 1];
+                    break;
+                case 3:
+                    output = karta[greger.getPosX() - 1, greger.getPosY()];
+                    break;
             }
             return output;
         }
 
         private void antstep()
         {
-
             mapAVC.reset();
             mapAVC.Upscale(3);
+
             for (int a = 0; a < ants.Count; a++)
             {
-                bool passthrough = antcheck(a);
+                bool passthrough = !is_ant_in_front(ants[a]);
                 bool exists = true;
-                switch (map.GetPixel(ants[a].getPosX(), ants[a].getPosY()).ToArgb())
+
+
+                if (ants[a]._dir == Array.IndexOf(Turn_fields, ants[a].getPos()))
+                {
+                    ants[a]._dir--;
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                }
+               
+                //Kollar på elementen på kartan och utför en handling beroende på detta
+                switch (map_elements[ants[a].getPosX(),ants[a].getPosY()])
                 {
                     //Case röd har ihjäl myran
-                    case -65536://Röd
+                    case -1://Röd
                         passthrough = false;
+                        karta[ants[a].getPosX(), ants[a].getPosY()] = false;
                         ants.RemoveAt(a);
                         exists = false;
                         break;
-                    //Blue
-                    case -16776961:
-
-                        ants[a]._dir++;
-                        ants[a]._dir += 4;
-                        ants[a]._dir %= 4;
-                        // Total Kaos plz förklara.
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        if (!antcheck(a))
-                        {
-                            passthrough = false;
-                            ants[a]._dir--;
-                            ants[a]._dir += 4;
-                            ants[a]._dir %= 4;
-                        }
-                        break;
-
-
-                    //Light blue
-                    case -16711681:
-                        //Ändrar riktning
-                        ants[a]._dir--;
-                        ants[a]._dir += 4;
-                        ants[a]._dir %= 4;
-                        //korrigerar riktning för att vara inom de tillåtna värdena
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        if (!antcheck(a))
-                        {
-                            passthrough = false;
-                            ants[a]._dir++;
-                            ants[a]._dir += 4;
-                            ants[a]._dir %= 4;
-                        }
-                        break;
-
-
-                    //Ljusare rosa
-                    case -392966:
-                        ants[a].step();
-
-                        ants[a]._dir++;
-                        ants[a]._dir += 4;
-                        ants[a]._dir %= 4;
-
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        ants[a].step();
-                        ants[a]._dir--;
-                        // if (!antcheck(a))
-                        // {
-                        //     passthrough = false;
-                        //     ants[a]._dir--;
-                        //     ants[a]._dir += 4;
-                        //     ants[a]._dir %= 4;
-                        // }
-                        break;
-
-
-                    //Rosa/lila
-                    case -393016:
-
-                        ants[a]._dir--;
-                        ants[a]._dir += 4;
-                        ants[a]._dir %= 4;
-
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        //  if (!antcheck(a))
-                        //  {
-                        //      passthrough = false;
-                        //      ants[a]._dir++;
-                        //      ants[a]._dir += 4;
-                        //      ants[a]._dir %= 4;
-                        //  }
-                        ants[a].step();
-
-
-                        ants[a]._dir++;
-                        ants[a]._dir += 4;
-                        ants[a]._dir %= 4;
-
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        //  if (!antcheck(a))
-                        //  {
-                        //      passthrough = false;
-                        //      ants[a]._dir--;
-                        //      ants[a]._dir += 4;
-                        //      ants[a]._dir %= 4;
-                        //  }
-                        break;
-
                 }
+
                 if (passthrough)
                 {
                     ants[a].step();
@@ -306,13 +298,13 @@ namespace Ant_test
                 if (exists)
                 {
                     mapAVC.Setpixel(ants[a].getPos(), ants[a].Color);
-                    pictureBox.Image = mapAVC.get();
                 }
             }
+            pictureBox.Image = mapAVC.get();
         }
         public void anttoarray() // metod för att placera myrorna på en karta.
         {
-           foreach (Ant a in ants)
+            foreach (Ant a in ants)
             {
                 karta[a.getPosX(), a.getPosY()] = true;
             }
@@ -328,6 +320,10 @@ namespace Ant_test
         private void Reset_button_Click(object sender, EventArgs e)
         {
             ants.Clear();
+            karta = new bool[map.Width, map.Height];
+            mapAVC.reset();
+            mapAVC.Upscale(3);
+            pictureBox.Image = mapAVC.get();
         }
 
 
