@@ -19,6 +19,7 @@ namespace Ant_test
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         static int counter;
         static Random rand = new Random();
+        private static bool[,] karta = new bool[1,1]; // Initieraren skall ändras så att den matchar kartans storlek. 
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -160,7 +161,7 @@ namespace Ant_test
             }
             return _dir;
         }
-        private bool antcheck(int a)
+        private bool antcheck(int a)// metoden kan ersättas med en array som säger huruvida en rutan är okuperad.
         {
             bool output = true;
             foreach (Ant x in ants)
@@ -309,7 +310,13 @@ namespace Ant_test
                 }
             }
         }
-
+        public void anttoarray() // metod för att placera myrorna på en karta.
+        {
+           foreach (Ant a in ants)
+            {
+                karta[a.getPosX(), a.getPosY()] = true;
+            }
+        }
 
 
 
