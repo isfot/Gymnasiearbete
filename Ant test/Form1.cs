@@ -17,7 +17,9 @@ namespace Ant_test
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
-        private static Point[] Turn_fields = new Point[4];
+        private static Point[] Turn_fields_Left = new Point[4];
+        private static Point[] Turn_fields_Right = new Point[4];
+        private static Point[] Turn_fields_Right_Diagonal = new Point[8];
         private static List<Point> Kill_Fields = new List<Point>();
         static int counter;
         static Random rand = new Random();
@@ -47,11 +49,12 @@ namespace Ant_test
             map_elements = new int[map.Width, map.Height];
             startField_Finder();
             mapAVC = new BitmapAVC(map);
-           
+
         }
 
         private void startField_Finder()
         {
+            int rightfield_counter = 0;
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
@@ -79,21 +82,21 @@ namespace Ant_test
                             Start_Fields[1].Add(new Point(x, y));
                             hide_pixel(x, y);
                             break;
-                        //Turnfields
+                        //Turnfields left
                         case -16711681:
-                            Turn_fields[0] = new Point(x, y);
+                            Turn_fields_Left[0] = new Point(x, y);
                             hide_pixel(x, y);
                             break;
                         case -13434881:
-                            Turn_fields[1] = new Point(x, y);
+                            Turn_fields_Left[1] = new Point(x, y);
                             hide_pixel(x, y);
                             break;
                         case -10158081:
-                            Turn_fields[2] = new Point(x, y);
+                            Turn_fields_Left[2] = new Point(x, y);
                             hide_pixel(x, y);
                             break;
                         case -6881281:
-                            Turn_fields[3] = new Point(x, y);
+                            Turn_fields_Left[3] = new Point(x, y);
                             hide_pixel(x, y);
                             break;
                         //Killfields
@@ -118,7 +121,38 @@ namespace Ant_test
                         case -39836:
                             hide_pixel(x, y);
                             break;
-
+                        //Högersvängar
+                        //Lila
+                        case -65281:
+                            Turn_fields_Right_Diagonal[rightfield_counter] = new Point(x, y);
+                            rightfield_counter++;
+                            hide_pixel(x, y);
+                            break;
+                        //Grön
+                        case -16711936:
+                            hide_pixel(x, y);
+                            break;
+                        //Turnfields right
+                        //0
+                        case -16711836:
+                            Turn_fields_Right[0] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        //1
+                        case -13435036:
+                            Turn_fields_Right[1] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        //2
+                        case -10158236:
+                            Turn_fields_Right[2] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
+                        //3
+                        case -6881436:
+                            Turn_fields_Right[3] = new Point(x, y);
+                            hide_pixel(x, y);
+                            break;
                     }
                 }
             }
@@ -149,18 +183,15 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Ant_button_Click(object sender, EventArgs e)
         {
-            for(int u = 0; u < 50; u++)
+            for (int i = 0; i < Start_Fields.Length; i++)
             {
-
-                for (int i = 0; i < Start_Fields.Length - 1; i++)
+                foreach (Point pos in Start_Fields[i])
                 {
-                    foreach (Point pos in Start_Fields[i])
-                    {
-                        ants.Add(new Ant(pos, i, Color.Black));
-                    }
+                    ants.Add(new Ant(pos, i, Color.Black));
                 }
             }
-           
+
+
             //Skriver ut antalet aktiva myror
             richTextBox3.Text = ants.Count.ToString();
             //Renderar alla myror
@@ -261,7 +292,27 @@ namespace Ant_test
             }
             return output;
         }
+        private bool is_ant_to_side(Ant Orvar)
+        {
+            bool output = false;
+            switch (Orvar._dir)
+            {
+                case 0:
+                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() - 1];
+                    break;
+                case 1:
+                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() + 1];
+                    break;
+                case 2:
+                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() + 1];
+                    break;
+                case 3:
+                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() - 1];
+                    break;
+            }
 
+            return output;
+        }
         private void antstep()
         {
             mapAVC.reset();
@@ -269,117 +320,130 @@ namespace Ant_test
 
             for (int a = 0; a < ants.Count; a++)
             {
-                bool passthrough = !is_ant_in_front(ants[a]);
                 bool exists = true;
 
 
-                if (ants[a]._dir == Array.IndexOf(Turn_fields, ants[a].getPos()))
+                if (ants[a]._dir == Array.IndexOf(Turn_fields_Left, ants[a].getPos()))
                 {
                     ants[a]._dir--;
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                 }
-               
-                //Kollar på elementen på kartan och utför en handling beroende på detta
-                switch (map_elements[ants[a].getPosX(),ants[a].getPosY()])
+                if (ants[a]._dir == Array.IndexOf(Turn_fields_Right, ants[a].getPos()))
                 {
-                    //Case röd har ihjäl myran
-                    case -1://Röd
-                        passthrough = false;
-                        karta[ants[a].getPosX(), ants[a].getPosY()] = false;
-                        ants.RemoveAt(a);
-                        exists = false;
-                        break;
+                    ants[a]._dir++;
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                 }
-
-                if (passthrough)
+                bool passthrough = !is_ant_in_front(ants[a]);
+                if (Array.IndexOf(Turn_fields_Right_Diagonal, ants[a].getPos()) >= 0 && !is_ant_to_side(ants[a]))
                 {
-                    ants[a].step();
-                }
-                if (exists)
-                {
-                    mapAVC.Setpixel(ants[a].getPos(), ants[a].Color);
-                }
+                ants[a].step();
+                ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                ants[a].step();
+                ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                passthrough = false;
             }
-            pictureBox.Image = mapAVC.get();
-        }
-        public void anttoarray() // metod för att placera myrorna på en karta.
-        {
-            foreach (Ant a in ants)
+
+            //Kollar på elementen på kartan och utför en handling beroende på detta
+            switch (map_elements[ants[a].getPosX(), ants[a].getPosY()])
             {
-                karta[a.getPosX(), a.getPosY()] = true;
+                //Case röd har ihjäl myran
+                case -1://Röd
+                    passthrough = false;
+                    karta[ants[a].getPosX(), ants[a].getPosY()] = false;
+                    ants.RemoveAt(a);
+                    exists = false;
+                    break;
+            }
+
+            if (passthrough)
+            {
+                ants[a].step();
+            }
+            if (exists)
+            {
+                mapAVC.Setpixel(ants[a].getPos(), ants[a].Color);
             }
         }
-
-
-
-        /// <summary>
-        /// Tar bort alla myror och återställer 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Reset_button_Click(object sender, EventArgs e)
-        {
-            ants.Clear();
-            karta = new bool[map.Width, map.Height];
-            mapAVC.reset();
-            mapAVC.Upscale(3);
-            pictureBox.Image = mapAVC.get();
+        pictureBox.Image = mapAVC.get();
         }
-
-
-
-        #region KODSOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
-        static Ant independent;
-        private void button8_Click(object sender, EventArgs e)
+    public void anttoarray() // metod för att placera myrorna på en karta.
+    {
+        foreach (Ant a in ants)
         {
-            independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow);
+            karta[a.getPosX(), a.getPosY()] = true;
         }
-
-        private void button_UP_Click(object sender, EventArgs e)
-        {
-            mapAVC.reset();
-            mapAVC.Upscale(10);
-            independent.setPos(new Point(independent.getPosX(), independent.getPosY() - 1));
-            mapAVC.Setpixel(independent.getPos(), independent.Color);
-            pictureBox.Image = mapAVC.get();
-            colorcheck();
-        }
-
-        private void button_RIGHT_Click(object sender, EventArgs e)
-        {
-            mapAVC.reset();
-            mapAVC.Upscale(10);
-            independent.setPos(new Point(independent.getPosX() + 1, independent.getPosY()));
-            mapAVC.Setpixel(independent.getPos(), independent.Color);
-            pictureBox.Image = mapAVC.get();
-            colorcheck();
-        }
-
-        private void button_LEFT_Click(object sender, EventArgs e)
-        {
-            mapAVC.reset();
-            mapAVC.Upscale(10);
-            independent.setPos(new Point(independent.getPosX() - 1, independent.getPosY()));
-            mapAVC.Setpixel(independent.getPos(), independent.Color);
-            pictureBox.Image = mapAVC.get();
-            colorcheck();
-        }
-
-        private void button_DOWN_Click(object sender, EventArgs e)
-        {
-            mapAVC.reset();
-            mapAVC.Upscale(10);
-            independent.setPos(new Point(independent.getPosX(), independent.getPosY() + 1));
-            mapAVC.Setpixel(independent.getPos(), independent.Color);
-            pictureBox.Image = mapAVC.get();
-            colorcheck();
-        }
-        private void colorcheck()
-        {
-            richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
-        }
-
-
     }
+
+
+
+    /// <summary>
+    /// Tar bort alla myror och återställer 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Reset_button_Click(object sender, EventArgs e)
+    {
+        ants.Clear();
+        karta = new bool[map.Width, map.Height];
+        mapAVC.reset();
+        mapAVC.Upscale(10);
+        pictureBox.Image = mapAVC.get();
+    }
+
+
+
+    #region KOD SOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
+    static Ant independent;
+    private void button8_Click(object sender, EventArgs e)
+    {
+        independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow);
+    }
+
+    private void button_UP_Click(object sender, EventArgs e)
+    {
+        mapAVC.reset();
+        mapAVC.Upscale(10);
+        independent.setPos(new Point(independent.getPosX(), independent.getPosY() - 1));
+        mapAVC.Setpixel(independent.getPos(), independent.Color);
+        pictureBox.Image = mapAVC.get();
+        colorcheck();
+    }
+
+    private void button_RIGHT_Click(object sender, EventArgs e)
+    {
+        mapAVC.reset();
+        mapAVC.Upscale(10);
+        independent.setPos(new Point(independent.getPosX() + 1, independent.getPosY()));
+        mapAVC.Setpixel(independent.getPos(), independent.Color);
+        pictureBox.Image = mapAVC.get();
+        colorcheck();
+    }
+
+    private void button_LEFT_Click(object sender, EventArgs e)
+    {
+        mapAVC.reset();
+        mapAVC.Upscale(10);
+        independent.setPos(new Point(independent.getPosX() - 1, independent.getPosY()));
+        mapAVC.Setpixel(independent.getPos(), independent.Color);
+        pictureBox.Image = mapAVC.get();
+        colorcheck();
+    }
+
+    private void button_DOWN_Click(object sender, EventArgs e)
+    {
+        mapAVC.reset();
+        mapAVC.Upscale(10);
+        independent.setPos(new Point(independent.getPosX(), independent.getPosY() + 1));
+        mapAVC.Setpixel(independent.getPos(), independent.Color);
+        pictureBox.Image = mapAVC.get();
+        colorcheck();
+    }
+    private void colorcheck()
+    {
+        richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
+    }
+
+
+}
     #endregion
 }
