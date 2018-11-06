@@ -57,10 +57,9 @@
             this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox.Location = new System.Drawing.Point(22, 22);
-            this.pictureBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox.Location = new System.Drawing.Point(12, 12);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(669, 583);
+            this.pictureBox.Size = new System.Drawing.Size(365, 316);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
@@ -68,10 +67,9 @@
             // Timer_button
             // 
             this.Timer_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Timer_button.Location = new System.Drawing.Point(860, 236);
-            this.Timer_button.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Timer_button.Location = new System.Drawing.Point(469, 128);
             this.Timer_button.Name = "Timer_button";
-            this.Timer_button.Size = new System.Drawing.Size(158, 85);
+            this.Timer_button.Size = new System.Drawing.Size(86, 46);
             this.Timer_button.TabIndex = 1;
             this.Timer_button.Text = "Timer";
             this.Timer_button.UseVisualStyleBackColor = true;
@@ -85,10 +83,9 @@
             // Ant_button
             // 
             this.Ant_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Ant_button.Location = new System.Drawing.Point(860, 332);
-            this.Ant_button.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Ant_button.Location = new System.Drawing.Point(469, 180);
             this.Ant_button.Name = "Ant_button";
-            this.Ant_button.Size = new System.Drawing.Size(158, 85);
+            this.Ant_button.Size = new System.Drawing.Size(86, 46);
             this.Ant_button.TabIndex = 2;
             this.Ant_button.Text = "Ant Start";
             this.Ant_button.UseVisualStyleBackColor = true;
@@ -97,10 +94,9 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(860, 428);
-            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button1.Location = new System.Drawing.Point(469, 232);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 85);
+            this.button1.Size = new System.Drawing.Size(86, 46);
             this.button1.TabIndex = 3;
             this.button1.Text = "Step";
             this.button1.UseVisualStyleBackColor = true;
@@ -109,50 +105,46 @@
             // richTextBox1
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(343, 620);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.richTextBox1.Location = new System.Drawing.Point(187, 336);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(345, 76);
+            this.richTextBox1.Size = new System.Drawing.Size(190, 43);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
             // 
             // richTextBox2
             // 
             this.richTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox2.Location = new System.Drawing.Point(739, 620);
-            this.richTextBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.richTextBox2.Location = new System.Drawing.Point(403, 336);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(303, 399);
+            this.richTextBox2.Size = new System.Drawing.Size(167, 218);
             this.richTextBox2.TabIndex = 9;
             this.richTextBox2.Text = "";
             // 
             // richTextBox3
             // 
             this.richTextBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox3.Location = new System.Drawing.Point(343, 713);
-            this.richTextBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.richTextBox3.Location = new System.Drawing.Point(187, 386);
             this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(345, 76);
+            this.richTextBox3.Size = new System.Drawing.Size(190, 43);
             this.richTextBox3.TabIndex = 10;
             this.richTextBox3.Text = "";
             // 
             // richTextBox4
             // 
             this.richTextBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox4.Location = new System.Drawing.Point(343, 801);
-            this.richTextBox4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.richTextBox4.Location = new System.Drawing.Point(187, 434);
             this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(345, 76);
+            this.richTextBox4.Size = new System.Drawing.Size(190, 43);
             this.richTextBox4.TabIndex = 11;
             this.richTextBox4.Text = "";
+           
             // 
             // Reset_button
             // 
             this.Reset_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Reset_button.Location = new System.Drawing.Point(860, 524);
-            this.Reset_button.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Reset_button.Location = new System.Drawing.Point(469, 284);
             this.Reset_button.Name = "Reset_button";
-            this.Reset_button.Size = new System.Drawing.Size(158, 85);
+            this.Reset_button.Size = new System.Drawing.Size(86, 46);
             this.Reset_button.TabIndex = 12;
             this.Reset_button.Text = "Restart";
             this.Reset_button.UseVisualStyleBackColor = true;
@@ -162,10 +154,9 @@
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(736, 349);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBox1.Location = new System.Drawing.Point(396, 188);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(111, 29);
+            this.checkBox1.Size = new System.Drawing.Size(66, 17);
             this.checkBox1.TabIndex = 13;
             this.checkBox1.Text = "Random";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -174,10 +165,9 @@
             // 
             this.button_UP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_UP.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.button_UP.Location = new System.Drawing.Point(112, 674);
-            this.button_UP.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button_UP.Location = new System.Drawing.Point(61, 365);
             this.button_UP.Name = "button_UP";
-            this.button_UP.Size = new System.Drawing.Size(81, 79);
+            this.button_UP.Size = new System.Drawing.Size(44, 43);
             this.button_UP.TabIndex = 16;
             this.button_UP.Text = "↑";
             this.button_UP.UseVisualStyleBackColor = true;
@@ -187,10 +177,9 @@
             // 
             this.button_RIGHT.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_RIGHT.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.button_RIGHT.Location = new System.Drawing.Point(191, 751);
-            this.button_RIGHT.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button_RIGHT.Location = new System.Drawing.Point(104, 407);
             this.button_RIGHT.Name = "button_RIGHT";
-            this.button_RIGHT.Size = new System.Drawing.Size(81, 79);
+            this.button_RIGHT.Size = new System.Drawing.Size(44, 43);
             this.button_RIGHT.TabIndex = 17;
             this.button_RIGHT.Text = "→ ";
             this.button_RIGHT.UseVisualStyleBackColor = true;
@@ -200,10 +189,9 @@
             // 
             this.button_LEFT.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_LEFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.button_LEFT.Location = new System.Drawing.Point(31, 751);
-            this.button_LEFT.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button_LEFT.Location = new System.Drawing.Point(17, 407);
             this.button_LEFT.Name = "button_LEFT";
-            this.button_LEFT.Size = new System.Drawing.Size(81, 79);
+            this.button_LEFT.Size = new System.Drawing.Size(44, 43);
             this.button_LEFT.TabIndex = 18;
             this.button_LEFT.Text = "←";
             this.button_LEFT.UseVisualStyleBackColor = true;
@@ -213,10 +201,9 @@
             // 
             this.button_DOWN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_DOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.button_DOWN.Location = new System.Drawing.Point(112, 833);
-            this.button_DOWN.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button_DOWN.Location = new System.Drawing.Point(61, 451);
             this.button_DOWN.Name = "button_DOWN";
-            this.button_DOWN.Size = new System.Drawing.Size(81, 79);
+            this.button_DOWN.Size = new System.Drawing.Size(44, 43);
             this.button_DOWN.TabIndex = 19;
             this.button_DOWN.Text = "↓";
             this.button_DOWN.UseVisualStyleBackColor = true;
@@ -226,10 +213,9 @@
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F);
-            this.button8.Location = new System.Drawing.Point(125, 764);
-            this.button8.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button8.Location = new System.Drawing.Point(68, 414);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(53, 55);
+            this.button8.Size = new System.Drawing.Size(29, 30);
             this.button8.TabIndex = 20;
             this.button8.Text = "Start";
             this.button8.UseVisualStyleBackColor = true;
@@ -241,10 +227,9 @@
             this.checkBox_Field_1.AutoSize = true;
             this.checkBox_Field_1.Checked = true;
             this.checkBox_Field_1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_Field_1.Location = new System.Drawing.Point(775, 80);
-            this.checkBox_Field_1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBox_Field_1.Location = new System.Drawing.Point(418, 42);
             this.checkBox_Field_1.Name = "checkBox_Field_1";
-            this.checkBox_Field_1.Size = new System.Drawing.Size(49, 29);
+            this.checkBox_Field_1.Size = new System.Drawing.Size(32, 17);
             this.checkBox_Field_1.TabIndex = 21;
             this.checkBox_Field_1.Text = "1";
             this.checkBox_Field_1.UseVisualStyleBackColor = true;
@@ -255,10 +240,9 @@
             this.checkBox_Field_2.AutoSize = true;
             this.checkBox_Field_2.Checked = true;
             this.checkBox_Field_2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_Field_2.Location = new System.Drawing.Point(775, 122);
-            this.checkBox_Field_2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBox_Field_2.Location = new System.Drawing.Point(418, 65);
             this.checkBox_Field_2.Name = "checkBox_Field_2";
-            this.checkBox_Field_2.Size = new System.Drawing.Size(49, 29);
+            this.checkBox_Field_2.Size = new System.Drawing.Size(32, 17);
             this.checkBox_Field_2.TabIndex = 22;
             this.checkBox_Field_2.Text = "2";
             this.checkBox_Field_2.UseVisualStyleBackColor = true;
@@ -269,10 +253,9 @@
             this.checkBox_Field_3.AutoSize = true;
             this.checkBox_Field_3.Checked = true;
             this.checkBox_Field_3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_Field_3.Location = new System.Drawing.Point(775, 164);
-            this.checkBox_Field_3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBox_Field_3.Location = new System.Drawing.Point(418, 88);
             this.checkBox_Field_3.Name = "checkBox_Field_3";
-            this.checkBox_Field_3.Size = new System.Drawing.Size(49, 29);
+            this.checkBox_Field_3.Size = new System.Drawing.Size(32, 17);
             this.checkBox_Field_3.TabIndex = 23;
             this.checkBox_Field_3.Text = "3";
             this.checkBox_Field_3.UseVisualStyleBackColor = true;
@@ -283,19 +266,18 @@
             this.checkBox_Field_4.AutoSize = true;
             this.checkBox_Field_4.Checked = true;
             this.checkBox_Field_4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_Field_4.Location = new System.Drawing.Point(775, 207);
-            this.checkBox_Field_4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBox_Field_4.Location = new System.Drawing.Point(418, 111);
             this.checkBox_Field_4.Name = "checkBox_Field_4";
-            this.checkBox_Field_4.Size = new System.Drawing.Size(49, 29);
+            this.checkBox_Field_4.Size = new System.Drawing.Size(32, 17);
             this.checkBox_Field_4.TabIndex = 24;
             this.checkBox_Field_4.Text = "4";
             this.checkBox_Field_4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1069, 1047);
+            this.ClientSize = new System.Drawing.Size(583, 567);
             this.Controls.Add(this.checkBox_Field_4);
             this.Controls.Add(this.checkBox_Field_3);
             this.Controls.Add(this.checkBox_Field_2);
@@ -315,7 +297,6 @@
             this.Controls.Add(this.Ant_button);
             this.Controls.Add(this.Timer_button);
             this.Controls.Add(this.pictureBox);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Trafik simulering";
             this.Load += new System.EventHandler(this.Form1_Load);

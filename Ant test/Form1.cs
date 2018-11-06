@@ -262,6 +262,7 @@ namespace Ant_test
             counter++;
             antstep();
             richTextBox3.Text = ants.Count.ToString();
+            richTextBox4.Text = tid.ToString();
             if (counter % 3 == 0 && checkBox1.Checked)
             {
                 for (int i = 0; i < 5; i++)
@@ -278,9 +279,9 @@ namespace Ant_test
 
                 Traficlights[3].Rödljus();
                 Traficlights[4].Rödljus();
-                Traficlights[8].Rödljus();
                 Traficlights[9].Rödljus();
-
+                Traficlights[10].Rödljus();
+                
             }
             if (tid % 24 == 8)
             {
@@ -292,16 +293,16 @@ namespace Ant_test
 
                 Traficlights[3].Rödljus();
                 Traficlights[4].Rödljus();
-                Traficlights[8].Rödljus();
                 Traficlights[9].Rödljus();
+                Traficlights[10].Rödljus();
 
             }
             if (tid % 24 == 16)
             {
                 Traficlights[3].Gröntljus();
                 Traficlights[4].Gröntljus();
-                Traficlights[8].Gröntljus();
                 Traficlights[9].Gröntljus();
+                Traficlights[10].Gröntljus();
 
                 Traficlights[0].Rödljus();
                 Traficlights[1].Rödljus();
@@ -318,7 +319,48 @@ namespace Ant_test
         {
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
-            
+            richTextBox4.Text = tid.ToString();
+
+            if (tid % 24 == 0)
+            {
+                Traficlights[0].Gröntljus();
+                Traficlights[1].Gröntljus();
+                Traficlights[6].Gröntljus();
+                Traficlights[7].Gröntljus();
+
+                Traficlights[3].Rödljus();
+                Traficlights[4].Rödljus();
+                Traficlights[9].Rödljus();
+                Traficlights[10].Rödljus();
+
+            }
+            if (tid % 24 == 8)
+            {
+                Traficlights[0].Rödljus();
+                Traficlights[1].Rödljus();
+                Traficlights[6].Rödljus();
+                Traficlights[7].Rödljus();
+
+
+                Traficlights[3].Rödljus();
+                Traficlights[4].Rödljus();
+                Traficlights[9].Rödljus();
+                Traficlights[10].Rödljus();
+
+            }
+            if (tid % 24 == 16)
+            {
+                Traficlights[3].Gröntljus();
+                Traficlights[4].Gröntljus();
+                Traficlights[9].Gröntljus();
+                Traficlights[10].Gröntljus();
+
+                Traficlights[0].Rödljus();
+                Traficlights[1].Rödljus();
+                Traficlights[6].Rödljus();
+                Traficlights[7].Rödljus();
+            }
+
             tid++;
         }
         /// <summary>
@@ -352,7 +394,7 @@ namespace Ant_test
                     
                     break;
                 case 1:
-                    if (karta[greger.getPosX()+2, greger.getPosY() ] == karta[greger.getPosX()+1, greger.getPosY() ])
+                    if (karta[greger.getPosX()+1, greger.getPosY()] == karta[greger.getPosX()+2, greger.getPosY()])
                     {
                         output = karta[greger.getPosX()+1, greger.getPosY() ];
                     }
@@ -364,7 +406,7 @@ namespace Ant_test
                     }
                     break;
                 case 3:
-                    if (karta[greger.getPosX() - 2, greger.getPosY()] == karta[greger.getPosX() - 1, greger.getPosY()])
+                    if (karta[greger.getPosX() - 1, greger.getPosY()] == karta[greger.getPosX() - 2, greger.getPosY()])
                     {
                         output = karta[greger.getPosX() -1, greger.getPosY()];
                     }
@@ -524,7 +566,7 @@ namespace Ant_test
         richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
     }
 
-
-}
+       
+    }
     #endregion
 }

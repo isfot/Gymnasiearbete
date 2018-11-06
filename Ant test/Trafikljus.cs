@@ -44,37 +44,13 @@ namespace Ant_test
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Rödljus() // Metoden kräver kod från andra delar av programmet.
         {
-            
-            switch (dir)
-            {
-                case 0:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X, pos.Y - i] = true;
-                    }
-                    break;
-                case 1:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X+i, pos.Y ] = true;
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i <=2; i++)
-                    {
-                        Form1.karta[pos.X, pos.Y +i] = true;
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X-i, pos.Y ] = true;
-                    }
-                    break;
-            }
-            
+
+            Form1.karta[pos.X, pos.Y] = true;
             
 
                  
@@ -82,33 +58,7 @@ namespace Ant_test
         public void Gröntljus() // Metoden kräver kod från andra delar av programmet.
         {
 
-            switch (dir)
-            {
-                case 0:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X, pos.Y - i] = false;
-                    }
-                    break;
-                case 1:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X + i, pos.Y] = false;
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X, pos.Y + i] = false;
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        Form1.karta[pos.X - i, pos.Y] = false;
-                    }
-                    break;
-            }
+            Form1.karta[pos.X, pos.Y] = false;
 
 
 
