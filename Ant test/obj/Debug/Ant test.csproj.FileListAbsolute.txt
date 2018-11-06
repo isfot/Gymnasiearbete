@@ -74,3 +74,4 @@ C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant test.exe
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant test.pdb
 D:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\pic_old.png
 D:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic_old.png
+C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\bin\Debug\pic_old.png
