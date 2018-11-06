@@ -25,6 +25,8 @@ namespace Ant_test
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek. 
         private static int[,] map_elements;
+        private int tid = 0;
+        private Trafikljus Trafficlight = new Trafikljus(22, 21, 2, 3);
 
         /// <summary>
         /// Inititerar UI och bitmapen
@@ -244,7 +246,13 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-
+            if (tid % 11 == 0 )
+            { Trafficlight.Rödljus(); }
+            if (tid%13==0)
+            {
+                Trafficlight.Gröntljus();
+            }
+            tid++;
         }
 
         //Step
@@ -253,6 +261,13 @@ namespace Ant_test
         {
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
+            if (tid % 11 == 0)
+            { Trafficlight.Rödljus(); }
+            if(tid%13==0)
+            {
+                Trafficlight.Gröntljus();
+            }
+            tid++;
         }
         /// <summary>
         /// Funktion som avgör ifall en int är större är 3 och sätter till 0 ifall det är så, eller ifall den är mindre en 0 och sätter till 3 ifall det är så
@@ -278,16 +293,29 @@ namespace Ant_test
             switch (greger._dir)
             {
                 case 0:
-                    output = karta[greger.getPosX(), greger.getPosY() - 1];
+                    if (karta[greger.getPosX() , greger.getPosY()-2]== karta[greger.getPosX(), greger.getPosY() - 1])
+                    {
+                        output = karta[greger.getPosX(), greger.getPosY() - 1];
+                    }
+                    
                     break;
                 case 1:
-                    output = karta[greger.getPosX() + 1, greger.getPosY()];
+                    if (karta[greger.getPosX()+2, greger.getPosY() ] == karta[greger.getPosX()+1, greger.getPosY() ])
+                    {
+                        output = karta[greger.getPosX()+1, greger.getPosY() ];
+                    }
                     break;
                 case 2:
-                    output = karta[greger.getPosX(), greger.getPosY() + 1];
+                    if (karta[greger.getPosX(), greger.getPosY() + 2] == karta[greger.getPosX(), greger.getPosY() + 1])
+                    {
+                        output = karta[greger.getPosX(), greger.getPosY() + 1];
+                    }
                     break;
                 case 3:
-                    output = karta[greger.getPosX() - 1, greger.getPosY()];
+                    if (karta[greger.getPosX() - 2, greger.getPosY()] == karta[greger.getPosX() - 1, greger.getPosY()])
+                    {
+                        output = karta[greger.getPosX() -1, greger.getPosY()];
+                    }
                     break;
             }
             return output;
@@ -388,6 +416,7 @@ namespace Ant_test
         mapAVC.reset();
         mapAVC.Upscale(10);
         pictureBox.Image = mapAVC.get();
+            tid = 0;
     }
 
 
