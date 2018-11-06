@@ -26,7 +26,7 @@ namespace Ant_test
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek. 
         private static int[,] map_elements;
         private int tid = 0;
-        private Trafikljus Trafficlight = new Trafikljus(22, 21, 2, 3);
+        private Trafikljus[] Traficlights = new Trafikljus[12];
 
         /// <summary>
         /// Inititerar UI och bitmapen
@@ -39,6 +39,7 @@ namespace Ant_test
             map_elements = new int[map.Width, map.Height];
             startField_Finder();
             mapAVC = new BitmapAVC(map);
+            traficlight_initiator();
         }
         /// <summary>
         /// Overload
@@ -51,7 +52,24 @@ namespace Ant_test
             map_elements = new int[map.Width, map.Height];
             startField_Finder();
             mapAVC = new BitmapAVC(map);
+            traficlight_initiator();
 
+        }
+        private void traficlight_initiator() // initierar alla trafikljus
+        {
+            Traficlights[0]= new Trafikljus(22,21,0,1);
+            Traficlights[1]= new Trafikljus(23,21,0,1);
+            Traficlights[2]= new Trafikljus(24,21,0,1);
+            Traficlights[3]= new Trafikljus(28,22,1,1);
+            Traficlights[4]= new Trafikljus(28,23,1,1);
+            Traficlights[5]= new Trafikljus(28,24,1,1);
+            Traficlights[6]= new Trafikljus(27,28,2,1);
+            Traficlights[7]= new Trafikljus(26,28,2,1);
+            Traficlights[8] = new Trafikljus(25,28,2,1);
+            Traficlights[9] = new Trafikljus(21,27,3,1);
+            Traficlights[10] = new Trafikljus(21,26,3,1);
+            Traficlights[11] = new Trafikljus(21,25,3,1);
+            
         }
 
         private void startField_Finder()
@@ -185,11 +203,16 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Ant_button_Click(object sender, EventArgs e)
         {
+            
             for (int i = 0; i < Start_Fields.Length; i++)
             {
                 foreach (Point pos in Start_Fields[i])
                 {
-                    ants.Add(new Ant(pos, i, Color.Black));
+                    if (karta[pos.X , pos.Y] == false) // Gör att vi inte skapar myror ovanpå varandra.
+                    {
+                        ants.Add(new Ant(pos, i, Color.Black));
+                    }
+                    
                 }
             }
 
@@ -209,7 +232,7 @@ namespace Ant_test
         /// </summary>
         private void spawnrandom()
         {
-            int index = rand.Next(0, 4);
+            int index = rand.Next(0, 4); // Random variabel mellan 0 och 4
             //Ha så kul med att försöka tyda detta :)
             if (index == 0 && checkBox_Field_3.Checked)
             {
@@ -246,13 +269,47 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-            if (tid % 11 == 0 )
-            { Trafficlight.Rödljus(); }
-            if (tid%13==0)
+            if (tid % 24 == 0)
             {
-                Trafficlight.Gröntljus();
+                Traficlights[0].Gröntljus();
+                Traficlights[1].Gröntljus();
+                Traficlights[6].Gröntljus();
+                Traficlights[7].Gröntljus();
+
+                Traficlights[3].Rödljus();
+                Traficlights[4].Rödljus();
+                Traficlights[8].Rödljus();
+                Traficlights[9].Rödljus();
+
             }
-            tid++;
+            if (tid % 24 == 8)
+            {
+                Traficlights[0].Rödljus();
+                Traficlights[1].Rödljus();
+                Traficlights[6].Rödljus();
+                Traficlights[7].Rödljus();
+
+
+                Traficlights[3].Rödljus();
+                Traficlights[4].Rödljus();
+                Traficlights[8].Rödljus();
+                Traficlights[9].Rödljus();
+
+            }
+            if (tid % 24 == 16)
+            {
+                Traficlights[3].Gröntljus();
+                Traficlights[4].Gröntljus();
+                Traficlights[8].Gröntljus();
+                Traficlights[9].Gröntljus();
+
+                Traficlights[0].Rödljus();
+                Traficlights[1].Rödljus();
+                Traficlights[6].Rödljus();
+                Traficlights[7].Rödljus();
+            }
+
+                tid++;
         }
 
         //Step
@@ -261,12 +318,7 @@ namespace Ant_test
         {
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
-            if (tid % 11 == 0)
-            { Trafficlight.Rödljus(); }
-            if(tid%13==0)
-            {
-                Trafficlight.Gröntljus();
-            }
+            
             tid++;
         }
         /// <summary>
@@ -350,7 +402,7 @@ namespace Ant_test
             {
                 bool exists = true;
 
-
+                bool passthrough = !is_ant_in_front(ants[a]);
                 if (ants[a]._dir == Array.IndexOf(Turn_fields_Left, ants[a].getPos()))
                 {
                     ants[a]._dir--;
@@ -361,7 +413,7 @@ namespace Ant_test
                     ants[a]._dir++;
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                 }
-                bool passthrough = !is_ant_in_front(ants[a]);
+               
                 if (Array.IndexOf(Turn_fields_Right_Diagonal, ants[a].getPos()) >= 0 && !is_ant_to_side(ants[a]))
                 {
                 ants[a].step();
