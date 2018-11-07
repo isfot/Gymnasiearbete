@@ -51,7 +51,7 @@ namespace Ant_test
         {
             switch (dir)
             {
-                case 0:
+                case 2:
                     for (int i = 0; i <= 2; i++)
                     {
                         Form1.karta[pos.X, pos.Y - i] = true;
@@ -63,7 +63,7 @@ namespace Ant_test
                         Form1.karta[pos.X - i, pos.Y] = true;
                     }
                     break;
-                case 2:
+                case 0:
                     for (int i = 0; i <= 2; i++)
                     {
                         Form1.karta[pos.X, pos.Y + i] = true;
@@ -87,7 +87,7 @@ namespace Ant_test
 
             switch (dir)
             {
-                case 0:
+                case 2:
                     for (int i = 0; i <= 2; i++)
                     {
                         Form1.karta[pos.X, pos.Y - i] = false;
@@ -99,7 +99,7 @@ namespace Ant_test
                         Form1.karta[pos.X - i, pos.Y] = false;
                     }
                     break;
-                case 2:
+                case 0:
                     for (int i = 0; i <= 2; i++)
                     {
                         Form1.karta[pos.X, pos.Y + i] = false;

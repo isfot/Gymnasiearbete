@@ -1,6 +1,10 @@
 ﻿2018-11-07
-Delete
-Trafikljus allocering
+Delete						✔
+Trafikljus allocering		✔
 Grafik trafikljus
 Vänster svängar
+myror som drar från mapen	✔
 -----------------
+Flöde
+Medelhastighet
+Densitet

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Ant_test
 {
-    class Ant
+    public class Ant
     {
         private Point _pos;		//En en koordinat för myrans placering i bitmap
         public int _dir;        //Variabel för myrans riktning
@@ -42,6 +42,13 @@ namespace Ant_test
             Color = color;
             ORGcolor = color;
             Form1.karta[X, Y] = true;
+        }
+        /// <summary>
+        /// Resettar färgen på myran
+        /// </summary>
+        public void resetColor()
+        {
+            Color = ORGcolor;
         }
         /// <summary>
         /// Hämtar positionen
@@ -112,11 +119,50 @@ namespace Ant_test
             }
             Form1.karta[getPos().X, getPos().Y] = true;
         }
+
         private void trace()
         {
-        //    Form1.karta[getPos().X, getPos().Y];
+            //    Form1.karta[getPos().X, getPos().Y];
 
-             //   Ant trace = new Ant(_pos,_dir);
+            Ant trace = new Ant(_pos, _dir, Color.White);
+            for(int step = 0; !Form1.karta[trace.getPosX(),trace.getPosY()] || Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1; step++)
+            {
+                if (trace._dir == Array.IndexOf(Form1.Turn_fields_Left, trace.getPos()))
+                {
+                    trace._dir--;
+                    trace._dir = dirOverFlowCorr(trace._dir);
+                }
+                if (trace._dir == Array.IndexOf(Form1.Turn_fields_Right, trace.getPos()))
+                {
+                    trace._dir++;
+                    trace._dir = dirOverFlowCorr(trace._dir);
+                }
+                //Sväng diagonalt
+                if (Array.IndexOf(Form1.Turn_fields_Right_Diagonal, trace.getPos()) > -1 && !Form1.is_ant_to_side(trace))
+                {
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir + 1);
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir - 1);
+                }
+            }
+        }
+        /// <summary>
+        /// Korrigerar överflöden i riktningen
+        /// </summary>
+        /// <param name="_dir"></param>
+        /// <returns></returns>
+        private int dirOverFlowCorr(int _dir)
+        {
+            if (_dir > 3)
+            {
+                _dir = 0;
+            }
+            else if (_dir < 0)
+            {
+                _dir = 3;
+            }
+            return _dir;
         }
         /// <summary>
         /// En metod för att myran ej skall få en odefinierad riktning. dir är enbart definierad för 0-3.
