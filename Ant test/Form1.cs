@@ -55,23 +55,22 @@ namespace Ant_test
             traficlight_initiator();
 
         }
-        private void traficlight_initiator() // initierar alla trafikljus
+       private void traficlight_initiator() // initierar alla trafikljus
         {
-            Traficlights[0]= new Trafikljus(22,21,0,1);
-            Traficlights[1]= new Trafikljus(23,21,0,1);
-            Traficlights[2]= new Trafikljus(24,21,0,1);
-            Traficlights[3]= new Trafikljus(28,22,1,1);
-            Traficlights[4]= new Trafikljus(28,23,1,1);
-            Traficlights[5]= new Trafikljus(28,24,1,1);
-            Traficlights[6]= new Trafikljus(27,28,2,1);
-            Traficlights[7]= new Trafikljus(26,28,2,1);
-            Traficlights[8] = new Trafikljus(25,28,2,1);
-            Traficlights[9] = new Trafikljus(21,27,3,1);
-            Traficlights[10] = new Trafikljus(21,26,3,1);
-            Traficlights[11] = new Trafikljus(21,25,3,1);
-            
-        }
-
+            Traficlights[0] = new Trafikljus(22, 21, 0, 1);
+            Traficlights[1] = new Trafikljus(23, 21, 0, 1);
+            Traficlights[2] = new Trafikljus(24, 21, 0, 1);
+            Traficlights[3] = new Trafikljus(28, 22, 1, 1);
+            Traficlights[4] = new Trafikljus(28, 23, 1, 1);
+            Traficlights[5] = new Trafikljus(28, 24, 1, 1);
+            Traficlights[6] = new Trafikljus(27, 28, 2, 1);
+            Traficlights[7] = new Trafikljus(26, 28, 2, 1);
+            Traficlights[8] = new Trafikljus(25, 28, 2, 1);
+            Traficlights[9] = new Trafikljus(21, 27, 3, 1);
+            Traficlights[10] = new Trafikljus(21, 26, 3, 1);
+            Traficlights[11] = new Trafikljus(21, 25, 3, 1);
+     }
+       
         private void startField_Finder()
         {
             int rightfield_counter = 0;
@@ -203,16 +202,15 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Ant_button_Click(object sender, EventArgs e)
         {
-            
             for (int i = 0; i < Start_Fields.Length; i++)
             {
                 foreach (Point pos in Start_Fields[i])
                 {
-                    if (karta[pos.X , pos.Y] == false) // Gör att vi inte skapar myror ovanpå varandra.
+                    if (karta[pos.X, pos.Y] == false) // Gör att vi inte skapar myror ovanpå varandra.
                     {
                         ants.Add(new Ant(pos, i, Color.Black));
                     }
-                    
+
                 }
             }
 
@@ -281,57 +279,6 @@ namespace Ant_test
                 Traficlights[4].Rödljus();
                 Traficlights[9].Rödljus();
                 Traficlights[10].Rödljus();
-                
-            }
-            if (tid % 24 == 8)
-            {
-                Traficlights[0].Rödljus();
-                Traficlights[1].Rödljus();
-                Traficlights[6].Rödljus();
-                Traficlights[7].Rödljus();
-
-
-                Traficlights[3].Rödljus();
-                Traficlights[4].Rödljus();
-                Traficlights[9].Rödljus();
-                Traficlights[10].Rödljus();
-
-            }
-            if (tid % 24 == 16)
-            {
-                Traficlights[3].Gröntljus();
-                Traficlights[4].Gröntljus();
-                Traficlights[9].Gröntljus();
-                Traficlights[10].Gröntljus();
-
-                Traficlights[0].Rödljus();
-                Traficlights[1].Rödljus();
-                Traficlights[6].Rödljus();
-                Traficlights[7].Rödljus();
-            }
-
-                tid++;
-        }
-
-        //Step
-        static List<int> ClearList = new List<int>();
-        private void Steg_Button_Click(object sender, EventArgs e)
-        {
-            antstep();
-            richTextBox2.Text = ants[3]._dir.ToString();
-            richTextBox4.Text = tid.ToString();
-
-            if (tid % 24 == 0)
-            {
-                Traficlights[0].Gröntljus();
-                Traficlights[1].Gröntljus();
-                Traficlights[6].Gröntljus();
-                Traficlights[7].Gröntljus();
-
-                Traficlights[3].Rödljus();
-                Traficlights[4].Rödljus();
-                Traficlights[9].Rödljus();
-                Traficlights[10].Rödljus();
 
             }
             if (tid % 24 == 8)
@@ -363,6 +310,57 @@ namespace Ant_test
 
             tid++;
         }
+
+        //Step
+        static List<int> ClearList = new List<int>();
+        private void Steg_Button_Click(object sender, EventArgs e)
+        {
+            antstep();
+            richTextBox2.Text = ants[3]._dir.ToString();
+            richTextBox4.Text = tid.ToString();
+
+            if (tid % 24 == 0)
+            {
+                Traficlights[0].Gröntljus();
+                Traficlights[1].Gröntljus();
+                Traficlights[6].Gröntljus();
+                Traficlights[7].Gröntljus();
+    
+                Traficlights[3].Rödljus();
+                Traficlights[4].Rödljus();
+                Traficlights[9].Rödljus();
+                Traficlights[10].Rödljus();
+    
+            }
+            if (tid % 24 == 8)
+            {
+                Traficlights[0].Rödljus();
+                Traficlights[1].Rödljus();
+                Traficlights[6].Rödljus();
+                Traficlights[7].Rödljus();
+    
+    
+                Traficlights[3].Rödljus();
+                Traficlights[4].Rödljus();
+                Traficlights[9].Rödljus();
+                Traficlights[10].Rödljus();
+    
+            }
+            if (tid % 24 == 16)
+            {
+                Traficlights[3].Gröntljus();
+                Traficlights[4].Gröntljus();
+                Traficlights[9].Gröntljus();
+                Traficlights[10].Gröntljus();
+    
+                Traficlights[0].Rödljus();
+                Traficlights[1].Rödljus();
+                Traficlights[6].Rödljus();
+                Traficlights[7].Rödljus();
+            }
+    
+               tid++;
+        }
         /// <summary>
         /// Funktion som avgör ifall en int är större är 3 och sätter till 0 ifall det är så, eller ifall den är mindre en 0 och sätter till 3 ifall det är så
         /// </summary>
@@ -381,39 +379,39 @@ namespace Ant_test
             return _dir;
         }
 
-        private bool is_ant_in_front(Ant greger)// metoden kan ersättas med en array som säger huruvida en rutan är okuperad.
+        private bool is_ant_in_front(Ant greger)// säger huruvida en rutan är okuperad.
         {
             bool output = false;
             switch (greger._dir)
             {
                 case 0:
-                    if (karta[greger.getPosX() , greger.getPosY()-2]== karta[greger.getPosX(), greger.getPosY() - 1])
+                    if (karta[greger.getPosX(), greger.getPosY() - 2] == true || true == karta[greger.getPosX(), greger.getPosY() - 1] )
                     {
-                        output = karta[greger.getPosX(), greger.getPosY() - 1];
+                        output = true;
                     }
-                    
                     break;
                 case 1:
-                    if (karta[greger.getPosX()+1, greger.getPosY()] == karta[greger.getPosX()+2, greger.getPosY()])
+                    if (karta[greger.getPosX() + 1, greger.getPosY()] == true || true == karta[greger.getPosX() + 2, greger.getPosY()])
                     {
-                        output = karta[greger.getPosX()+1, greger.getPosY() ];
+                        output = true;
                     }
                     break;
                 case 2:
-                    if (karta[greger.getPosX(), greger.getPosY() + 2] == karta[greger.getPosX(), greger.getPosY() + 1])
+                    if (karta[greger.getPosX(), greger.getPosY() + 2] == true || true == karta[greger.getPosX(), greger.getPosY() + 1])
                     {
-                        output = karta[greger.getPosX(), greger.getPosY() + 1];
+                        output = true;
                     }
                     break;
                 case 3:
-                    if (karta[greger.getPosX() - 1, greger.getPosY()] == karta[greger.getPosX() - 2, greger.getPosY()])
+                    if (karta[greger.getPosX() - 1, greger.getPosY()] == true || true == karta[greger.getPosX() - 2, greger.getPosY()])
                     {
-                        output = karta[greger.getPosX() -1, greger.getPosY()];
+                        output = true;
                     }
                     break;
             }
             return output;
         }
+
         private bool is_ant_to_side(Ant Orvar)
         {
             bool output = false;
@@ -435,6 +433,7 @@ namespace Ant_test
 
             return output;
         }
+
         private void antstep()
         {
             mapAVC.reset();
@@ -444,7 +443,7 @@ namespace Ant_test
             {
                 bool exists = true;
 
-                bool passthrough = !is_ant_in_front(ants[a]);
+                bool passthrough = true;// !is_ant_in_front(ants[a]);
                 if (ants[a]._dir == Array.IndexOf(Turn_fields_Left, ants[a].getPos()))
                 {
                     ants[a]._dir--;
@@ -455,118 +454,126 @@ namespace Ant_test
                     ants[a]._dir++;
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                 }
-               
-                if (Array.IndexOf(Turn_fields_Right_Diagonal, ants[a].getPos()) >= 0 && !is_ant_to_side(ants[a]))
+                //Sväng diagonalt
+                if (Array.IndexOf(Turn_fields_Right_Diagonal, ants[a].getPos()) > -1 && !is_ant_to_side(ants[a]))
                 {
-                ants[a].step();
-                ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                ants[a].step();
-                ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                passthrough = false;
-            }
-
-            //Kollar på elementen på kartan och utför en handling beroende på detta
-            switch (map_elements[ants[a].getPosX(), ants[a].getPosY()])
-            {
-                //Case röd har ihjäl myran
-                case -1://Röd
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
                     passthrough = false;
-                    karta[ants[a].getPosX(), ants[a].getPosY()] = false;
-                    ants.RemoveAt(a);
-                    exists = false;
-                    break;
-            }
+                }
 
-            if (passthrough)
-            {
-                ants[a].step();
+                if (passthrough)
+                {
+                    ants[a].step();
+                    ants[a].Color = Color.Black;
+                }
+                else
+                {
+                    ants[a].Color = Color.Red;
+                }
             }
-            if (exists)
-            {
-                mapAVC.Setpixel(ants[a].getPos(), ants[a].Color);
+            //Kollar på elementen på kartan och utför en handling beroende på detta
+            List<Ant> Remove = new List<Ant>();
+            foreach(Ant a in ants){
+                switch (map_elements[a.getPosX(), a.getPosY()])
+                {
+                    //Case röd har ihjäl myran
+                    case -1://Röd
+                        karta[a.getPosX(), a.getPosY()] = false;
+                        Remove.Add(a);
+                        break;
+                }
             }
+            for(int i = 0; i < Remove.Count; i++){
+                ants.Remove(Remove[i]);
+            }
+            
+            foreach (Ant a in ants)
+            {
+                mapAVC.Setpixel(a.getPos(), a.Color);
+            }
+            pictureBox.Image = mapAVC.get();
         }
-        pictureBox.Image = mapAVC.get();
-        }
-    public void anttoarray() // metod för att placera myrorna på en karta.
-    {
-        foreach (Ant a in ants)
+        private void v_step()
         {
-            karta[a.getPosX(), a.getPosY()] = true;
+            for (int i = 0; i < ants.Count; i++)
+            {
+
+            }
         }
-    }
 
 
-
-    /// <summary>
-    /// Tar bort alla myror och återställer 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Reset_button_Click(object sender, EventArgs e)
-    {
-        ants.Clear();
-        karta = new bool[map.Width, map.Height];
-        mapAVC.reset();
-        mapAVC.Upscale(10);
-        pictureBox.Image = mapAVC.get();
+        /// <summary>
+        /// Tar bort alla myror och återställer 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Reset_button_Click(object sender, EventArgs e)
+        {
+            ants.Clear();
+            karta = new bool[map.Width, map.Height];
+            mapAVC.reset();
+            mapAVC.Upscale(10);
+            pictureBox.Image = mapAVC.get();
             tid = 0;
-    }
+        }
 
 
 
-    #region KOD SOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
-    static Ant independent;
-    private void button8_Click(object sender, EventArgs e)
-    {
-        independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow);
-    }
+        #region KOD SOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
+        static Ant independent;
+        private void button8_Click(object sender, EventArgs e)
+        {
+            independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow);
+        }
 
-    private void button_UP_Click(object sender, EventArgs e)
-    {
-        mapAVC.reset();
-        mapAVC.Upscale(10);
-        independent.setPos(new Point(independent.getPosX(), independent.getPosY() - 1));
-        mapAVC.Setpixel(independent.getPos(), independent.Color);
-        pictureBox.Image = mapAVC.get();
-        colorcheck();
-    }
+        private void button_UP_Click(object sender, EventArgs e)
+        {
+            mapAVC.reset();
+            mapAVC.Upscale(10);
+            independent.setPos(new Point(independent.getPosX(), independent.getPosY() - 1));
+            mapAVC.Setpixel(independent.getPos(), independent.Color);
+            pictureBox.Image = mapAVC.get();
+            colorcheck();
+        }
 
-    private void button_RIGHT_Click(object sender, EventArgs e)
-    {
-        mapAVC.reset();
-        mapAVC.Upscale(10);
-        independent.setPos(new Point(independent.getPosX() + 1, independent.getPosY()));
-        mapAVC.Setpixel(independent.getPos(), independent.Color);
-        pictureBox.Image = mapAVC.get();
-        colorcheck();
-    }
+        private void button_RIGHT_Click(object sender, EventArgs e)
+        {
+            mapAVC.reset();
+            mapAVC.Upscale(10);
+            independent.setPos(new Point(independent.getPosX() + 1, independent.getPosY()));
+            mapAVC.Setpixel(independent.getPos(), independent.Color);
+            pictureBox.Image = mapAVC.get();
+            colorcheck();
+        }
 
-    private void button_LEFT_Click(object sender, EventArgs e)
-    {
-        mapAVC.reset();
-        mapAVC.Upscale(10);
-        independent.setPos(new Point(independent.getPosX() - 1, independent.getPosY()));
-        mapAVC.Setpixel(independent.getPos(), independent.Color);
-        pictureBox.Image = mapAVC.get();
-        colorcheck();
-    }
+        private void button_LEFT_Click(object sender, EventArgs e)
+        {
+            mapAVC.reset();
+            mapAVC.Upscale(10);
+            independent.setPos(new Point(independent.getPosX() - 1, independent.getPosY()));
+            mapAVC.Setpixel(independent.getPos(), independent.Color);
+            pictureBox.Image = mapAVC.get();
+            colorcheck();
+        }
 
-    private void button_DOWN_Click(object sender, EventArgs e)
-    {
-        mapAVC.reset();
-        mapAVC.Upscale(10);
-        independent.setPos(new Point(independent.getPosX(), independent.getPosY() + 1));
-        mapAVC.Setpixel(independent.getPos(), independent.Color);
-        pictureBox.Image = mapAVC.get();
-        colorcheck();
-    }
-    private void colorcheck()
-    {
-        richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
-    }
+        private void button_DOWN_Click(object sender, EventArgs e)
+        {
+            mapAVC.reset();
+            mapAVC.Upscale(10);
+            independent.setPos(new Point(independent.getPosX(), independent.getPosY() + 1));
+            mapAVC.Setpixel(independent.getPos(), independent.Color);
+            pictureBox.Image = mapAVC.get();
+            colorcheck();
+        }
+        private void colorcheck()
+        {
+            richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
+        }
 
-       
+
     }
     #endregion
 }

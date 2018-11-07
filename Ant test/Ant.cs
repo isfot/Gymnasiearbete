@@ -112,6 +112,12 @@ namespace Ant_test
             }
             Form1.karta[getPos().X, getPos().Y] = true;
         }
+        private void trace()
+        {
+        //    Form1.karta[getPos().X, getPos().Y];
+
+             //   Ant trace = new Ant(_pos,_dir);
+        }
         /// <summary>
         /// En metod för att myran ej skall få en odefinierad riktning. dir är enbart definierad för 0-3.
         /// </summary>

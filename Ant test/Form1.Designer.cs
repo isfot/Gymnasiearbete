@@ -77,7 +77,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 1;
+            this.timer1.Interval = 300;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Ant_button
@@ -137,7 +137,6 @@
             this.richTextBox4.Size = new System.Drawing.Size(190, 43);
             this.richTextBox4.TabIndex = 11;
             this.richTextBox4.Text = "";
-           
             // 
             // Reset_button
             // 
