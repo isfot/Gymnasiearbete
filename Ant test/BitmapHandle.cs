@@ -97,7 +97,8 @@ namespace Ant_test
         }
         /// <summary>
         /// Sätter en pixel i den potentiellt uppskalade bitmapen
-        /// </summary>
+   
+            /// </summary>
         /// <param name="pos">Vilket pixel som ska sättas</param>
         /// <param name="col">Vilken färg denna pixel ska vara</param>
         public void Setpixel(Point pos, Color col) 

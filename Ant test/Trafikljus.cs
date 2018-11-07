@@ -11,7 +11,7 @@ namespace Ant_test
     class Trafikljus
     {
         private Point pos;
-        
+
         private readonly int dir;
         private readonly int v_max;
 
@@ -27,7 +27,7 @@ namespace Ant_test
             this.pos = pos;
 
             this.dir = dir;
-            
+
         }
         /// <summary>
         ///  Inizialerar en ny trafikljus
@@ -39,9 +39,9 @@ namespace Ant_test
         public Trafikljus(int X, int Y, int dir, int v_max)
         {
             pos = new Point(X, Y);
-           
+
             this.dir = dir;
-            
+
         }
 
         /// <summary>
@@ -49,20 +49,73 @@ namespace Ant_test
         /// </summary>
         public void Rödljus() // Metoden kräver kod från andra delar av programmet.
         {
+            switch (dir)
+            {
+                case 0:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X, pos.Y - i] = true;
+                    }
+                    break;
+                case 1:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X - i, pos.Y] = true;
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X, pos.Y + i] = true;
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X + i, pos.Y] = true;
+                    }
+                    break;
+            }
 
-            Form1.karta[pos.X, pos.Y] = true;
-            
 
-                 
+
+
+
         }
         public void Gröntljus() // Metoden kräver kod från andra delar av programmet.
         {
 
-            Form1.karta[pos.X, pos.Y] = false;
+            switch (dir)
+            {
+                case 0:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X, pos.Y - i] = false;
+                    }
+                    break;
+                case 1:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X - i, pos.Y] = false;
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X, pos.Y + i] = false;
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Form1.karta[pos.X + i, pos.Y] = false;
+                    }
+                    break;
 
 
 
 
+            }
         }
     }
 }
