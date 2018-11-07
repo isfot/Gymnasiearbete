@@ -138,12 +138,13 @@ namespace Ant_test
                     trace._dir = dirOverFlowCorr(trace._dir);
                 }
                 //Sväng diagonalt
-                if (Array.IndexOf(Form1.Turn_fields_Right_Diagonal, trace.getPos()) > -1 && !Form1.is_ant_to_side(trace))
+                if (Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()) && !Form1.is_ant_to_side(trace))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
+                  
                 }
             }
         }

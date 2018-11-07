@@ -17,9 +17,9 @@ namespace Ant_test
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
-        private static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
-        private static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
-        private static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
+        public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
+        public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
+        public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
         private static readonly int v_max = 1;
 
         private static List<Point> Kill_Fields = new List<Point>();
@@ -29,7 +29,7 @@ namespace Ant_test
         public static int[,] map_elements;
         private int tid = 0;
         private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
-
+        private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -58,7 +58,7 @@ namespace Ant_test
 
         private void startField_Finder()
         {
-            int rightfield_counter = 0;
+
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
@@ -112,42 +112,49 @@ namespace Ant_test
                         //0
                         case -39786:
                             hide_pixel(x, y);
-                            TraficLights[dir].Add(new Trafikljus(x, y, 0, ));
+                            TraficLights[0].Add(new Trafikljus(x, y, 0, v_max));
                             break;
                         //1
                         case -39736:
                             hide_pixel(x, y);
-                            traficlight_initiator(new Point(x, y), 1, 1);
+                            TraficLights[1].Add(new Trafikljus(x, y, 1, v_max));
                             break;
                         //2
                         case -39886:
                             hide_pixel(x, y);
-                            traficlight_initiator(new Point(x, y), 2, 1);
+                            TraficLights[2].Add(new Trafikljus(x, y, 2, v_max));
                             break;
                         //3
                         case -39836:
                             hide_pixel(x, y);
-                            traficlight_initiator(new Point(x, y), 3, 1);
+                            TraficLights[3].Add(new Trafikljus(x, y, 3, v_max));
                             break;
                         //Trafikljus vänstersväng
                         //0
                         case -26986:
+                            TraficLights_Left_Turn[0].Add(new Trafikljus(x, y, 0, v_max));
+                            hide_pixel(x, y);
                             break;
                         //1
                         case -26936:
+                            TraficLights_Left_Turn[1].Add(new Trafikljus(x, y, 1, v_max));
+                            hide_pixel(x, y);
                             break;
                         //2
                         case -27086:
+                            TraficLights_Left_Turn[2].Add(new Trafikljus(x, y, 2, v_max));
+                            hide_pixel(x, y);
                             break;
                         //3
                         case -27036:
+                            TraficLights_Left_Turn[3].Add(new Trafikljus(x, y, 3, v_max));
+                            hide_pixel(x, y);
                             break;
 
                         //Högersvängar
                         //Lila
                         case -65281:
-                            Turn_fields_Right_Diagonal[rightfield_counter] = new Point(x, y);
-                            rightfield_counter++;
+                            Turn_fields_Right_Diagonal.Add(new Point(x, y));
                             hide_pixel(x, y);
                             break;
                         //Grön
@@ -157,32 +164,27 @@ namespace Ant_test
                         //Turnfields right
                         //0
                         case -16711836:
-                            Turn_fields_Right[0] = new Point(x, y);
+                            Turn_fields_Right[0].Add(new Point(x, y));
                             hide_pixel(x, y);
                             break;
                         //1
                         case -13435036:
-                            Turn_fields_Right[1] = new Point(x, y);
+                            Turn_fields_Right[1].Add(new Point(x, y));
                             hide_pixel(x, y);
                             break;
                         //2
                         case -10158236:
-                            Turn_fields_Right[2] = new Point(x, y);
+                            Turn_fields_Right[2].Add(new Point(x, y));
                             hide_pixel(x, y);
                             break;
                         //3
                         case -6881436:
-                            Turn_fields_Right[3] = new Point(x, y);
+                            Turn_fields_Right[3].Add(new Point(x, y));
                             hide_pixel(x, y);
                             break;
                     }
                 }
             }
-        }
-
-        private void traficlight_initiator(Point pos, int dir, int v_max) // initierar alla trafikljus
-        {
-
         }
 
         private void hide_pixel(int x, int y)
@@ -210,9 +212,9 @@ namespace Ant_test
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private static Color[] colors = new Color[] { Color.Blue, Color.Green, Color.Indigo, Color.Orange };
-        private void Ant_button_Click(object sender, EventArgs e)
+        private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
-            for (int a = 0; a < 50; a++)
+            //for (int a = 0; a < 50; a++)
                 for (int i = 0; i < Start_Fields.Length; i++)
                 {
                     foreach (Point pos in Start_Fields[i])
@@ -257,6 +259,35 @@ namespace Ant_test
             }
 
         }
+
+        private void TraficLight_Toggle_Forward(int dir, bool on)
+        {
+            foreach (Trafikljus a in TraficLights[dir])
+            {
+                if (on)
+                {
+                    a.Gröntljus();
+                }
+                else
+                {
+                    a.Rödljus();
+                }
+            }
+        }
+        private void TraficLight_Toggle_Turn(int dir, bool on)
+        {
+            foreach (Trafikljus a in TraficLights_Left_Turn[dir])
+            {
+                if (on)
+                {
+                    a.Gröntljus();
+                }
+                else
+                {
+                    a.Rödljus();
+                }
+            }
+        }
         /// <summary>
         /// Timer event som körs med ett fast intervall
         /// </summary>
@@ -275,60 +306,43 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-
-            if (tid % 100 == 0)
+            double cycel = 400;
+            if (tid % cycel == 0)
             {
-                TraficLights[2, 0].Gröntljus();
-                TraficLights[2, 1].Gröntljus();
-                TraficLights[0, 1].Gröntljus();
-                TraficLights[0, 2].Gröntljus();
-
-                TraficLights[1, 1].Rödljus();
-                TraficLights[1, 2].Rödljus();
-                TraficLights[3, 0].Rödljus();
-                TraficLights[3, 1].Rödljus();
-
+                //  TraficLight_Toggle_Forward(0,true);
+                //  TraficLight_Toggle_Forward(2,true);
+                //  TraficLight_Toggle_Forward(1, false);
+                //  TraficLight_Toggle_Forward(3, false);
+                TraficLight_Toggle_Turn(0, true);
+                TraficLight_Toggle_Turn(3, false);
             }
-            if (tid % 100 == 25)
+            if (tid % cycel == (0.25 * cycel))
             {
-                TraficLights[2, 0].Rödljus();
-                TraficLights[2, 1].Rödljus();
-                TraficLights[0, 1].Rödljus();
-                TraficLights[0, 2].Rödljus();
-
-                TraficLights[1, 1].Rödljus();
-                TraficLights[1, 2].Rödljus();
-                TraficLights[3, 0].Rödljus();
-                TraficLights[3, 1].Rödljus();
-
-
+                //  TraficLight_Toggle_Forward(0, false);
+                //  TraficLight_Toggle_Forward(2, false);
+                //  TraficLight_Toggle_Forward(1, false);
+                //  TraficLight_Toggle_Forward(3, false
+                TraficLight_Toggle_Turn(1, true);
+                TraficLight_Toggle_Turn(0, false);
             }
-            if (tid % 100 == 50)
+            if (tid % cycel == (0.5 * cycel))
             {
-                TraficLights[2, 0].Rödljus();
-                TraficLights[2, 1].Rödljus();
-                TraficLights[0, 1].Rödljus();
-                TraficLights[0, 2].Rödljus();
-
-                TraficLights[1, 1].Gröntljus();
-                TraficLights[1, 2].Gröntljus();
-                TraficLights[3, 0].Gröntljus();
-                TraficLights[3, 1].Gröntljus();
+                //   TraficLight_Toggle_Forward(0, false);
+                //   TraficLight_Toggle_Forward(2, false);
+                //   TraficLight_Toggle_Forward(1, true);
+                //   TraficLight_Toggle_Forward(3, true);
+                TraficLight_Toggle_Turn(2, true);
+                TraficLight_Toggle_Turn(1, false);
             }
-            if (tid % 100 == 75)
+            if (tid % cycel == (0.75 * cycel))
             {
-                TraficLights[2, 0].Rödljus();
-                TraficLights[2, 1].Rödljus();
-                TraficLights[0, 1].Rödljus();
-                TraficLights[0, 2].Rödljus();
-
-                TraficLights[1, 1].Rödljus();
-                TraficLights[1, 2].Rödljus();
-                TraficLights[3, 0].Rödljus();
-                TraficLights[3, 1].Rödljus();
+                //  TraficLight_Toggle_Forward(0, false);
+                //  TraficLight_Toggle_Forward(2, false);
+                //  TraficLight_Toggle_Forward(1, false);
+                //  TraficLight_Toggle_Forward(3, false);
+                TraficLight_Toggle_Turn(3, true);
+                TraficLight_Toggle_Turn(2, false);
             }
-
-
             tid++;
         }
 
@@ -340,59 +354,59 @@ namespace Ant_test
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
 
-            if (tid % 100 == 0)
-            {
-                TraficLights[2, 0].Gröntljus();
-                TraficLights[2, 1].Gröntljus();
-                TraficLights[0, 1].Gröntljus();
-                TraficLights[0, 2].Gröntljus();
-
-                TraficLights[1, 1].Rödljus();
-                TraficLights[1, 2].Rödljus();
-                TraficLights[3, 0].Rödljus();
-                TraficLights[3, 1].Rödljus();
-
-            }
-            if (tid % 100 == 25)
-            {
-                TraficLights[2, 0].Rödljus();
-                TraficLights[2, 1].Rödljus();
-                TraficLights[0, 1].Rödljus();
-                TraficLights[0, 2].Rödljus();
-
-                TraficLights[1, 1].Rödljus();
-                TraficLights[1, 2].Rödljus();
-                TraficLights[3, 0].Rödljus();
-                TraficLights[3, 1].Rödljus();
-
-
-            }
-            if (tid % 100 == 50)
-            {
-                TraficLights[2, 0].Rödljus();
-                TraficLights[2, 1].Rödljus();
-                TraficLights[0, 1].Rödljus();
-                TraficLights[0, 2].Rödljus();
-
-                TraficLights[1, 1].Gröntljus();
-                TraficLights[1, 2].Gröntljus();
-                TraficLights[3, 0].Gröntljus();
-                TraficLights[3, 1].Gröntljus();
-            }
-            if (tid % 100 == 75)
-            {
-                TraficLights[2, 0].Rödljus();
-                TraficLights[2, 1].Rödljus();
-                TraficLights[0, 1].Rödljus();
-                TraficLights[0, 2].Rödljus();
-
-                TraficLights[1, 1].Rödljus();
-                TraficLights[1, 2].Rödljus();
-                TraficLights[3, 0].Rödljus();
-                TraficLights[3, 1].Rödljus();
-
-
-            }
+            //          if (tid % 100 == 0)
+            //          {
+            //              TraficLights[2, 0].Gröntljus();
+            //              TraficLights[2, 1].Gröntljus();
+            //              TraficLights[0, 1].Gröntljus();
+            //              TraficLights[0, 2].Gröntljus();
+            //
+            //              TraficLights[1, 1].Rödljus();
+            //              TraficLights[1, 2].Rödljus();
+            //              TraficLights[3, 0].Rödljus();
+            //              TraficLights[3, 1].Rödljus();
+            //
+            //          }
+            //          if (tid % 100 == 25)
+            //          {
+            //              TraficLights[2, 0].Rödljus();
+            //              TraficLights[2, 1].Rödljus();
+            //              TraficLights[0, 1].Rödljus();
+            //              TraficLights[0, 2].Rödljus();
+            //
+            //              TraficLights[1, 1].Rödljus();
+            //              TraficLights[1, 2].Rödljus();
+            //              TraficLights[3, 0].Rödljus();
+            //              TraficLights[3, 1].Rödljus();
+            //
+            //
+            //          }
+            //          if (tid % 100 == 50)
+            //          {
+            //              TraficLights[2, 0].Rödljus();
+            //              TraficLights[2, 1].Rödljus();
+            //              TraficLights[0, 1].Rödljus();
+            //              TraficLights[0, 2].Rödljus();
+            //
+            //              TraficLights[1, 1].Gröntljus();
+            //              TraficLights[1, 2].Gröntljus();
+            //              TraficLights[3, 0].Gröntljus();
+            //              TraficLights[3, 1].Gröntljus();
+            //          }
+            //          if (tid % 100 == 75)
+            //          {
+            //              TraficLights[2, 0].Rödljus();
+            //              TraficLights[2, 1].Rödljus();
+            //              TraficLights[0, 1].Rödljus();
+            //              TraficLights[0, 2].Rödljus();
+            //
+            //              TraficLights[1, 1].Rödljus();
+            //              TraficLights[1, 2].Rödljus();
+            //              TraficLights[3, 0].Rödljus();
+            //              TraficLights[3, 1].Rödljus();
+            //
+            //
+            //          }
 
             tid++;
         }
@@ -485,18 +499,24 @@ namespace Ant_test
             {
                 bool turn = false;
                 bool passthrough = !is_ant_in_front(ants[a]);
-                if (ants[a]._dir == Array.IndexOf(Turn_fields_Left, ants[a].getPos()))
+                for (int i = 0; i < Turn_fields_Left.Length; i++)
                 {
-                    ants[a]._dir--;
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                    if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                    {
+                        ants[a]._dir--;
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                    }
                 }
-                if (ants[a]._dir == Array.IndexOf(Turn_fields_Right, ants[a].getPos()))
+                for (int i = 0; i < Turn_fields_Right.Length; i++)
                 {
-                    ants[a]._dir++;
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                    if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                    {
+                        ants[a]._dir++;
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                    }
                 }
                 //Sväng diagonalt
-                if (Array.IndexOf(Turn_fields_Right_Diagonal, ants[a].getPos()) > -1 && !is_ant_to_side(ants[a]))
+                if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side(ants[a]))
                 {
                     ants[a].step();
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
@@ -506,7 +526,7 @@ namespace Ant_test
                     turn = true;
                 }
                 //Tar steg ifall den får
-                if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && Array.IndexOf(Turn_fields_Right_Diagonal, ants[a].getPos()) < 0)
+                if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()))
                 {
                     ants[a].step();
                     ants[a].resetColor();

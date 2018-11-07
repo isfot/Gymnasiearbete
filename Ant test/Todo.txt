@@ -8,3 +8,4 @@ myror som drar från mapen	✔
 Flöde
 Medelhastighet
 Densitet
+Hastighet
