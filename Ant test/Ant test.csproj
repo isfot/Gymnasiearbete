@@ -83,6 +83,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pic - Copy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pic.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

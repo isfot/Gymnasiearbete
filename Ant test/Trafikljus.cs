@@ -10,8 +10,8 @@ namespace Ant_test
     //Klass för att sköta trafikljusen i korsningen och i och med det trafikflödet
     class Trafikljus
     {
-        private Point pos;
-
+        public Point pos;
+        public bool grönt;
         private readonly int dir;
         private readonly int v_max;
 
@@ -49,30 +49,31 @@ namespace Ant_test
         /// </summary>
         public void Rödljus() // Metoden kräver kod från andra delar av programmet.
         {
+            grönt = false;
             switch (dir)
             {
                 case 2:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X, pos.Y - i] = true;
+                        Form1.map_elements[pos.X, pos.Y - i] = 1;
                     }
                     break;
                 case 1:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X - i, pos.Y] = true;
+                        Form1.map_elements[pos.X - i, pos.Y] = 1;
                     }
                     break;
                 case 0:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X, pos.Y + i] = true;
+                        Form1.map_elements[pos.X, pos.Y + i] = 1;
                     }
                     break;
                 case 3:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X + i, pos.Y] = true;
+                        Form1.map_elements[pos.X + i, pos.Y] = 1;
                     }
                     break;
             }
@@ -84,37 +85,33 @@ namespace Ant_test
         }
         public void Gröntljus() // Metoden kräver kod från andra delar av programmet.
         {
-
+            grönt = true;
             switch (dir)
             {
                 case 2:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X, pos.Y - i] = false;
+                        Form1.map_elements[pos.X, pos.Y - i] = 2;
                     }
                     break;
                 case 1:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X - i, pos.Y] = false;
+                        Form1.map_elements[pos.X - i, pos.Y] = 2;
                     }
                     break;
                 case 0:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X, pos.Y + i] = false;
+                        Form1.map_elements[pos.X, pos.Y + i] = 2;
                     }
                     break;
                 case 3:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.karta[pos.X + i, pos.Y] = false;
+                        Form1.map_elements[pos.X + i, pos.Y] = 2;
                     }
                     break;
-
-
-
-
             }
         }
     }

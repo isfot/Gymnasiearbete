@@ -211,17 +211,17 @@ namespace Ant_test
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static Color[] colors = new Color[] { Color.Blue, Color.Green, Color.Indigo, Color.Orange };
+        private static Color[] colors = new Color[] { Color.Blue, Color.HotPink, Color.Indigo, Color.Turquoise };
         private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
             //for (int a = 0; a < 50; a++)
-                for (int i = 0; i < Start_Fields.Length; i++)
+            for (int i = 0; i < Start_Fields.Length; i++)
+            {
+                foreach (Point pos in Start_Fields[i])
                 {
-                    foreach (Point pos in Start_Fields[i])
-                    {
-                        ants.Add(new Ant(pos, i, colors[i]));
-                    }
+                    ants.Add(new Ant(pos, i, colors[i]));
                 }
+            }
 
 
             //Skriver ut antalet aktiva myror
@@ -306,42 +306,42 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-            double cycel = 400;
+            double cycel = 200;
             if (tid % cycel == 0)
             {
-                //  TraficLight_Toggle_Forward(0,true);
-                //  TraficLight_Toggle_Forward(2,true);
-                //  TraficLight_Toggle_Forward(1, false);
-                //  TraficLight_Toggle_Forward(3, false);
-                TraficLight_Toggle_Turn(0, true);
-                TraficLight_Toggle_Turn(3, false);
+                TraficLight_Toggle_Forward(0, true);
+                TraficLight_Toggle_Forward(2, true);
+                TraficLight_Toggle_Forward(1, false);
+                TraficLight_Toggle_Forward(3, false);
+                //  TraficLight_Toggle_Turn(0, true);
+                //  TraficLight_Toggle_Turn(3, false);
             }
             if (tid % cycel == (0.25 * cycel))
             {
-                //  TraficLight_Toggle_Forward(0, false);
-                //  TraficLight_Toggle_Forward(2, false);
-                //  TraficLight_Toggle_Forward(1, false);
-                //  TraficLight_Toggle_Forward(3, false
-                TraficLight_Toggle_Turn(1, true);
-                TraficLight_Toggle_Turn(0, false);
+                TraficLight_Toggle_Forward(0, false);
+                TraficLight_Toggle_Forward(2, false);
+                TraficLight_Toggle_Forward(1, false);
+                TraficLight_Toggle_Forward(3, false);
+                //  TraficLight_Toggle_Turn(1, true);
+                //  TraficLight_Toggle_Turn(0, false);
             }
             if (tid % cycel == (0.5 * cycel))
             {
-                //   TraficLight_Toggle_Forward(0, false);
-                //   TraficLight_Toggle_Forward(2, false);
-                //   TraficLight_Toggle_Forward(1, true);
-                //   TraficLight_Toggle_Forward(3, true);
-                TraficLight_Toggle_Turn(2, true);
-                TraficLight_Toggle_Turn(1, false);
+                TraficLight_Toggle_Forward(0, false);
+                TraficLight_Toggle_Forward(2, false);
+                TraficLight_Toggle_Forward(1, true);
+                TraficLight_Toggle_Forward(3, true);
+                //TraficLight_Toggle_Turn(2, true);
+                //TraficLight_Toggle_Turn(1, false);
             }
             if (tid % cycel == (0.75 * cycel))
             {
-                //  TraficLight_Toggle_Forward(0, false);
-                //  TraficLight_Toggle_Forward(2, false);
-                //  TraficLight_Toggle_Forward(1, false);
-                //  TraficLight_Toggle_Forward(3, false);
-                TraficLight_Toggle_Turn(3, true);
-                TraficLight_Toggle_Turn(2, false);
+                TraficLight_Toggle_Forward(0, false);
+                TraficLight_Toggle_Forward(2, false);
+                TraficLight_Toggle_Forward(1, false);
+                TraficLight_Toggle_Forward(3, false);
+                //TraficLight_Toggle_Turn(3, true);
+                //TraficLight_Toggle_Turn(2, false);
             }
             tid++;
         }
@@ -493,7 +493,7 @@ namespace Ant_test
         private void antstep()
         {
             mapAVC.reset();
-            mapAVC.Upscale(3);
+            mapAVC.Upscale(1);
 
             for (int a = 0; a < ants.Count; a++)
             {
@@ -526,14 +526,14 @@ namespace Ant_test
                     turn = true;
                 }
                 //Tar steg ifall den får
-                if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()))
+                if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
                 {
                     ants[a].step();
                     ants[a].resetColor();
                 }
                 else if (!turn)
                 {
-                    ants[a].Color = Color.Red;
+                    ants[a].Color = Color.Orange;
                 }
             }
             //Tar bort myror på dödsrutor
@@ -557,6 +557,21 @@ namespace Ant_test
             {
                 ants.Remove(Remove[i]);
             }
+            for (int i = 0; i < TraficLights.Length; i++)
+            {
+                foreach (Trafikljus t in TraficLights[i])
+                {
+                    if (t.grönt)
+                    {
+                        mapAVC.Setpixel(t.pos, Color.Green);
+                    }
+                    else
+                    {
+                        mapAVC.Setpixel(t.pos, Color.Red);
+                    }
+                }
+            }
+
             //Renderar myrorna
             foreach (Ant a in ants)
             {
