@@ -668,6 +668,10 @@ namespace Ant_test
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
         }
+        public void Update()
+        {
+            pictureBox.Image = mapAVC.get();
+        }
     }
     #endregion
 }

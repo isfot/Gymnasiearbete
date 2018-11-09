@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Threading;
 
 namespace Ant_test
 {
@@ -117,14 +118,8 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            try
-            {
-                Form1.karta[getPos().X, getPos().Y] = true;
-            }
-            catch
-            {
-
-            }
+            if(_pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)
+            Form1.karta[getPos().X, getPos().Y] = true;
         }
 
         public int trace()
@@ -132,7 +127,7 @@ namespace Ant_test
             bool passthrough = true;
             int output = 0;
             Ant trace = new Ant(_pos, _dir, Color.White);
-            for (int step = 0; /*!Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++)
+            for (int step = 0;/* step == 0 || !Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ trace.getPosY() < Form1.map.Height - 1 && trace._pos.Y >= 0 && trace.getPosX() < Form1.map.Width - 1 && trace.getPosX() > 0 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++)
             {
                 for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
@@ -151,7 +146,7 @@ namespace Ant_test
                     }
                 }
                 //Sväng diagonalt
-                if (Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()) && !Form1.is_ant_to_side(trace))
+                if (Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
