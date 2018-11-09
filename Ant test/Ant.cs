@@ -117,25 +117,38 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            Form1.karta[getPos().X, getPos().Y] = true;
+            try
+            {
+                Form1.karta[getPos().X, getPos().Y] = true;
+            }
+            catch
+            {
+
+            }
         }
 
-        private void trace()
+        public int trace()
         {
-            //    Form1.karta[getPos().X, getPos().Y];
-
+            bool passthrough = true;
+            int output = 0;
             Ant trace = new Ant(_pos, _dir, Color.White);
-            for(int step = 0; !Form1.karta[trace.getPosX(),trace.getPosY()] || Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1; step++)
+            for (int step = 0; /*!Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++)
             {
-                if (trace._dir == Array.IndexOf(Form1.Turn_fields_Left, trace.getPos()))
+                for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
-                    trace._dir--;
-                    trace._dir = dirOverFlowCorr(trace._dir);
+                    if (Form1.Turn_fields_Left[i].Contains(trace.getPos()) && trace._dir == i)
+                    {
+                        trace._dir--;
+                        trace._dir = dirOverFlowCorr(trace._dir);
+                    }
                 }
-                if (trace._dir == Array.IndexOf(Form1.Turn_fields_Right, trace.getPos()))
+                for (int i = 0; i < Form1.Turn_fields_Right.Length; i++)
                 {
-                    trace._dir++;
-                    trace._dir = dirOverFlowCorr(trace._dir);
+                    if (Form1.Turn_fields_Right[i].Contains(trace.getPos()) && trace._dir == i)
+                    {
+                        trace._dir++;
+                        trace._dir = dirOverFlowCorr(trace._dir);
+                    }
                 }
                 //Sväng diagonalt
                 if (Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()) && !Form1.is_ant_to_side(trace))
@@ -144,9 +157,16 @@ namespace Ant_test
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
-                  
+                    passthrough = false;
                 }
+                if (passthrough && trace.getPosX() < Form1.map.Width && trace.getPosX() > 0 && trace.getPosY() < Form1.map.Height && trace.getPosY() > 0 && !Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()) && Form1.map_elements[trace.getPos().X, trace.getPos().Y] != 1)
+                {
+                    trace.step();
+                }
+                Form1.mapAVC.Setpixel(trace.getPosX(), trace.getPosY(), Color.Aqua);
+                output = step;
             }
+            return output;
         }
         /// <summary>
         /// Korrigerar överflöden i riktningen

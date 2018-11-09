@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Ant_test
 {
-    class BitmapAVC
+    public class BitmapAVC
     {
         private Bitmap _bitmap; // Kartan som en bitmap
         private readonly Bitmap _Resetmap; // Ursprungskartan för återställning
@@ -130,7 +130,14 @@ namespace Ant_test
             {
                 for (int Y = posY * MAPscale; Y < posY * MAPscale + MAPscale; Y++)
                 {
+                    try
+                    {
                     _bitmap.SetPixel(X, Y, col);
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
         }

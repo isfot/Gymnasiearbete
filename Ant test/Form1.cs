@@ -12,8 +12,8 @@ namespace Ant_test
     public partial class Form1 : Form
     {
         private static string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
-        private static Bitmap map; // Kartan som en bitmap
-        private static BitmapAVC mapAVC; // Kartan som en AVC bitmap
+        public static Bitmap map; // Kartan som en bitmap
+        public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
@@ -493,12 +493,11 @@ namespace Ant_test
         private void antstep()
         {
             mapAVC.reset();
-            mapAVC.Upscale(1);
+            mapAVC.Upscale(3);
 
             for (int a = 0; a < ants.Count; a++)
             {
                 bool turn = false;
-                bool passthrough = !is_ant_in_front(ants[a]);
                 for (int i = 0; i < Turn_fields_Left.Length; i++)
                 {
                     if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
@@ -515,6 +514,7 @@ namespace Ant_test
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                     }
                 }
+                bool passthrough = !is_ant_in_front(ants[a]);
                 //Sväng diagonalt
                 if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side(ants[a]))
                 {
@@ -615,7 +615,8 @@ namespace Ant_test
         private void button_UP_Click(object sender, EventArgs e)
         {
             mapAVC.reset();
-            mapAVC.Upscale(10);
+            mapAVC.Upscale(2);
+            independent._dir = 0;
             independent.setPos(new Point(independent.getPosX(), independent.getPosY() - 1));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
@@ -625,7 +626,8 @@ namespace Ant_test
         private void button_RIGHT_Click(object sender, EventArgs e)
         {
             mapAVC.reset();
-            mapAVC.Upscale(10);
+            mapAVC.Upscale(2);
+            independent._dir = 1;
             independent.setPos(new Point(independent.getPosX() + 1, independent.getPosY()));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
@@ -635,7 +637,8 @@ namespace Ant_test
         private void button_LEFT_Click(object sender, EventArgs e)
         {
             mapAVC.reset();
-            mapAVC.Upscale(10);
+            mapAVC.Upscale(2);
+            independent._dir = 3;
             independent.setPos(new Point(independent.getPosX() - 1, independent.getPosY()));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
@@ -645,7 +648,8 @@ namespace Ant_test
         private void button_DOWN_Click(object sender, EventArgs e)
         {
             mapAVC.reset();
-            mapAVC.Upscale(10);
+            mapAVC.Upscale(2);
+            independent._dir = 2;
             independent.setPos(new Point(independent.getPosX(), independent.getPosY() + 1));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
@@ -656,7 +660,14 @@ namespace Ant_test
             richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
         }
 
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            mapAVC.reset();
+            mapAVC.Upscale(2);
+            richTextBox1.Text = independent.trace().ToString();
+            mapAVC.Setpixel(independent.getPos(), independent.Color);
+            pictureBox.Image = mapAVC.get();
+        }
     }
     #endregion
 }
