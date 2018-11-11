@@ -21,7 +21,9 @@ namespace Ant_test
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
         private static readonly int v_max = 1;
-
+        
+        private static double occupiable_fields;
+        private static  double density;
         private static List<Point> Kill_Fields = new List<Point>();
         static int counter;
         static Random rand = new Random();
@@ -73,35 +75,43 @@ namespace Ant_test
                         case -1536:
                             Start_Fields[2].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         case -14336:
                             Start_Fields[3].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         case -27136:
                             Start_Fields[0].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         case -39936:
                             Start_Fields[1].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //Turnfields left
                         case -16711681:
                             Turn_fields_Left[0].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         case -13434881:
                             Turn_fields_Left[1].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         case -10158081:
                             Turn_fields_Left[2].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         case -6881281:
                             Turn_fields_Left[3].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //Killfields
                         case -65536:
@@ -113,42 +123,51 @@ namespace Ant_test
                         case -39786:
                             hide_pixel(x, y);
                             TraficLights[0].Add(new Trafikljus(x, y, 0, v_max));
+                            occupiable_fields++;
                             break;
                         //1
                         case -39736:
                             hide_pixel(x, y);
                             TraficLights[1].Add(new Trafikljus(x, y, 1, v_max));
+                            occupiable_fields++;
                             break;
                         //2
                         case -39886:
                             hide_pixel(x, y);
                             TraficLights[2].Add(new Trafikljus(x, y, 2, v_max));
+                            occupiable_fields++;
                             break;
                         //3
                         case -39836:
                             hide_pixel(x, y);
                             TraficLights[3].Add(new Trafikljus(x, y, 3, v_max));
+                            occupiable_fields++;
                             break;
                         //Trafikljus vänstersväng
                         //0
                         case -26986:
                             TraficLights_Left_Turn[0].Add(new Trafikljus(x, y, 0, v_max));
+                            occupiable_fields++;
                             hide_pixel(x, y);
                             break;
                         //1
                         case -26936:
                             TraficLights_Left_Turn[1].Add(new Trafikljus(x, y, 1, v_max));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //2
                         case -27086:
                             TraficLights_Left_Turn[2].Add(new Trafikljus(x, y, 2, v_max));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //3
                         case -27036:
                             TraficLights_Left_Turn[3].Add(new Trafikljus(x, y, 3, v_max));
                             hide_pixel(x, y);
+
+                            occupiable_fields++;
                             break;
 
                         //Högersvängar
@@ -156,31 +175,41 @@ namespace Ant_test
                         case -65281:
                             Turn_fields_Right_Diagonal.Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //Grön
                         case -16711936:
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //Turnfields right
                         //0
                         case -16711836:
                             Turn_fields_Right[0].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //1
                         case -13435036:
                             Turn_fields_Right[1].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //2
                         case -10158236:
                             Turn_fields_Right[2].Add(new Point(x, y));
                             hide_pixel(x, y);
+                            occupiable_fields++;
                             break;
                         //3
                         case -6881436:
                             Turn_fields_Right[3].Add(new Point(x, y));
                             hide_pixel(x, y);
+
+                            occupiable_fields++;
+                            break;
+                        case -1: // Hittar alla körbara fält.
+                            occupiable_fields++;
                             break;
                     }
                 }
@@ -343,7 +372,10 @@ namespace Ant_test
                 //TraficLight_Toggle_Turn(3, true);
                 //TraficLight_Toggle_Turn(2, false);
             }
+            density = ants.Count / occupiable_fields;
+            Densitet_Textbox.Text = density.ToString();
             tid++;
+
         }
 
         //Step

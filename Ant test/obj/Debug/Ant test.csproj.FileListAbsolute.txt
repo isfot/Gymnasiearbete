@@ -76,3 +76,4 @@ D:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\pic_old.png
 D:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic_old.png
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\bin\Debug\pic_old.png
 D:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic - Copy.png
+C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\bin\Debug\pic - Copy.png
