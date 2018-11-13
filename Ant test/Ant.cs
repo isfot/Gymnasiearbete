@@ -124,11 +124,16 @@ namespace Ant_test
 
         public int trace()
         {
-            bool passthrough = true;
+           
             int output = 0;
             Ant trace = new Ant(_pos, _dir, Color.White);
-            for (int step = 0;/* step == 0 || !Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ trace.getPosY() < Form1.map.Height - 1 && trace._pos.Y >= 0 && trace.getPosX() < Form1.map.Width - 1 && trace.getPosX() > 0 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++)
+            for (int step = 0;/* step == 0 || !Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ trace.getPosY() < Form1.map.Height - 1 && trace._pos.Y >= 0 && trace.getPosX() < Form1.map.Width - 1 && trace.getPosX() > 0 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++) // Göra om till en While loop?
             {
+                if (Form1.map_elements[trace.getPosX(), trace.getPosY()] == -1 || Form1.map_elements[trace.getPosX(), trace.getPosY()]==1)
+                {
+                    return step;
+               
+                }
                 for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
                     if (Form1.Turn_fields_Left[i].Contains(trace.getPos()) && trace._dir == i)
@@ -152,9 +157,9 @@ namespace Ant_test
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
-                    passthrough = false;
+                    
                 }
-                if (passthrough && trace.getPosX() < Form1.map.Width && trace.getPosX() > 0 && trace.getPosY() < Form1.map.Height && trace.getPosY() > 0 && !Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()) && Form1.map_elements[trace.getPos().X, trace.getPos().Y] != 1)
+                else  // Gör tillsammans med if-sats i början att trace myra dör på killfields.
                 {
                     trace.step();
                 }
