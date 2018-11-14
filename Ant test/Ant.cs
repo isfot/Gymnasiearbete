@@ -102,6 +102,7 @@ namespace Ant_test
         /// </summary>
         public void step()
         {
+            
             Form1.karta[getPos().X, getPos().Y] = false;
             switch (_dir % 4) // Switch med resten av dir mod 4.
             {
@@ -129,7 +130,7 @@ namespace Ant_test
             Ant trace = new Ant(_pos, _dir, Color.White);
             for (int step = 0;/* step == 0 || !Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ trace.getPosY() < Form1.map.Height - 1 && trace._pos.Y >= 0 && trace.getPosX() < Form1.map.Width - 1 && trace.getPosX() > 0 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++) // Göra om till en While loop?
             {
-                if (Form1.map_elements[trace.getPosX(), trace.getPosY()] == -1 || Form1.map_elements[trace.getPosX(), trace.getPosY()]==1)
+                if (Form1.map_elements[trace.getPosX(), trace.getPosY()] == -1 || Form1.map_elements[trace.getPosX(), trace.getPosY()]==1 || Form1.karta[trace.getPosX(), trace.getPosY()]==true)
                 {
                     return step;
                
