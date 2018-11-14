@@ -15,19 +15,26 @@ namespace Ant_test
         public Color Color;     //Variabel för myrans fårg
         private readonly Color ORGcolor;
         private int hastighet = 0;
+        private readonly bool RealAnt;
         /// <summary>
         /// Inizialerar en ny myra
         /// </summary>
         /// <param name="pos">Position</param>
         /// <param name="dir">Riktning 0-3</param>
         /// <param name="color">Färg</param>
-        public Ant(Point pos, int dir, Color color)
+        public Ant(Point pos, int dir, Color color,bool RF)
         {
             _pos = pos;
             _dir = dir;
             Color = color;
             ORGcolor = color;
-            Form1.karta[pos.X, pos.Y] = true;
+            RealAnt = RF;
+            if (RealAnt)
+            {
+                Form1.karta[pos.X, pos.Y] = true;
+            }
+           
+            
         }
         /// <summary>
         ///  Inizialerar en ny myra
@@ -36,13 +43,18 @@ namespace Ant_test
         /// <param name="Y">Y postition</param>
         /// <param name="dir">Riktning g0-3</param>
         /// <param name="color">Färg</param>
-        public Ant(int X, int Y, int dir, Color color)
+        public Ant(int X, int Y, int dir, Color color,bool RF)
         {
             _pos = new Point(X, Y);
             _dir = dir;
             Color = color;
             ORGcolor = color;
-            Form1.karta[X, Y] = true;
+            RealAnt = RF;
+            if (RealAnt)
+            {
+                Form1.karta[X, Y] = true;
+            }
+          
         }
         /// <summary>
         /// Resettar färgen på myran
@@ -92,6 +104,10 @@ namespace Ant_test
         {
             _pos = new Point(X, Y);
         }
+        public bool getRealAnt()
+        {
+            return RealAnt;
+        }
 
         //  int mod(int x, int m)
         //  {
@@ -102,8 +118,11 @@ namespace Ant_test
         /// </summary>
         public void step()
         {
-            
-            Form1.karta[getPos().X, getPos().Y] = false;
+            if (RealAnt)
+            {
+                Form1.karta[getPos().X, getPos().Y] = false;
+            }
+           
             switch (_dir % 4) // Switch med resten av dir mod 4.
             {
                 case 0:
@@ -119,22 +138,33 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            if(_pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)
-            Form1.karta[getPos().X, getPos().Y] = true;
+            if(_pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0 && getRealAnt() == true)
+            {
+                Form1.karta[getPos().X, getPos().Y] = true;
+            }
+         
         }
 
         public int trace()
         {
            
-            int output = 0;
-            Ant trace = new Ant(_pos, _dir, Color.White);
-            for (int step = 0;/* step == 0 || !Form1.karta[trace.getPosX(), trace.getPosY()] &&*/ trace.getPosY() < Form1.map.Height - 1 && trace._pos.Y >= 0 && trace.getPosX() < Form1.map.Width - 1 && trace.getPosX() > 0 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != -1 && Form1.map_elements[trace.getPosX(), trace.getPosY()] != 1; step++) // Göra om till en While loop?
+            int step = 0;
+            Ant trace = new Ant(_pos, _dir, Color.White,false);
+            while (true) // Göra om till en While loop?
             {
-                if (Form1.map_elements[trace.getPosX(), trace.getPosY()] == -1 || Form1.map_elements[trace.getPosX(), trace.getPosY()]==1 || Form1.karta[trace.getPosX(), trace.getPosY()]==true)
+                if (Form1.map_elements[trace.getPosX(), trace.getPosY()] == 1)
                 {
                     return step;
-               
                 }
+                if (Form1.map_elements[trace.getPosX(), trace.getPosY()] == -1)
+                {
+                    return step;
+                }
+                if (Form1.karta[trace.getPosX(), trace.getPosY()]==true)
+                {
+                    return step;
+                }
+                Form1.mapAVC.Setpixel(trace.getPosX(), trace.getPosY(), Color.Aqua);
                 for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
                     if (Form1.Turn_fields_Left[i].Contains(trace.getPos()) && trace._dir == i)
@@ -151,23 +181,28 @@ namespace Ant_test
                         trace._dir = dirOverFlowCorr(trace._dir);
                     }
                 }
+               
+
                 //Sväng diagonalt
                 if (Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()))
                 {
+
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
-                    
                 }
-                else  // Gör tillsammans med if-sats i början att trace myra dör på killfields.
+
+                else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
                 {
                     trace.step();
                 }
-                Form1.mapAVC.Setpixel(trace.getPosX(), trace.getPosY(), Color.Aqua);
-                output = step;
+               
+               
+                step++;
+               
             }
-            return output;
+            return step;
         }
         /// <summary>
         /// Korrigerar överflöden i riktningen

@@ -248,7 +248,7 @@ namespace Ant_test
             {
                 foreach (Point pos in Start_Fields[i])
                 {
-                    ants.Add(new Ant(pos, i, colors[i]));
+                    ants.Add(new Ant(pos, i, colors[i],false));
                 }
             }
 
@@ -272,19 +272,19 @@ namespace Ant_test
             //Ha så kul med att försöka tyda detta :)
             if (index == 0 && checkBox_Field_3.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index]));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
             }
             if (index == 1 && checkBox_Field_4.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index]));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
             }
             if (index == 2 && checkBox_Field_1.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index]));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
             }
             if (index == 3 && checkBox_Field_2.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index]));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
             }
 
         }
@@ -325,7 +325,9 @@ namespace Ant_test
         private void timer1_Tick(object sender, EventArgs e)
         {
             counter++;
+            
             antstep();
+            
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
             if (counter % 3 == 0 && checkBox1.Checked)
@@ -374,6 +376,7 @@ namespace Ant_test
             }
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString();
+            
             tid++;
 
         }
@@ -524,9 +527,11 @@ namespace Ant_test
 
         private void antstep()
         {
+            
             mapAVC.reset();
             mapAVC.Upscale(3);
-
+          
+            
             for (int a = 0; a < ants.Count; a++)
             {
                 bool turn = false;
@@ -603,12 +608,13 @@ namespace Ant_test
                     }
                 }
             }
-
+            
             //Renderar myrorna
             foreach (Ant a in ants)
             {
                 mapAVC.Setpixel(a.getPos(), a.Color);
             }
+          
             pictureBox.Image = mapAVC.get();
         }
         private void v_step()
@@ -641,7 +647,7 @@ namespace Ant_test
         static Ant independent;
         private void button8_Click(object sender, EventArgs e)
         {
-            independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow);
+            independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow,false);
         }
 
         private void button_UP_Click(object sender, EventArgs e)
@@ -694,11 +700,11 @@ namespace Ant_test
 
         private void button2_Click(object sender, EventArgs e)
         {
-            mapAVC.reset();
-            mapAVC.Upscale(2);
+         mapAVC.reset();
+           mapAVC.Upscale(2);
             richTextBox1.Text = independent.trace().ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
-            pictureBox.Image = mapAVC.get();
+         pictureBox.Image = mapAVC.get();
         }
         public void Update()
         {
