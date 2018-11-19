@@ -77,3 +77,16 @@ D:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic_old.png
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\bin\Debug\pic_old.png
 D:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic - Copy.png
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\bin\Debug\pic - Copy.png
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\bin\Debug\pic - Copy.png
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\bin\Debug\pic.png
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\bin\Debug\pic_old.png
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\bin\Debug\Ant test.exe.config
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\bin\Debug\Ant test.exe
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\bin\Debug\Ant test.pdb
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csprojAssemblyReference.cache
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant_test.Form1.resources
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.GenerateResource.cache
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.exe
+C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.pdb

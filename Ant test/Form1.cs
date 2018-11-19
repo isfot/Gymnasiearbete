@@ -12,13 +12,13 @@ namespace Ant_test
     public partial class Form1 : Form
     {
         private static string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
-        public static Bitmap map; // Kartan som en bitmap
+        public static Bitmap map; // Kartan som en bitmap   VArje pixel
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
-        public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
-        public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
+        public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
+        public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
         private static readonly int v_max = 1;
         
