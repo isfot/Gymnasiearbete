@@ -15,20 +15,19 @@ namespace Ant_test
         public static Bitmap map; // Kartan som en bitmap   VArje pixel
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
-        public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
+        public static readonly int v_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
-        private static readonly int v_max = 1;
         
-        private static double occupiable_fields;
+        private static double occupiable_fields;  //LÄSER IN ALLA FÄLT SOM GÅR ATT KÖRA PÅ FÖR DENSITETSF
         private static  double density;
         private static List<Point> Kill_Fields = new List<Point>();
-        static int counter;
+        static int counter; 
         static Random rand = new Random();
-        public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek. 
-        public static int[,] map_elements;
+        public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
+        public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
         private int tid = 0;
         private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
@@ -58,14 +57,14 @@ namespace Ant_test
         }
 
 
-        private void startField_Finder()
+        private void startField_Finder()  //LOOP SOM KOLLAR TILL ALLA PIXLAR INNAN PROGRAMMET VISAR NÅT
         {
 
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    //2: -1536
+                    //2: -1536  ALLA FÄRGER FÅR EN SIFFRA
                     //3: -14336
                     //0: -27136
                     //1: -39936
@@ -216,7 +215,7 @@ namespace Ant_test
             }
         }
 
-        private void hide_pixel(int x, int y)
+        private void hide_pixel(int x, int y)  //GÖR VÄGARNA I GRAFIKEN VITA (TAR INFO FRÅN STARTFIELDFINDER)
         {
             map.SetPixel(x, y, Color.White);
         }
@@ -246,21 +245,20 @@ namespace Ant_test
             //for (int a = 0; a < 50; a++)
             for (int i = 0; i < Start_Fields.Length; i++)
             {
-                foreach (Point pos in Start_Fields[i])
+                foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 {
-                    ants.Add(new Ant(pos, i, colors[i],false));
+                    ants.Add(new Ant(pos, i, colors[i],false));  //SÄTTER UT MYRAN PÅ STARTFÄLTEN, i FÅR RÄTT RIKTNING
                 }
             }
 
+            richTextBox3.Text = ants.Count.ToString();            //Skriver ut antalet aktiva myror
 
-            //Skriver ut antalet aktiva myror
-            richTextBox3.Text = ants.Count.ToString();
             //Renderar alla myror
-            foreach (Ant x in ants)
+            foreach (Ant x in ants) //GER TILLFÄLLIT NAMN FÖR VARJE MYRA
             {
-                mapAVC.Setpixel(x.getPos(), x.Color);
+                mapAVC.Setpixel(x.getPos(), x.Color); //MÅLAR UT MYRORNA
             }
-            pictureBox.Image = mapAVC.get();
+            pictureBox.Image = mapAVC.get(); //DEN FIKTIVA BILDEN KOPIERAS TILL DET GRAFISKA PROGRAMMET 
         }
 
         /// <summary>
@@ -268,7 +266,7 @@ namespace Ant_test
         /// </summary>
         private void spawnrandom()
         {
-            int index = rand.Next(0, 4); // Random variabel mellan 0 och 4
+            int index = rand.Next(0, 4); // Random INT-variabel mellan 0 och 4
             //Ha så kul med att försöka tyda detta :)
             if (index == 0 && checkBox_Field_3.Checked)
             {
