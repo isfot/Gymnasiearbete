@@ -15,16 +15,17 @@ namespace Ant_test
         public static Bitmap map; // Kartan som en bitmap   VArje pixel
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
-        public static readonly int v_max = 1; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
+        public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
+        private static readonly int v_max = 1;
         
-        private static double occupiable_fields;  //LÄSER IN ALLA FÄLT SOM GÅR ATT KÖRA PÅ FÖR DENSITETSF
+        private static double occupiable_fields;
         private static  double density;
         private static List<Point> Kill_Fields = new List<Point>();
-        static int counter; 
+        static int counter;
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
@@ -247,7 +248,7 @@ namespace Ant_test
             {
                 foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 {
-                    ants.Add(new Ant(pos, i, colors[i],false));  //SÄTTER UT MYRAN PÅ STARTFÄLTEN, i FÅR RÄTT RIKTNING
+                    ants.Add(new Ant(pos, i, colors[i],false));
                 }
             }
 
@@ -270,19 +271,19 @@ namespace Ant_test
             //Ha så kul med att försöka tyda detta :)
             if (index == 0 && checkBox_Field_3.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
             }
             if (index == 1 && checkBox_Field_4.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
             }
             if (index == 2 && checkBox_Field_1.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
             }
             if (index == 3 && checkBox_Field_2.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index],false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
             }
 
         }
@@ -315,6 +316,7 @@ namespace Ant_test
                 }
             }
         }
+        static int counter;
         /// <summary>
         /// Timer event som körs med ett fast intervall
         /// </summary>
@@ -323,9 +325,9 @@ namespace Ant_test
         private void timer1_Tick(object sender, EventArgs e)
         {
             counter++;
-            
+
             antstep();
-            
+
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
             if (counter % 3 == 0 && checkBox1.Checked)
@@ -374,7 +376,7 @@ namespace Ant_test
             }
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString();
-            
+
             tid++;
 
         }
@@ -525,11 +527,11 @@ namespace Ant_test
 
         private void antstep()
         {
-            
+
             mapAVC.reset();
             mapAVC.Upscale(3);
-          
-            
+
+
             for (int a = 0; a < ants.Count; a++)
             {
                 bool turn = false;
@@ -606,13 +608,13 @@ namespace Ant_test
                     }
                 }
             }
-            
+
             //Renderar myrorna
             foreach (Ant a in ants)
             {
                 mapAVC.Setpixel(a.getPos(), a.Color);
             }
-          
+
             pictureBox.Image = mapAVC.get();
         }
         private void v_step()
@@ -645,7 +647,7 @@ namespace Ant_test
         static Ant independent;
         private void button8_Click(object sender, EventArgs e)
         {
-            independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow,false);
+            independent = new Ant(new Point(map.Height / 2, map.Width / 2), 0, Color.GreenYellow, false);
         }
 
         private void button_UP_Click(object sender, EventArgs e)
@@ -698,11 +700,11 @@ namespace Ant_test
 
         private void button2_Click(object sender, EventArgs e)
         {
-         mapAVC.reset();
-           mapAVC.Upscale(2);
+            mapAVC.reset();
+            mapAVC.Upscale(2);
             richTextBox1.Text = independent.trace().ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
-         pictureBox.Image = mapAVC.get();
+            pictureBox.Image = mapAVC.get();
         }
         public void Update()
         {
