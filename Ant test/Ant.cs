@@ -16,7 +16,7 @@ namespace Ant_test
         public Point Pos { get { return _pos; } }
         private bool affect_Fields = true;
         public int _dir;        //Variabel för myrans riktning
-        public Color Color;     //Variabel för myrans fårg
+        public Color Color;     //Variabel för myrans färg
         private readonly Color ORGcolor;
         private int hastighet = 0;
         private readonly bool RealAnt;
@@ -120,11 +120,11 @@ namespace Ant_test
         /// <summary>
         /// Ökar myrans postion i den riktning som riktnings variabeln anger
         /// </summary>
-        public void step()
+        public void step()  //påverkar myrorna (utanför huvudprogrammet) vid varje tidsenhet ska myrorna göra step
         {
             if (affect_Fields)
             {
-                Form1.karta[getPos().X, getPos().Y] = false;
+                Form1.karta[getPos().X, getPos().Y] = false; //gamla ruta blir false, nya blire true
             }
 
             switch (_dir % 4) // Switch med resten av dir mod 4.
@@ -142,13 +142,13 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            if (affect_Fields && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)
+            if (affect_Fields && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
                 Form1.karta[getPos().X, getPos().Y] = true;
             }
 
         }
-        private bool trace_stop(Ant i)
+        private bool trace_stop(Ant i)  //har med hastighet att göra
         {
             try
             {
@@ -214,7 +214,7 @@ namespace Ant_test
         /// </summary>
         /// <param name="_dir"></param>
         /// <returns></returns>
-        private int dirOverFlowCorr(int _dir)
+        private int dirOverFlowCorr(int _dir) // endast riktningarna 0,1,2,3 är tillåtna
         {
             if (_dir > 3)
             {
@@ -229,7 +229,7 @@ namespace Ant_test
         /// <summary>
         /// En metod för att myran ej skall få en odefinierad riktning. dir är enbart definierad för 0-3.
         /// </summary>
-        private void dirOverFlowCorr()
+        private void dirOverFlowCorr() //enbart riktningarna 0,1,2,3
         {
             if (_dir > 3)
             {

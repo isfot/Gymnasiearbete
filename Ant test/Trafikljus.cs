@@ -12,7 +12,7 @@ namespace Ant_test
     {
         public Point pos;
         public bool grönt;
-        private readonly int dir;
+        private readonly int dir;   //vilket håll den ska släppa igenom bilar
         private readonly int v_max;
 
 
@@ -22,7 +22,7 @@ namespace Ant_test
         /// <param name="pos">Position</param>
         /// <param name="dir">Riktning 0-3</param>
         /// <param name="color">Färg</param>
-        public Trafikljus(Point pos, int dir, int v_max)
+        public Trafikljus(Point pos, int dir, int v_max) //När programmet ser en ruta med en viss färg blir det ett trafikljus
         {
             this.pos = pos;
 
@@ -36,7 +36,7 @@ namespace Ant_test
         /// <param name="Y">Y postition</param>
         /// <param name="dir">Riktning g0-3</param>
         /// <param name="color">Färg</param>
-        public Trafikljus(int X, int Y, int dir, int v_max)
+        public Trafikljus(int X, int Y, int dir, int v_max) //Övre sak fast beskrivet med koordinater
         {
             pos = new Point(X, Y);
 
@@ -50,12 +50,12 @@ namespace Ant_test
         public void Rödljus() // Metoden kräver kod från andra delar av programmet.
         {
             grönt = false;
-            switch (dir)
+            switch (dir) //utifrån vilken riktning måste den stänga av olika rutor
             {
                 case 2:
                     for (int i = 0; i <= 2; i++)
                     {
-                        Form1.map_elements[pos.X, pos.Y - i] = 1;
+                        Form1.map_elements[pos.X, pos.Y - i] = 1; 
                     }
                     break;
                 case 1:
@@ -85,8 +85,8 @@ namespace Ant_test
         }
         public void Gröntljus() // Metoden kräver kod från andra delar av programmet.
         {
-            grönt = true;
-            switch (dir)
+            grönt = true; 
+            switch (dir)  //tar bort det som rött gjorde 
             {
                 case 2:
                     for (int i = 0; i <= 2; i++)

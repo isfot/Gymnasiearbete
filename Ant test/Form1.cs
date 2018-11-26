@@ -19,13 +19,12 @@ namespace Ant_test
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
-        public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar startfält för myrorna
+        public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
         private static readonly int v_max = 1;
         
         private static double occupiable_fields;
         private static  double density;
-        private static List<Point> Kill_Fields = new List<Point>();
-        static int counter;
+        private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
@@ -35,19 +34,19 @@ namespace Ant_test
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
-        public Form1()
+        public Form1() //Skapar grafiska förutsättningar
         {
             InitializeComponent();
-            map = new Bitmap(path);
-            karta = new bool[map.Width, map.Height];
-            map_elements = new int[map.Width, map.Height];
-            startField_Finder();
-            mapAVC = new BitmapAVC(map);
+            map = new Bitmap(path); //Nytt fönster
+            karta = new bool[map.Width, map.Height];//Gör en karta som är ett koordinatsystem där varje ruta är true-false
+            map_elements = new int[map.Width, map.Height]; //Gör en karta som håller koll på trafikljus, svängfält och grejer
+            startField_Finder(); //Läser in vad som ska vara på kartan
+            mapAVC = new BitmapAVC(map); //
         }
         /// <summary>
         /// Overload
         /// </summary>
-        public Form1(string[] args)
+        public Form1(string[] args) // Samma sak som ovan för att FILIP VILL DET
         {
             InitializeComponent();
             map = new Bitmap(args[0]);
@@ -58,8 +57,8 @@ namespace Ant_test
         }
 
 
-        private void startField_Finder()  //LOOP SOM KOLLAR TILL ALLA PIXLAR INNAN PROGRAMMET VISAR NÅT
-        {
+        private void startField_Finder()  //LOOP SOM KOLLAR TILL ALLA PIXLAR INNAN PROGRAMMET VISAR NÅT OCH VAD SOM SKA VARA PÅ DOM
+        {                                   // blonderar också pixlar så att do minte syns
 
             for (int x = 0; x < map.Width; x++)
             {
@@ -230,8 +229,7 @@ namespace Ant_test
             mapAVC.Upscale(10); // Skala upp kartan
             pictureBox.Image = mapAVC.get(); // Sätter kartan i picturebox
         }
-        //Sätter på timer eventet som körs med ett intervall
-        private void Timer_button_Click(object sender, EventArgs e)
+        private void Timer_button_Click(object sender, EventArgs e)//Sätter på timer eventet som körs med ett intervall
         {
             timer1.Enabled = !timer1.Enabled;
         }
@@ -240,7 +238,7 @@ namespace Ant_test
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static Color[] colors = new Color[] { Color.Blue, Color.HotPink, Color.Indigo, Color.Turquoise };
+        private static Color[] colors = new Color[] { Color.Blue, Color.HotPink, Color.Indigo, Color.Turquoise }; //Beroende på var dom börjhar får dom en viss färg
         private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
             //for (int a = 0; a < 50; a++)
@@ -709,6 +707,16 @@ namespace Ant_test
         public void Update()
         {
             pictureBox.Image = mapAVC.get();
+        }
+
+        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
     #endregion
