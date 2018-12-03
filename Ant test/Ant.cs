@@ -202,6 +202,13 @@ namespace Ant_test
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
+                if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
+                {
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir - 1);
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir + 1);
+                }
                 else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
                 {
                     trace.step();

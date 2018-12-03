@@ -11,7 +11,7 @@ namespace Ant_test
 {
     public partial class Form1 : Form
     {
-        private static string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
+        private static readonly string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
         public static Bitmap map; // Kartan som en bitmap   VArje pixel
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
@@ -19,11 +19,12 @@ namespace Ant_test
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
+        public static List<Point>[] Turn_fields_Left_Diagonal = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
         private static readonly int v_max = 1;
-        
+
         private static double occupiable_fields;
-        private static  double density;
+        private static double density;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
@@ -165,14 +166,37 @@ namespace Ant_test
                         case -27036:
                             TraficLights_Left_Turn[3].Add(new Trafikljus(x, y, 3, v_max));
                             hide_pixel(x, y);
-
                             occupiable_fields++;
                             break;
-
                         //Högersvängar
                         //Lila
                         case -65281:
                             Turn_fields_Right_Diagonal.Add(new Point(x, y));
+                            hide_pixel(x, y);
+                            occupiable_fields++;
+                            break;
+                        //Turnfields left diagonal
+                        //0
+                        case -16776961:
+                            Turn_fields_Left_Diagonal[0].Add(new Point(x, y));
+                            hide_pixel(x, y);
+                            occupiable_fields++;
+                            break;
+                        //1
+                        case -6908161:
+                            Turn_fields_Left_Diagonal[1].Add(new Point(x, y));
+                            hide_pixel(x, y);
+                            occupiable_fields++;
+                            break;
+                        //2
+                        case -6895361:
+                            Turn_fields_Left_Diagonal[2].Add(new Point(x, y));
+                            hide_pixel(x, y);
+                            occupiable_fields++;
+                            break;
+                        //3
+                        case -3618561:
+                            Turn_fields_Left_Diagonal[3].Add(new Point(x, y));
                             hide_pixel(x, y);
                             occupiable_fields++;
                             break;
@@ -238,7 +262,7 @@ namespace Ant_test
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static Color[] colors = new Color[] { Color.Blue, Color.HotPink, Color.Indigo, Color.Turquoise }; //Beroende på var dom börjhar får dom en viss färg
+        private static readonly Color[] colors = new Color[] { Color.Blue, Color.HotPink, Color.Indigo, Color.Turquoise }; //Beroende på var dom börjhar får dom en viss färg
         private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
             //for (int a = 0; a < 50; a++)
@@ -246,7 +270,7 @@ namespace Ant_test
             {
                 foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 {
-                    ants.Add(new Ant(pos, i, colors[i],false));
+                    ants.Add(new Ant(pos, i, colors[i], false));
                 }
             }
 
@@ -354,6 +378,16 @@ namespace Ant_test
                 //  TraficLight_Toggle_Turn(1, true);
                 //  TraficLight_Toggle_Turn(0, false);
             }
+            if (tid % cycel == (0.27 * cycel))
+            {
+                TraficLight_Toggle_Turn(0, true);
+                TraficLight_Toggle_Turn(2, true);
+            }
+            if (tid % cycel == (0.47 * cycel))
+            {
+                TraficLight_Toggle_Turn(0, false);
+                TraficLight_Toggle_Turn(2, false);
+            }
             if (tid % cycel == (0.5 * cycel))
             {
                 TraficLight_Toggle_Forward(0, false);
@@ -371,6 +405,16 @@ namespace Ant_test
                 TraficLight_Toggle_Forward(3, false);
                 //TraficLight_Toggle_Turn(3, true);
                 //TraficLight_Toggle_Turn(2, false);
+            }
+            if (tid % cycel == (0.77 * cycel))
+            {
+                TraficLight_Toggle_Turn(1, true);
+                TraficLight_Toggle_Turn(3, true);
+            }
+            if (tid % cycel == (0.97 * cycel))
+            {
+                TraficLight_Toggle_Turn(1, false);
+                TraficLight_Toggle_Turn(3, false);
             }
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString();
@@ -501,7 +545,7 @@ namespace Ant_test
             }
         }
 
-        static public bool is_ant_to_side(Ant Orvar)
+        static public bool is_ant_to_side_right(Ant Orvar)
         {
             bool output = false;
             switch (Orvar._dir)
@@ -522,6 +566,27 @@ namespace Ant_test
 
             return output;
         }
+        static public bool is_ant_to_side_left(Ant Orvar)
+        {
+            bool output = false;
+            switch (Orvar._dir)
+            {
+                case 0:
+                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() - 1];
+                    break;
+                case 1:
+                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() - 1];
+                    break;
+                case 2:
+                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() + 1];
+                    break;
+                case 3:
+                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() + 1];
+                    break;
+            }
+
+            return output;
+        }
 
         private void antstep()
         {
@@ -533,6 +598,7 @@ namespace Ant_test
             for (int a = 0; a < ants.Count; a++)
             {
                 bool turn = false;
+                //Kollar ifall myran står på vänstersväng
                 for (int i = 0; i < Turn_fields_Left.Length; i++)
                 {
                     if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
@@ -541,6 +607,7 @@ namespace Ant_test
                         ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                     }
                 }
+                //Kollar ifall myran står på en högersväng
                 for (int i = 0; i < Turn_fields_Right.Length; i++)
                 {
                     if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
@@ -551,12 +618,22 @@ namespace Ant_test
                 }
                 bool passthrough = !is_ant_in_front(ants[a]);
                 //Sväng diagonalt
-                if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side(ants[a]))
+                if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
                 {
                     ants[a].step();
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
                     ants[a].step();
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                    passthrough = false;
+                    turn = true;
+                }
+                //Sväng höger
+                if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                {
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
                     passthrough = false;
                     turn = true;
                 }
@@ -595,6 +672,20 @@ namespace Ant_test
             for (int i = 0; i < TraficLights.Length; i++)
             {
                 foreach (Trafikljus t in TraficLights[i])
+                {
+                    if (t.grönt)
+                    {
+                        mapAVC.Setpixel(t.pos, Color.Green);
+                    }
+                    else
+                    {
+                        mapAVC.Setpixel(t.pos, Color.Red);
+                    }
+                }
+            }
+            for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
+            {
+                foreach (Trafikljus t in TraficLights_Left_Turn[i])
                 {
                     if (t.grönt)
                     {
