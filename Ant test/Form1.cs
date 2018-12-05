@@ -347,8 +347,8 @@ namespace Ant_test
         private void timer1_Tick(object sender, EventArgs e)
         {
             counter++;
-
             antstep();
+
 
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
@@ -808,6 +808,18 @@ namespace Ant_test
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int total = 0;
+           foreach(Ant x in ants)
+            {
+                total += x.trace();
+            }
+            double total_avg = Convert.ToDouble(total) / Convert.ToDouble(ants.Count());
+            richTextBox5.Text = total.ToString();
+            pictureBox.Image = mapAVC.get();
         }
     }
     #endregion

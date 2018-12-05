@@ -148,9 +148,9 @@ namespace Ant_test
             }
 
         }
-        private bool trace_stop(Ant i)  //har med hastighet att göra
+        private static bool trace_stop(Ant i)  //har med hastighet att göra
         {
-            try
+            if (Form1.map.Width > i.X && -1 < i.X && Form1.map.Height > i.Y && -1 < i.Y)
             {
                 switch (Form1.map_elements[i.X, i.Y])
                 {
@@ -164,11 +164,7 @@ namespace Ant_test
                 }
                 return true;
             }
-            catch
-            {
-                return false;
-            }
-
+            return false;
         }
         public int trace()
         {
@@ -202,7 +198,7 @@ namespace Ant_test
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
-                if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
+                else if(Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
