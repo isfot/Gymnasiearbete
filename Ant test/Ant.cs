@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Threading;
+﻿using System.Drawing;
 
 namespace Ant_test
 {
@@ -198,7 +192,7 @@ namespace Ant_test
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
-                else if(Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
+                else if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);

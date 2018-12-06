@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace Ant_test
 {
@@ -545,7 +541,7 @@ namespace Ant_test
             }
         }
 
-        static public bool is_ant_to_side_right(Ant Orvar)
+        public static bool is_ant_to_side_right(Ant Orvar)
         {
             bool output = false;
             switch (Orvar._dir)
@@ -566,7 +562,7 @@ namespace Ant_test
 
             return output;
         }
-        static public bool is_ant_to_side_left(Ant Orvar)
+        public static bool is_ant_to_side_left(Ant Orvar)
         {
             bool output = false;
             switch (Orvar._dir)
@@ -592,7 +588,7 @@ namespace Ant_test
         {
 
             mapAVC.reset();
-            mapAVC.Upscale(3);
+            mapAVC.Upscale(10);
 
 
             for (int a = 0; a < ants.Count; a++)
@@ -813,7 +809,7 @@ namespace Ant_test
         private void button3_Click(object sender, EventArgs e)
         {
             int total = 0;
-           foreach(Ant x in ants)
+            foreach (Ant x in ants)
             {
                 total += x.trace();
             }

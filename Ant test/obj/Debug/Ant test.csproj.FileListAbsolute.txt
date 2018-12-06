@@ -90,3 +90,16 @@ C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.Ge
 C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
 C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.exe
 C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\pic - Copy.png
+Q:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\pic.png
+Q:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\pic_old.png
+Q:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\Ant test.exe.config
+Q:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\Ant test\bin\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant test.csprojAssemblyReference.cache
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant_test.Form1.resources
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.GenerateResource.cache
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\Ant test\obj\Debug\Ant test.pdb
