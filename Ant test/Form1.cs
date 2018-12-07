@@ -787,7 +787,7 @@ namespace Ant_test
         {
             mapAVC.reset();
             mapAVC.Upscale(2);
-            richTextBox1.Text = independent.trace().ToString();
+            richTextBox1.Text = Ant.trace(independent).ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
         }
@@ -811,7 +811,7 @@ namespace Ant_test
             int total = 0;
             foreach (Ant x in ants)
             {
-                total += x.trace();
+                total += Ant.trace(x);
             }
             double total_avg = Convert.ToDouble(total) / Convert.ToDouble(ants.Count());
             richTextBox5.Text = total.ToString();

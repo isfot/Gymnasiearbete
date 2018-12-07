@@ -160,10 +160,10 @@ namespace Ant_test
             }
             return false;
         }
-        public int trace()
+        public static int trace(Ant in_)
         {
             int step;
-            Ant trace = new Ant(_pos, _dir, Color.White, false);
+            Ant trace = new Ant(in_._pos, in_._dir, Color.White, false);
             trace.affect_Fields = false;
             for (step = 0; trace_stop(trace); step++)
             {
@@ -211,7 +211,7 @@ namespace Ant_test
         /// </summary>
         /// <param name="_dir"></param>
         /// <returns></returns>
-        private int dirOverFlowCorr(int _dir) // endast riktningarna 0,1,2,3 är tillåtna
+        private static int dirOverFlowCorr(int _dir) // endast riktningarna 0,1,2,3 är tillåtna
         {
             if (_dir > 3)
             {
