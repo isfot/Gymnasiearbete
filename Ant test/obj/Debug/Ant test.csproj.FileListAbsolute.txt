@@ -90,3 +90,16 @@ C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.Ge
 C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
 C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.exe
 C:\Users\albsan1ros\Desktop\Gymnasiearbete\Ant test\obj\Debug\Ant test.pdb
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\bin\Debug\pic - Copy.png
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\bin\Debug\pic.png
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\bin\Debug\pic_old.png
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\bin\Debug\Ant test.exe.config
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\bin\Debug\Ant test.exe
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\bin\Debug\Ant test.pdb
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.csprojAssemblyReference.cache
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant_test.Form1.resources
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.csproj.GenerateResource.cache
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.exe
+D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.pdb

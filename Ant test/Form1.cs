@@ -43,6 +43,22 @@ namespace Ant_test
             map_elements = new int[map.Width, map.Height]; //Gör en karta som håller koll på trafikljus, svängfält och grejer
             startField_Finder(); //Läser in vad som ska vara på kartan
             mapAVC = new BitmapAVC(map); //
+            foreach (List<Trafikljus> y in TraficLights)
+            {
+                foreach (Trafikljus a in y)
+                {
+                    a.Rödljus();
+                    mapAVC.Setpixel(a.pos, Color.Red);
+                }
+            }
+            foreach (List<Trafikljus> y in TraficLights_Left_Turn)
+            {
+                foreach (Trafikljus a in y)
+                {
+                    a.Rödljus();
+                    mapAVC.Setpixel(a.pos, Color.Red);
+                }
+            }
         }
         /// <summary>
         /// Overload
@@ -55,6 +71,22 @@ namespace Ant_test
             map_elements = new int[map.Width, map.Height];
             startField_Finder();
             mapAVC = new BitmapAVC(map);
+            foreach (List<Trafikljus> y in TraficLights)
+            {
+                foreach (Trafikljus a in y)
+                {
+                    a.Rödljus();
+                    mapAVC.Setpixel(a.pos, Color.Red);
+                }
+            }
+            foreach (List<Trafikljus> y in TraficLights_Left_Turn)
+            {
+                foreach (Trafikljus a in y)
+                {
+                    a.Rödljus();
+                    mapAVC.Setpixel(a.pos, Color.Red);
+                }
+            }
         }
 
 
