@@ -169,10 +169,14 @@ namespace Ant_test
                 return false;
             }
 
-        }
-        public int trace()
+        }/// <summary>
+         /// Kollar hur långt det är till nästa objekt...
+         /// https://www.dotnetperls.com/multiple-return-values
+         /// MÅSTE KOLLA DENNA LÄNK
+         /// </summary>
+         /// <returns>Antal rutor till nästa fordon</returns>
+        public KeyValuePair<int, bool> trace(out int step, out bool needs_brake, out int form)
         {
-            int step;
             Ant trace = new Ant(_pos, _dir, Color.White, false);
             trace.affect_Fields = false;
             for (step = 0; trace_stop(trace); step++)
@@ -202,7 +206,7 @@ namespace Ant_test
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
-                if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
+                else if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
@@ -214,7 +218,20 @@ namespace Ant_test
                     trace.step();
                 }
             }
-            return step;
+            form = Form1.map_elements[trace.X, trace.Y];
+            needs_brake = false;
+            foreach (Ant a in Form1.ants)
+            {
+                if (a.Pos == trace.Pos)
+                {
+                    needs_brake = true;
+                }
+                if(Form1.map_elements[trace.X,trace.Y] == 1)
+                {
+                    needs_brake = true;
+                }
+            }
+           return new KeyValuePair<int, bool>(step, needs_brake);
         }
         /// <summary>
         /// Korrigerar överflöden i riktningen

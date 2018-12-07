@@ -14,7 +14,7 @@ namespace Ant_test
         private static readonly string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
         public static Bitmap map; // Kartan som en bitmap   VArje pixel
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
-        private static List<Ant> ants = new List<Ant>(); // En lista med alla myror
+        public static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
@@ -391,8 +391,8 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-            double cycel = 200;
-            if (tid % cycel == 0)
+            double cykel = 200;
+            if (tid % cykel == 0)
             {
                 TraficLight_Toggle_Forward(0, true);
                 TraficLight_Toggle_Forward(2, true);
@@ -401,7 +401,7 @@ namespace Ant_test
                 //  TraficLight_Toggle_Turn(0, true);
                 //  TraficLight_Toggle_Turn(3, false);
             }
-            if (tid % cycel == (0.25 * cycel))
+            if (tid % cykel == (0.25 * cykel))
             {
                 TraficLight_Toggle_Forward(0, false);
                 TraficLight_Toggle_Forward(2, false);
@@ -410,17 +410,17 @@ namespace Ant_test
                 //  TraficLight_Toggle_Turn(1, true);
                 //  TraficLight_Toggle_Turn(0, false);
             }
-            if (tid % cycel == (0.27 * cycel))
+            if (tid % cykel == (0.27 * cykel))
             {
                 TraficLight_Toggle_Turn(0, true);
                 TraficLight_Toggle_Turn(2, true);
             }
-            if (tid % cycel == (0.47 * cycel))
+            if (tid % cykel == (0.47 * cykel))
             {
                 TraficLight_Toggle_Turn(0, false);
                 TraficLight_Toggle_Turn(2, false);
             }
-            if (tid % cycel == (0.5 * cycel))
+            if (tid % cykel == (0.5 * cykel))
             {
                 TraficLight_Toggle_Forward(0, false);
                 TraficLight_Toggle_Forward(2, false);
@@ -429,7 +429,7 @@ namespace Ant_test
                 //TraficLight_Toggle_Turn(2, true);
                 //TraficLight_Toggle_Turn(1, false);
             }
-            if (tid % cycel == (0.75 * cycel))
+            if (tid % cykel == (0.75 * cykel))
             {
                 TraficLight_Toggle_Forward(0, false);
                 TraficLight_Toggle_Forward(2, false);
@@ -438,12 +438,12 @@ namespace Ant_test
                 //TraficLight_Toggle_Turn(3, true);
                 //TraficLight_Toggle_Turn(2, false);
             }
-            if (tid % cycel == (0.77 * cycel))
+            if (tid % cykel == (0.77 * cykel))
             {
                 TraficLight_Toggle_Turn(1, true);
                 TraficLight_Toggle_Turn(3, true);
             }
-            if (tid % cycel == (0.97 * cycel))
+            if (tid % cykel == (0.97 * cykel))
             {
                 TraficLight_Toggle_Turn(1, false);
                 TraficLight_Toggle_Turn(3, false);
@@ -462,7 +462,7 @@ namespace Ant_test
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
-
+            #region kommentar
             //          if (tid % 100 == 0)
             //          {
             //              TraficLights[2, 0].Gröntljus();
@@ -516,7 +516,7 @@ namespace Ant_test
             //
             //
             //          }
-
+            #endregion
             tid++;
         }
         /// <summary>
@@ -697,10 +697,12 @@ namespace Ant_test
                     Remove.Add(a);
                 }
             }
+            //Tar bort alla myror som ska bort
             for (int i = 0; i < Remove.Count; i++)
             {
                 ants.Remove(Remove[i]);
             }
+            //Renderar all rödöjus
             for (int i = 0; i < TraficLights.Length; i++)
             {
                 foreach (Trafikljus t in TraficLights[i])
@@ -715,6 +717,7 @@ namespace Ant_test
                     }
                 }
             }
+            //Renderar all rödöjus
             for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
             {
                 foreach (Trafikljus t in TraficLights_Left_Turn[i])
@@ -823,7 +826,12 @@ namespace Ant_test
         {
             mapAVC.reset();
             mapAVC.Upscale(2);
-            richTextBox1.Text = independent.trace().ToString();
+            bool is_ant;
+            int length;
+            int field;
+            //Kolla länken ifall man inte förstår https://www.dotnetperls.com/multiple-return-values kollade upp detta för en sekund sedan
+            independent.trace(out length, out is_ant, out field);
+            richTextBox1.Text = length.ToString() + "     " + is_ant.ToString() + "   " + field.ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
         }
