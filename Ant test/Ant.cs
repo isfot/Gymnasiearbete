@@ -1,4 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+using System.Threading;
 
 namespace Ant_test
 {
@@ -142,9 +148,9 @@ namespace Ant_test
             }
 
         }
-        private static bool trace_stop(Ant i)  //har med hastighet att göra
+        private bool trace_stop(Ant i)  //har med hastighet att göra
         {
-            if (Form1.map.Width > i.X && -1 < i.X && Form1.map.Height > i.Y && -1 < i.Y)
+            try
             {
                 switch (Form1.map_elements[i.X, i.Y])
                 {
@@ -158,12 +164,16 @@ namespace Ant_test
                 }
                 return true;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
+
         }
-        public static int trace(Ant in_)
+        public int trace()
         {
             int step;
-            Ant trace = new Ant(in_._pos, in_._dir, Color.White, false);
+            Ant trace = new Ant(_pos, _dir, Color.White, false);
             trace.affect_Fields = false;
             for (step = 0; trace_stop(trace); step++)
             {
@@ -192,13 +202,6 @@ namespace Ant_test
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
-                else if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
-                {
-                    trace.step();
-                    trace._dir = dirOverFlowCorr(trace._dir - 1);
-                    trace.step();
-                    trace._dir = dirOverFlowCorr(trace._dir + 1);
-                }
                 else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
                 {
                     trace.step();
@@ -211,7 +214,7 @@ namespace Ant_test
         /// </summary>
         /// <param name="_dir"></param>
         /// <returns></returns>
-        private static int dirOverFlowCorr(int _dir) // endast riktningarna 0,1,2,3 är tillåtna
+        private int dirOverFlowCorr(int _dir) // endast riktningarna 0,1,2,3 är tillåtna
         {
             if (_dir > 3)
             {
