@@ -103,3 +103,16 @@ D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.csproj.Gener
 D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
 D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.exe
 D:\C Sharp\!!GymnasieArbete\Github lolz\Ant test\obj\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\bin\Debug\pic - Copy.png
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\bin\Debug\pic.png
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\bin\Debug\pic_old.png
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\bin\Debug\Ant test.exe.config
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\bin\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\bin\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant test.csprojAssemblyReference.cache
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant_test.Form1.resources
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant test.csproj.GenerateResource.cache
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\FUNGERAR\Ant test\obj\Debug\Ant test.pdb

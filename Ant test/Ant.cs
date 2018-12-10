@@ -169,7 +169,7 @@ namespace Ant_test
             }
         }
         private static Form1 forms;
-        public void trace(out int step, out bool need_brake, Form1 inputform)
+        public void trace(out int step, out bool need_brake, out int Ant_V, Form1 inputform)
         {
             forms = inputform;
             need_brake = true;
@@ -211,10 +211,11 @@ namespace Ant_test
                 {
                     trace.step();
                 }
-                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
+               // Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
             try
             {
+                Ant_V = Form1.ants[Form1.ants.IndexOf(trace)].v;
                 if (Form1.map_elements[trace.X, trace.Y] == -1)
                 {
                     need_brake = false;
@@ -222,7 +223,7 @@ namespace Ant_test
             }
             catch
             {
-
+                Ant_V = -1;
             }
 
         }

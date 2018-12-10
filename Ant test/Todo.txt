@@ -9,4 +9,4 @@ Flöde
 Medelhastighet
 Densitet					✔
 Hastighet
-trace (!)
+trace (!)					✔ 

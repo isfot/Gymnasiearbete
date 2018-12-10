@@ -21,7 +21,7 @@ namespace Ant_test
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point>[] Turn_fields_Left_Diagonal = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
-        private static readonly int v_max = 1;
+        private static readonly int v_max = 5;
 
         private static double occupiable_fields;
         private static double density;
@@ -32,6 +32,7 @@ namespace Ant_test
         private int tid = 0;
         private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
+        private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -282,6 +283,8 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Icon = Properties.Resources.IKON;
+            pictureBox1.Image = Properties.Resources.IKON.ToBitmap();
             mapAVC.Upscale(10); // Skala upp kartan
             pictureBox.Image = mapAVC.get(); // Sätter kartan i picturebox
         }
@@ -379,9 +382,8 @@ namespace Ant_test
         private void timer1_Tick(object sender, EventArgs e)
         {
             counter++;
-
-            antstep();
-
+            //antstep();
+            v_step();
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
             if (counter % 3 == 0 && checkBox1.Checked)
@@ -459,7 +461,7 @@ namespace Ant_test
         static List<int> ClearList = new List<int>();
         private void Steg_Button_Click(object sender, EventArgs e)
         {
-            antstep();
+            v_step();
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
             #region kommentar
@@ -543,35 +545,42 @@ namespace Ant_test
 
         private bool is_ant_in_front(Ant greger)// säger huruvida en rutan är okuperad.
         {
-            bool output = false;
-            switch (greger._dir)
+            try
             {
-                case 0:
-                    if (true == karta[greger.X, greger.Y - 1])
-                    {
-                        output = true;
-                    }
-                    break;
-                case 1:
-                    if (karta[greger.X + 1, greger.Y] == true)
-                    {
-                        output = true;
-                    }
-                    break;
-                case 2:
-                    if (true == karta[greger.X, greger.Y + 1])
-                    {
-                        output = true;
-                    }
-                    break;
-                case 3:
-                    if (karta[greger.X - 1, greger.Y] == true)
-                    {
-                        output = true;
-                    }
-                    break;
+                bool output = false;
+                switch (greger._dir)
+                {
+                    case 0:
+                        if (true == karta[greger.X, greger.Y - 1])
+                        {
+                            output = true;
+                        }
+                        break;
+                    case 1:
+                        if (karta[greger.X + 1, greger.Y] == true)
+                        {
+                            output = true;
+                        }
+                        break;
+                    case 2:
+                        if (true == karta[greger.X, greger.Y + 1])
+                        {
+                            output = true;
+                        }
+                        break;
+                    case 3:
+                        if (karta[greger.X - 1, greger.Y] == true)
+                        {
+                            output = true;
+                        }
+                        break;
+                }
+                return output;
             }
-            return output;
+            catch
+            {
+                return true;
+            }
         }
 
         static public bool is_ant_to_side_right(Ant Orvar)
@@ -598,7 +607,7 @@ namespace Ant_test
         static public bool is_ant_to_side_left(Ant Orvar)
         {
             if (Orvar.X < map.Width && Orvar.X > 0 && Orvar.Y < map.Height && Orvar.Y > 0)
-            { 
+            {
                 switch (Orvar._dir)
                 {
                     case 0:
@@ -615,74 +624,75 @@ namespace Ant_test
             }
             return true;
         }
-
-        private void antstep()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        private void ant_check_Turn_Fields_Left(int a)
         {
-
-            mapAVC.reset();
-            mapAVC.Upscale(3);
-
-
-            for (int a = 0; a < ants.Count; a++)
+            for (int i = 0; i < Turn_fields_Left.Length; i++)
             {
-                bool turn = false;
-                //Kollar ifall myran står på vänstersväng
-                for (int i = 0; i < Turn_fields_Left.Length; i++)
+                if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
                 {
-                    if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                    {
-                        ants[a]._dir--;
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                    }
-                }
-                //Kollar ifall myran står på en högersväng
-                for (int i = 0; i < Turn_fields_Right.Length; i++)
-                {
-                    if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                    {
-                        ants[a]._dir++;
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                    }
-                }
-                bool passthrough = !is_ant_in_front(ants[a]);
-                //Sväng diagonalt
-                if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                {
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                    passthrough = false;
-                    turn = true;
-                }
-                //Sväng höger
-                else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                {
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                    passthrough = false;
-                    turn = true;
-                }
-                //Tar steg ifall den får
-                else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
-                {
-                    ants[a].step();
-                    ants[a].resetColor();
-                }
-                else if (!turn)
-                {
-                    //Sätter Färgen till orange ifall bilen står still
-                    //ants[a].Color = Color.Orange;
+                    ants[a]._dir--;
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
                 }
             }
-            foreach (Ant a in ants)
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        private void ant_check_Turn_Fields_Right(int a)
+        {
+            for (int i = 0; i < Turn_fields_Right.Length; i++)
             {
-                a.trace(out int step, out bool brake, this);
+                if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                {
+                    ants[a]._dir++;
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                }
             }
-            //Tar bort myror på dödsrutor
-            List<Ant> Remove = new List<Ant>();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="passthrough"></param>
+        private void ant_check_Turn_Diagonal(int a, bool passthrough)
+        {
+            if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+            {
+                ants[a].step();
+                ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                ants[a].step();
+                ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                passthrough = false;
+            }
+            //Sväng höger
+            else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+            {
+                ants[a].step();
+                ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                ants[a].step();
+                ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                passthrough = false;
+            }
+            //Tar steg ifall den får
+            else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
+            {
+                ants[a].step();
+                ants[a].resetColor();
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ants"></param>
+        /// <param name="ants_"></param>
+        static List<Ant> Remove;
+        private void ant_check_remove(List<Ant> ants)
+        {
             foreach (Ant a in ants)
             {
                 switch (map_elements[a.getPosX(), a.getPosY()])
@@ -698,11 +708,85 @@ namespace Ant_test
                     Remove.Add(a);
                 }
             }
-            //Tar bort alla myror som ska bort
+            //Tar bort alla myror
+
+        }
+
+        private void antstep(Ant s)
+        {
+            mapAVC.reset();
+            mapAVC.Upscale(1);
+
+            int a = ants.IndexOf(s);
+            //Kollar ifall myran står på vänstersväng
+            ant_check_Turn_Fields_Left(a);
+            //Kollar ifall myran står på en högersväng
+            ant_check_Turn_Fields_Right(a);
+            //Sväng diagonalt
+            ant_check_Turn_Diagonal(a, !is_ant_in_front(ants[a]));
+
+            //Tar bort myror på dödsrutor
+            ant_check_remove(ants);
+            //renderar allt till skärmen
+            // render_To_Screen();
+        }
+
+        /// <summary>
+        /// Funktion som tar gör att alla myror tar ett steg med sin acceleration
+        /// </summary>
+        private void v_step()
+        {
+            Remove = new List<Ant>();
+            mapAVC.reset();
+            mapAVC.Upscale(1);
+            foreach (Ant a in ants)
+            {
+                a.trace(out int step, out bool brake, out int Ant_V, this);
+
+                if (step < (a.v * a.v + a.v) / 2 + 1 + Ant_V)
+                {
+                    for (int x = 1; x < a.v; x++)
+                    {
+                        antstep(a);
+                    }
+                    if (0 < a.v)
+                    {
+                        a.v--;
+                    }
+
+                }
+                else if (step > a.v * a.v / 2 + 2.5 * a.v + 2 + Ant_V)
+                {
+                    //Tar bort myra innan vi är klarar med den
+                    for (int x = 1; x < a.v; x++)
+                    {
+                        antstep(a);
+                    }
+                    if (a.v < v_max)
+                    {
+                        a.v++;
+                    }
+                }
+                else
+                {
+                    for (int x = 1; x < a.v; x++)
+                    {
+                        antstep(a);
+                    }
+                }
+            }
+            //Tar bort alla myror
             for (int i = 0; i < Remove.Count; i++)
             {
                 ants.Remove(Remove[i]);
             }
+            foreach (Ant a in ants)
+                a.trace(out int stepppp, out bool assdabsdasdrake, out int Ant_V, this);
+            render_To_Screen();
+        }
+
+        private void render_To_Screen()
+        {
             //Renderar all rödöjus
             for (int i = 0; i < TraficLights.Length; i++)
             {
@@ -733,214 +817,19 @@ namespace Ant_test
                     }
                 }
             }
-
             //Renderar myrorna
             foreach (Ant a in ants)
             {
                 mapAVC.Setpixel(a.getPos(), a.Color);
             }
-            //  Bitmap lolz = new Bitmap(map.Width, map.Height);
-            //  for (int x = 0; x < map.Width; x++)
-            //  {
-            //      for (int y = 0; y < map.Height; y++)
-            //      {
-            //          if (karta[x, y])
-            //          {
-            //              lolz.SetPixel(x, y, Color.Red);
-            //          }
-            //          else
-            //          {
-            //              lolz.SetPixel(x, y, Color.White);
-            //          }
-            //      }
-            //  }
-            //  pictureBox.Image = lolz;
+
             pictureBox.Image = mapAVC.get();
+            new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
-        private void v_step()
-        {
-            mapAVC.reset();
-            mapAVC.Upscale(3);
-            for (int a= 0; a < ants.Count; a++)
-            {
-                ants[a].trace(out int step, out bool brake, this);
-                bool turn = false;
-                bool passthrough;
-                if (step < (ants[1].v * ants[1].v) / 2 + ants[1].v + 1)
-                {
-                    for (int x = 1; x < ants[a].v; x++)
-                    {
-                        //Kollar ifall myran står på vänstersväng
-                        for (int i = 0; i < Turn_fields_Left.Length; i++)
-                    {
-                        if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                        {
-                            ants[a]._dir--;
-                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        }
-                    }
-                    //Kollar ifall myran står på en högersväng
-                    for (int i = 0; i < Turn_fields_Right.Length; i++)
-                    {
-                        if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                        {
-                            ants[a]._dir++;
-                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        }
-                    }
-                    passthrough = !is_ant_in_front(ants[a]);
-                    //Sväng diagonalt
-                    if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                    {
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                        passthrough = false;
-                        turn = true;
-                    }
-                    //Sväng höger
-                    else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                    {
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                        passthrough = false;
-                        turn = true;
-                    }
-                    //Tar steg ifall den får
-                    else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
-                    {
-                        ants[a].step();
-                        ants[a].resetColor();
-                    }
-                    else if (!turn)
-                    {
-                        //Sätter Färgen till orange ifall bilen står still
-                        //ants[a].Color = Color.Orange;
-                    }
-                }
-                    ants[a].v--;
-                }
-               else if (step> ants[a].v*ants[a].v/2+2*ants[a].v+2)
-                {
-                    for (int x=1; x<ants[a].v; x++) { 
-                    //Kollar ifall myran står på vänstersväng
-                    for (int i = 0; i < Turn_fields_Left.Length; i++)
-                    {
-                        if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                        {
-                            ants[a]._dir--;
-                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        }
-                    }
-                    //Kollar ifall myran står på en högersväng
-                    for (int i = 0; i < Turn_fields_Right.Length; i++)
-                    {
-                        if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                        {
-                            ants[a]._dir++;
-                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                        }
-                    }
-                   passthrough = !is_ant_in_front(ants[a]);
-                    //Sväng diagonalt
-                    if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                    {
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                        passthrough = false;
-                        turn = true;
-                    }
-                    //Sväng höger
-                    else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                    {
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                        ants[a].step();
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                        passthrough = false;
-                        turn = true;
-                    }
-                    //Tar steg ifall den får
-                    else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
-                    {
-                        ants[a].step();
-                        ants[a].resetColor();
-                    }
-                    else if (!turn)
-                    {
-                        //Sätter Färgen till orange ifall bilen står still
-                        //ants[a].Color = Color.Orange;
-                    }
-                    }
-                    ants[a].v++;
-                }
-                else { 
-                    for (int x=1; x<ants[a].v;x++)
-                //Kollar ifall myran står på vänstersväng
-                for (int i = 0; i < Turn_fields_Left.Length; i++)
-                {
-                    if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                    {
-                        ants[a]._dir--;
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                    }
-                }
-                //Kollar ifall myran står på en högersväng
-                for (int i = 0; i < Turn_fields_Right.Length; i++)
-                {
-                    if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
-                    {
-                        ants[a]._dir++;
-                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
-                    }
-                }
-                 passthrough = !is_ant_in_front(ants[a]);
-                //Sväng diagonalt
-                if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                {
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                    passthrough = false;
-                    turn = true;
-                }
-                //Sväng höger
-                else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
-                {
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
-                    ants[a].step();
-                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
-                    passthrough = false;
-                    turn = true;
-                }
-                //Tar steg ifall den får
-                else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
-                {
-                    ants[a].step();
-                    ants[a].resetColor();
-                }
-                else if (!turn)
-                {
-                    //Sätter Färgen till orange ifall bilen står still
-                    //ants[a].Color = Color.Orange;
-                }
-                }
-            }
 
-        }
-        
-                
-       
-               
 
-       
+
+
 
 
         /// <summary>
@@ -960,7 +849,7 @@ namespace Ant_test
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ants[1].trace(out int step, out bool brake, this);
+            ants[1].trace(out int step, out bool brake, out int Ant_V, this);
             richTextBox1.Text = step.ToString() + "     " + brake.ToString();
             pictureBox.Image = mapAVC.get();
         }
@@ -1028,7 +917,7 @@ namespace Ant_test
             bool is_ant;
             int length;
             //Kolla länken ifall man inte förstår https://www.dotnetperls.com/multiple-return-values kollade upp detta för en sekund sedan
-            independent.trace(out length, out is_ant, this);
+            independent.trace(out length, out is_ant, out int Ant_V, this);
             richTextBox1.Text = length.ToString() + "     " + is_ant.ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
