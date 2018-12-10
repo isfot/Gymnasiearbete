@@ -146,7 +146,7 @@ namespace Ant_test
             {
                 Form1.karta[getPos().X, getPos().Y] = true;
             }
-         
+
 
         }
         public Point stepcalc()
@@ -154,49 +154,49 @@ namespace Ant_test
             switch (_dir % 4) // Switch med resten av dir mod 4.
             {
                 case 0:
-                   return new Point(_pos.X, _pos.Y-1);
-                   
+                    return new Point(_pos.X, _pos.Y - 1);
+
                 case 1:
-                   return new Point( _pos.X+1, _pos.Y);
-                   
+                    return new Point(_pos.X + 1, _pos.Y);
+
                 case 2:
-                    return new Point(_pos.X,_pos.Y+1);
-                    
+                    return new Point(_pos.X, _pos.Y + 1);
+
                 case 3:
-                    return new Point( _pos.X-1,_pos.Y);
-                   
+                    return new Point(_pos.X - 1, _pos.Y);
+
             }
             return _pos;
         }
-        private bool trace_stop(Ant i)  // Ska myran som räknar steg sluta bestämms av denna funktion.
+        private bool trace_stop(Ant i, int step)  // Ska myran som räknar steg sluta bestämms av denna funktion.
         {
-           try
+            if (step != 0)
             {
-                if (Form1.map_elements[i.stepcalc().X, i.stepcalc().Y]==1 || Form1.map_elements[i.stepcalc().X, i.stepcalc().Y] == -1)
+                try
                 {
-                   
+                    if (Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1)
+                    {
                         return false;
+                    }
+                    if (Form1.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
+                    {
+                        return false;
+                    }
+                    return true;
                 }
-                if (Form1.karta[i.stepcalc().X, i.stepcalc().Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
+                catch
                 {
                     return false;
                 }
-                return true;
             }
-           catch
-            {
-                return false;
-            }
-
+            return true;
         }
-        public int trace()
+        public void trace(out int step, out bool need_brake)
         {
-            int step; // En variabel för att räkna steg.
-            Ant trace = new Ant(_pos.X,_pos.Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
-           
-            for (step = 0; trace_stop(trace); step++) // En for-loop som ökar antalet steg tills logiken blir false se metod trace_stop ovan.
+            need_brake = true;
+            Ant trace = new Ant(_pos.X, _pos.Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
+            for (step = 0; trace_stop(trace, step); step++) // En for-loop som ökar antalet steg tills logiken blir false se metod trace_stop ovan.
             {
-                
                 for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
                     if (Form1.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
@@ -224,11 +224,13 @@ namespace Ant_test
                 else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
                 {
                     trace.step();
-                    
                 }
                 Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
-            return step;
+            if(Form1.map_elements[trace.X,trace.Y] == -1)
+            {
+                need_brake = false;
+            }
         }
         /// <summary>
         /// Korrigerar överflöden i riktningen

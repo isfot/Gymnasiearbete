@@ -21,9 +21,9 @@ namespace Ant_test
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
         private static readonly int v_max = 1;
-        
+
         private static double occupiable_fields;
-        private static  double density;
+        private static double density;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
@@ -246,7 +246,7 @@ namespace Ant_test
             {
                 foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 {
-                    ants.Add(new Ant(pos, i, colors[i],true));
+                    ants.Add(new Ant(pos, i, colors[i], true));
                 }
             }
 
@@ -386,7 +386,7 @@ namespace Ant_test
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
-            
+
 
             //          if (tid % 100 == 0)
             //          {
@@ -641,12 +641,9 @@ namespace Ant_test
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            
-            {
-                
-                richTextBox5.Text= ants[1].trace().ToString();
-                pictureBox.Image = mapAVC.get();
-            }
+            ants[1].trace(out int step, out bool brake);
+            richTextBox5.Text = step.ToString() + "     " + brake.ToString();
+            pictureBox.Image = mapAVC.get();
         }
 
 
@@ -710,7 +707,8 @@ namespace Ant_test
         {
             mapAVC.reset();
             mapAVC.Upscale(2);
-            richTextBox1.Text = independent.trace().ToString();
+            independent.trace(out int step, out bool brake);
+            richTextBox1.Text = step.ToString() + "      " + brake.ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
         }
