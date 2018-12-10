@@ -122,7 +122,7 @@ namespace Ant_test
         /// </summary>
         public void step()  //påverkar myrorna (utanför huvudprogrammet) vid varje tidsenhet ska myrorna göra step
         {
-            if (affect_Fields)
+            if (RealAnt)
             {
                 Form1.karta[getPos().X, getPos().Y] = false; //gamla ruta blir false, nya blire true
             }
@@ -142,46 +142,40 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            if (affect_Fields && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
+            if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
                 Form1.karta[getPos().X, getPos().Y] = true;
             }
-
         }
-        private bool trace_stop(Ant i)  //har med hastighet att göra
+
+        private bool trace_stop(Ant i, int step)  // Ska myran som räknar steg sluta bestämms av denna funktion.
         {
             try
             {
-                switch (Form1.map_elements[i.X, i.Y])
-                {
-                    case 1:
-                    case -1:
-                        return false;
-                }
-                if (Form1.karta[i.X, i.Y])
+                if (Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1)
                 {
                     return false;
                 }
+                if (step != 0)
+                    if (Form1.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
+                    {
+                        return false;
+                    }
                 return true;
             }
             catch
             {
                 return false;
             }
-
-        }/// <summary>
-         /// Kollar hur långt det är till nästa objekt...
-         /// https://www.dotnetperls.com/multiple-return-values
-         /// MÅSTE KOLLA DENNA LÄNK
-         /// </summary>
-         /// <returns>Antal rutor till nästa fordon</returns>
-        public KeyValuePair<int, bool> trace(out int step, out bool needs_brake, out int form)
+        }
+        private static Form1 forms;
+        public void trace(out int step, out bool need_brake, Form1 inputform)
         {
-            Ant trace = new Ant(_pos, _dir, Color.White, false);
-            trace.affect_Fields = false;
-            for (step = 0; trace_stop(trace); step++)
+            forms = inputform;
+            need_brake = true;
+            Ant trace = new Ant(_pos.X, _pos.Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
+            for (step = 0; trace_stop(trace, step); step++) // En for-loop som ökar antalet steg tills logiken blir false se metod trace_stop ovan.
             {
-                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
                 for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
                     if (Form1.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
@@ -206,7 +200,7 @@ namespace Ant_test
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
-                else if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
+                if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
@@ -217,21 +211,20 @@ namespace Ant_test
                 {
                     trace.step();
                 }
+                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
-            form = Form1.map_elements[trace.X, trace.Y];
-            needs_brake = false;
-            foreach (Ant a in Form1.ants)
+            try
             {
-                if (a.Pos == trace.Pos)
+                if (Form1.map_elements[trace.X, trace.Y] == -1)
                 {
-                    needs_brake = true;
-                }
-                if(Form1.map_elements[trace.X,trace.Y] == 1)
-                {
-                    needs_brake = true;
+                    need_brake = false;
                 }
             }
-           return new KeyValuePair<int, bool>(step, needs_brake);
+            catch
+            {
+
+            }
+
         }
         /// <summary>
         /// Korrigerar överflöden i riktningen

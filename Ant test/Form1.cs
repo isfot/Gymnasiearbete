@@ -302,7 +302,7 @@ namespace Ant_test
             {
                 foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 {
-                    ants.Add(new Ant(pos, i, colors[i], false));
+                    ants.Add(new Ant(pos, i, colors[i], true));
                 }
             }
 
@@ -325,19 +325,19 @@ namespace Ant_test
             //Ha så kul med att försöka tyda detta :)
             if (index == 0 && checkBox_Field_3.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
             if (index == 1 && checkBox_Field_4.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
             if (index == 2 && checkBox_Field_1.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
             if (index == 3 && checkBox_Field_2.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
 
         }
@@ -519,6 +519,10 @@ namespace Ant_test
             #endregion
             tid++;
         }
+        public void updateText(string text)
+        {
+            richTextBox2.Text = text;
+        }
         /// <summary>
         /// Funktion som avgör ifall en int är större är 3 och sätter till 0 ifall det är så, eller ifall den är mindre en 0 och sätter till 3 ifall det är så
         /// </summary>
@@ -539,42 +543,35 @@ namespace Ant_test
 
         private bool is_ant_in_front(Ant greger)// säger huruvida en rutan är okuperad.
         {
-            try
+            bool output = false;
+            switch (greger._dir)
             {
-                bool output = false;
-                switch (greger._dir)
-                {
-                    case 0:
-                        if (true == karta[greger.getPosX(), greger.getPosY() - 1])
-                        {
-                            output = true;
-                        }
-                        break;
-                    case 1:
-                        if (karta[greger.getPosX() + 1, greger.getPosY()] == true)
-                        {
-                            output = true;
-                        }
-                        break;
-                    case 2:
-                        if (true == karta[greger.getPosX(), greger.getPosY() + 1])
-                        {
-                            output = true;
-                        }
-                        break;
-                    case 3:
-                        if (karta[greger.getPosX() - 1, greger.getPosY()] == true)
-                        {
-                            output = true;
-                        }
-                        break;
-                }
-                return output;
+                case 0:
+                    if (true == karta[greger.X, greger.Y - 1])
+                    {
+                        output = true;
+                    }
+                    break;
+                case 1:
+                    if (karta[greger.X + 1, greger.Y] == true)
+                    {
+                        output = true;
+                    }
+                    break;
+                case 2:
+                    if (true == karta[greger.X, greger.Y + 1])
+                    {
+                        output = true;
+                    }
+                    break;
+                case 3:
+                    if (karta[greger.X - 1, greger.Y] == true)
+                    {
+                        output = true;
+                    }
+                    break;
             }
-            catch
-            {
-                return true;
-            }
+            return output;
         }
 
         static public bool is_ant_to_side_right(Ant Orvar)
@@ -680,6 +677,10 @@ namespace Ant_test
                     ants[a].Color = Color.Orange;
                 }
             }
+            foreach (Ant a in ants)
+            {
+                a.trace(out int step, out bool brake, this);
+            }
             //Tar bort myror på dödsrutor
             List<Ant> Remove = new List<Ant>();
             foreach (Ant a in ants)
@@ -738,7 +739,22 @@ namespace Ant_test
             {
                 mapAVC.Setpixel(a.getPos(), a.Color);
             }
-
+            //  Bitmap lolz = new Bitmap(map.Width, map.Height);
+            //  for (int x = 0; x < map.Width; x++)
+            //  {
+            //      for (int y = 0; y < map.Height; y++)
+            //      {
+            //          if (karta[x, y])
+            //          {
+            //              lolz.SetPixel(x, y, Color.Red);
+            //          }
+            //          else
+            //          {
+            //              lolz.SetPixel(x, y, Color.White);
+            //          }
+            //      }
+            //  }
+            //  pictureBox.Image = lolz;
             pictureBox.Image = mapAVC.get();
         }
         private void v_step()
@@ -765,6 +781,12 @@ namespace Ant_test
             tid = 0;
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ants[1].trace(out int step, out bool brake, this);
+            richTextBox1.Text = step.ToString() + "     " + brake.ToString();
+            pictureBox.Image = mapAVC.get();
+        }
 
 
         #region KOD SOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
@@ -828,10 +850,9 @@ namespace Ant_test
             mapAVC.Upscale(2);
             bool is_ant;
             int length;
-            int field;
             //Kolla länken ifall man inte förstår https://www.dotnetperls.com/multiple-return-values kollade upp detta för en sekund sedan
-            independent.trace(out length, out is_ant, out field);
-            richTextBox1.Text = length.ToString() + "     " + is_ant.ToString() + "   " + field.ToString();
+            independent.trace(out length, out is_ant, this);
+            richTextBox1.Text = length.ToString() + "     " + is_ant.ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
         }
@@ -849,6 +870,7 @@ namespace Ant_test
         {
 
         }
+
     }
     #endregion
 }
