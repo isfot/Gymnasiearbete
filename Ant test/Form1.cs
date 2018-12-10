@@ -759,11 +759,188 @@ namespace Ant_test
         }
         private void v_step()
         {
-            for (int i = 0; i < ants.Count; i++)
+            mapAVC.reset();
+            mapAVC.Upscale(3);
+            for (int a= 0; a < ants.Count; a++)
             {
-
+                ants[a].trace(out int step, out bool brake, this);
+                bool turn = false;
+                bool passthrough;
+                if (step < (ants[1].v * ants[1].v) / 2 + ants[1].v + 1)
+                {
+                    for (int x = 1; x < ants[a].v; x++)
+                    {
+                        //Kollar ifall myran står på vänstersväng
+                        for (int i = 0; i < Turn_fields_Left.Length; i++)
+                    {
+                        if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                        {
+                            ants[a]._dir--;
+                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                        }
+                    }
+                    //Kollar ifall myran står på en högersväng
+                    for (int i = 0; i < Turn_fields_Right.Length; i++)
+                    {
+                        if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                        {
+                            ants[a]._dir++;
+                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                        }
+                    }
+                    passthrough = !is_ant_in_front(ants[a]);
+                    //Sväng diagonalt
+                    if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                    {
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                        passthrough = false;
+                        turn = true;
+                    }
+                    //Sväng höger
+                    else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                    {
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                        passthrough = false;
+                        turn = true;
+                    }
+                    //Tar steg ifall den får
+                    else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
+                    {
+                        ants[a].step();
+                        ants[a].resetColor();
+                    }
+                    else if (!turn)
+                    {
+                        //Sätter Färgen till orange ifall bilen står still
+                        //ants[a].Color = Color.Orange;
+                    }
+                }
+                    ants[a].v--;
+                }
+               else if (step> ants[a].v*ants[a].v/2+2*ants[a].v+2)
+                {
+                    for (int x=1; x<ants[a].v; x++) { 
+                    //Kollar ifall myran står på vänstersväng
+                    for (int i = 0; i < Turn_fields_Left.Length; i++)
+                    {
+                        if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                        {
+                            ants[a]._dir--;
+                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                        }
+                    }
+                    //Kollar ifall myran står på en högersväng
+                    for (int i = 0; i < Turn_fields_Right.Length; i++)
+                    {
+                        if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                        {
+                            ants[a]._dir++;
+                            ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                        }
+                    }
+                   passthrough = !is_ant_in_front(ants[a]);
+                    //Sväng diagonalt
+                    if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                    {
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                        passthrough = false;
+                        turn = true;
+                    }
+                    //Sväng höger
+                    else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                    {
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                        ants[a].step();
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                        passthrough = false;
+                        turn = true;
+                    }
+                    //Tar steg ifall den får
+                    else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
+                    {
+                        ants[a].step();
+                        ants[a].resetColor();
+                    }
+                    else if (!turn)
+                    {
+                        //Sätter Färgen till orange ifall bilen står still
+                        //ants[a].Color = Color.Orange;
+                    }
+                    }
+                    ants[a].v++;
+                }
+                else { 
+                    for (int x=1; x<ants[a].v;x++)
+                //Kollar ifall myran står på vänstersväng
+                for (int i = 0; i < Turn_fields_Left.Length; i++)
+                {
+                    if (Turn_fields_Left[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                    {
+                        ants[a]._dir--;
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                    }
+                }
+                //Kollar ifall myran står på en högersväng
+                for (int i = 0; i < Turn_fields_Right.Length; i++)
+                {
+                    if (Turn_fields_Right[i].Contains(ants[a].getPos()) && ants[a]._dir == i)
+                    {
+                        ants[a]._dir++;
+                        ants[a]._dir = dirOverFlowCorr(ants[a]._dir);
+                    }
+                }
+                 passthrough = !is_ant_in_front(ants[a]);
+                //Sväng diagonalt
+                if (Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                {
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                    passthrough = false;
+                    turn = true;
+                }
+                //Sväng höger
+                else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                {
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
+                    ants[a].step();
+                    ants[a]._dir = dirOverFlowCorr(ants[a]._dir + 1);
+                    passthrough = false;
+                    turn = true;
+                }
+                //Tar steg ifall den får
+                else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
+                {
+                    ants[a].step();
+                    ants[a].resetColor();
+                }
+                else if (!turn)
+                {
+                    //Sätter Färgen till orange ifall bilen står still
+                    //ants[a].Color = Color.Orange;
+                }
+                }
             }
+
         }
+        
+                
+       
+               
+
+       
 
 
         /// <summary>
