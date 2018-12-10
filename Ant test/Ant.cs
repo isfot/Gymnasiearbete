@@ -122,7 +122,7 @@ namespace Ant_test
         /// </summary>
         public void step()  //påverkar myrorna (utanför huvudprogrammet) vid varje tidsenhet ska myrorna göra step
         {
-            if (affect_Fields)
+            if (RealAnt)
             {
                 Form1.karta[getPos().X, getPos().Y] = false; //gamla ruta blir false, nya blire true
             }
@@ -142,29 +142,48 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            if (affect_Fields && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
+            if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
                 Form1.karta[getPos().X, getPos().Y] = true;
             }
+         
 
         }
-        private bool trace_stop(Ant i)  //har med hastighet att göra
+        public Point stepcalc()
         {
-            try
+            switch (_dir % 4) // Switch med resten av dir mod 4.
             {
-                switch (Form1.map_elements[i.X, i.Y])
+                case 0:
+                   return new Point(_pos.X, _pos.Y-1);
+                   
+                case 1:
+                   return new Point( _pos.X+1, _pos.Y);
+                   
+                case 2:
+                    return new Point(_pos.X,_pos.Y+1);
+                    
+                case 3:
+                    return new Point( _pos.X-1,_pos.Y);
+                   
+            }
+            return _pos;
+        }
+        private bool trace_stop(Ant i)  // Ska myran som räknar steg sluta bestämms av denna funktion.
+        {
+           try
+            {
+                if (Form1.map_elements[i.stepcalc().X, i.stepcalc().Y]==1 || Form1.map_elements[i.stepcalc().X, i.stepcalc().Y] == -1)
                 {
-                    case 1:
-                    case -1:
+                   
                         return false;
                 }
-                if (Form1.karta[i.X, i.Y])
+                if (Form1.karta[i.stepcalc().X, i.stepcalc().Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
                 {
                     return false;
                 }
                 return true;
             }
-            catch
+           catch
             {
                 return false;
             }
@@ -172,12 +191,12 @@ namespace Ant_test
         }
         public int trace()
         {
-            int step;
-            Ant trace = new Ant(_pos, _dir, Color.White, false);
-            trace.affect_Fields = false;
-            for (step = 0; trace_stop(trace); step++)
+            int step; // En variabel för att räkna steg.
+            Ant trace = new Ant(_pos.X,_pos.Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
+           
+            for (step = 0; trace_stop(trace); step++) // En for-loop som ökar antalet steg tills logiken blir false se metod trace_stop ovan.
             {
-                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
+                
                 for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
                 {
                     if (Form1.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
@@ -205,7 +224,9 @@ namespace Ant_test
                 else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
                 {
                     trace.step();
+                    
                 }
+                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
             return step;
         }

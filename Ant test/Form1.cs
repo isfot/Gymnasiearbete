@@ -246,7 +246,7 @@ namespace Ant_test
             {
                 foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 {
-                    ants.Add(new Ant(pos, i, colors[i],false));
+                    ants.Add(new Ant(pos, i, colors[i],true));
                 }
             }
 
@@ -269,19 +269,19 @@ namespace Ant_test
             //Ha så kul med att försöka tyda detta :)
             if (index == 0 && checkBox_Field_3.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
             if (index == 1 && checkBox_Field_4.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
             if (index == 2 && checkBox_Field_1.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
             if (index == 3 && checkBox_Field_2.Checked)
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], false));
+                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
             }
 
         }
@@ -386,6 +386,7 @@ namespace Ant_test
             antstep();
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
+            
 
             //          if (tid % 100 == 0)
             //          {
@@ -637,6 +638,15 @@ namespace Ant_test
             mapAVC.Upscale(10);
             pictureBox.Image = mapAVC.get();
             tid = 0;
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+            {
+                
+                richTextBox5.Text= ants[1].trace().ToString();
+                pictureBox.Image = mapAVC.get();
+            }
         }
 
 

@@ -1,4 +1,6 @@
-﻿namespace Ant_test
+﻿using System;
+
+namespace Ant_test
 {
     partial class Form1
     {
@@ -82,7 +84,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 1;
+            this.timer1.Interval = 300;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Ant_button
@@ -367,6 +369,10 @@
             this.PerformLayout();
 
         }
+
+        
+
+
 
         #endregion
 
