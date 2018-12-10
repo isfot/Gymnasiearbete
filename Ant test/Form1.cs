@@ -294,7 +294,7 @@ namespace Ant_test
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static readonly Color[] colors = new Color[] { Color.Blue, Color.HotPink, Color.Indigo, Color.Turquoise }; //Beroende på var dom börjhar får dom en viss färg
+        private static readonly Color[] colors = new Color[] { Color.Yellow, Color.HotPink, Color.Indigo, Color.DarkRed }; //Beroende på var dom börjhar får dom en viss färg
         private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
             //for (int a = 0; a < 50; a++)
@@ -597,24 +597,23 @@ namespace Ant_test
         }
         static public bool is_ant_to_side_left(Ant Orvar)
         {
-            bool output = false;
-            switch (Orvar._dir)
-            {
-                case 0:
-                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() - 1];
-                    break;
-                case 1:
-                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() - 1];
-                    break;
-                case 2:
-                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() + 1];
-                    break;
-                case 3:
-                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() + 1];
-                    break;
+            if (Orvar.X < map.Width && Orvar.X > 0 && Orvar.Y < map.Height && Orvar.Y > 0)
+            { 
+                switch (Orvar._dir)
+                {
+                    case 0:
+                        return karta[Orvar.X - 1, Orvar.Y - 1];
+                    case 1:
+                        return karta[Orvar.X + 1, Orvar.Y - 1];
+                    case 2:
+                        return karta[Orvar.X + 1, Orvar.Y + 1];
+                    case 3:
+                        return karta[Orvar.X - 1, Orvar.Y + 1];
+                    default:
+                        return false;
+                }
             }
-
-            return output;
+            return true;
         }
 
         private void antstep()
@@ -657,7 +656,7 @@ namespace Ant_test
                     turn = true;
                 }
                 //Sväng höger
-                if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
+                else if (Turn_fields_Left_Diagonal[ants[a]._dir].Contains(ants[a].getPos()) && !is_ant_to_side_right(ants[a]))
                 {
                     ants[a].step();
                     ants[a]._dir = dirOverFlowCorr(ants[a]._dir - 1);
@@ -667,14 +666,15 @@ namespace Ant_test
                     turn = true;
                 }
                 //Tar steg ifall den får
-                if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
+                else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
                 {
                     ants[a].step();
                     ants[a].resetColor();
                 }
                 else if (!turn)
                 {
-                    ants[a].Color = Color.Orange;
+                    //Sätter Färgen till orange ifall bilen står still
+                    //ants[a].Color = Color.Orange;
                 }
             }
             foreach (Ant a in ants)
