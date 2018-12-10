@@ -756,8 +756,7 @@ namespace Ant_test
 
                 }
                 else if (step > a.v * a.v / 2 + 2.5 * a.v + 2 + Ant_V)
-                {
-                    //Tar bort myra innan vi är klarar med den
+                {  
                     for (int x = 1; x < a.v; x++)
                     {
                         antstep(a);
