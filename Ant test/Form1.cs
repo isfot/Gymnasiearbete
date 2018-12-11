@@ -29,7 +29,7 @@ namespace Ant_test
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
-        private int tid = 0;
+        private int tid = 0; // Variabel för tid- I programmet motsvarar 1 tidsenhet=1 sekund
         private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
@@ -44,20 +44,20 @@ namespace Ant_test
             map_elements = new int[map.Width, map.Height]; //Gör en karta som håller koll på trafikljus, svängfält och grejer
             startField_Finder(); //Läser in vad som ska vara på kartan
             mapAVC = new BitmapAVC(map); //
-            foreach (List<Trafikljus> y in TraficLights)
+            foreach (List<Trafikljus> y in TraficLights) // Alla vanliga trafikljus
             {
                 foreach (Trafikljus a in y)
                 {
-                    a.Rödljus();
-                    mapAVC.Setpixel(a.pos, Color.Red);
+                    a.Rödljus(); // Gör alla trafikljus till röda vid programmets start
+                    mapAVC.Setpixel(a.pos, Color.Red); // Gör så att dem visas röda i bilden.
                 }
             }
-            foreach (List<Trafikljus> y in TraficLights_Left_Turn)
+            foreach (List<Trafikljus> y in TraficLights_Left_Turn) // Alla trafikljus som svänger vänster
             {
                 foreach (Trafikljus a in y)
                 {
-                    a.Rödljus();
-                    mapAVC.Setpixel(a.pos, Color.Red);
+                    a.Rödljus();// Gör alla trafikljus till röda vid programmets start
+                    mapAVC.Setpixel(a.pos, Color.Red);// Gör så att dem visas röda i bilden.
                 }
             }
         }
@@ -102,7 +102,9 @@ namespace Ant_test
                     //3: -14336
                     //0: -27136
                     //1: -39936
-                    switch (map.GetPixel(x, y).ToArgb())
+
+                    // Se i bilden vilken rikning som motsvarar vilken siffra
+                    switch (map.GetPixel(x, y).ToArgb()) // Tittar på varje pixel vilket Argb-värde den har(dvs vilken färg den har).
                     {
                         //Startfields
                         case -1536:
@@ -283,8 +285,8 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Icon = Properties.Resources.IKON;
-            pictureBox1.Image = Properties.Resources.IKON.ToBitmap();
+            this.Icon = Properties.Resources.IKON; // Filip ville  prompt ha en ikon i programmet ......
+            pictureBox1.Image = Properties.Resources.IKON.ToBitmap(); // Ikonen skulle också finnas i Form1 ......
             mapAVC.Upscale(10); // Skala upp kartan
             pictureBox.Image = mapAVC.get(); // Sätter kartan i picturebox
         }
