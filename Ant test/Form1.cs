@@ -25,6 +25,7 @@ namespace Ant_test
 
         private static double occupiable_fields;
         private static double density;
+        private static int car_in_motion=0;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
@@ -453,7 +454,7 @@ namespace Ant_test
                 TraficLight_Toggle_Turn(3, false);
             }
             density = ants.Count / occupiable_fields;
-            Densitet_Textbox.Text = density.ToString();
+            Densitet_Textbox.Text = density.ToString() + "   "+car_in_motion.ToString();
 
             tid++;
 
@@ -466,6 +467,7 @@ namespace Ant_test
             v_step();
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
+            Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
             #region kommentar
             //          if (tid % 100 == 0)
             //          {
@@ -754,6 +756,10 @@ namespace Ant_test
                     if (0 < a.v)
                     {
                         a.v--;
+                        if (a.v == 0)
+                        {
+                            car_in_motion--;
+                        }
                     }
 
                 }
@@ -766,6 +772,10 @@ namespace Ant_test
                     if (a.v < v_max)
                     {
                         a.v++;
+                        if (a.v == 1)
+                        {
+                            car_in_motion++;
+                        }
                     }
                 }
                 else
@@ -825,7 +835,7 @@ namespace Ant_test
             }
 
             pictureBox.Image = mapAVC.get();
-            new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
+            //new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
 
 
