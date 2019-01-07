@@ -14,12 +14,12 @@ namespace Ant_test
         public int X { get { return _pos.X; } }
         public int Y { get { return _pos.Y; } }
         public Point Pos { get { return _pos; } }
-        private bool affect_Fields = true;
+       // private bool affect_Fields = true; Variabeln används ej? Om så, vänligen ta bort denna rad.
         public int _dir;        //Variabel för myrans riktning
         public Color Color;     //Variabel för myrans färg
-        private readonly Color ORGcolor;
-        public int v = 0;
-        private readonly bool RealAnt;
+        private readonly Color ORGcolor; // "orginalfärgen"
+        public int v = 0; // Hastighet
+        private readonly bool RealAnt; // Om myran är en faktisk myra eller en "trace" dvs om den ska ändra i map.
         /// <summary>
         /// Inizialerar en ny myra
         /// </summary>
@@ -114,9 +114,9 @@ namespace Ant_test
         }
 
         //  int mod(int x, int m)
-        //  {
+        //  {       
         //      return (x % m + m) % m;
-        //  }
+        //  }                                           <---------    Vad används den här koden till?
         /// <summary>
         /// Ökar myrans postion i den riktning som riktnings variabeln anger
         /// </summary>
@@ -141,6 +141,10 @@ namespace Ant_test
                 case 3:
                     _pos.X--;
                     break;
+            }
+            if (Form1.map_elements[getPosX(), getPosY()] == -1) // ny kod
+            {
+                v = 0;
             }
             if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
@@ -211,7 +215,7 @@ namespace Ant_test
                 {
                     trace.step();
                 }
-               // Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
+                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
             try
             {

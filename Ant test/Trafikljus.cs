@@ -13,7 +13,7 @@ namespace Ant_test
         public Point pos;
         public bool grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
-        private readonly int v_max;
+        private readonly int v_max; // Globalt hastighetsmaximum
 
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Ant_test
         /// <param name="pos">Position</param>
         /// <param name="dir">Riktning 0-3</param>
         /// <param name="color">Färg</param>
-        public Trafikljus(Point pos, int dir, int v_max) //När programmet ser en ruta med en viss färg blir det ett trafikljus
+        public Trafikljus(Point pos, int dir, int v_max) //När programmet ser en ruta med en viss färg intieras ett nytt trafikljus
         {
             this.pos = pos;
 
@@ -36,7 +36,7 @@ namespace Ant_test
         /// <param name="Y">Y postition</param>
         /// <param name="dir">Riktning g0-3</param>
         /// <param name="color">Färg</param>
-        public Trafikljus(int X, int Y, int dir, int v_max) //Övre sak fast beskrivet med koordinater
+        public Trafikljus(int X, int Y, int dir, int v_max) //Ett annat sätt att skapa ett trafikljus-.
         {
             pos = new Point(X, Y);
 
@@ -44,16 +44,14 @@ namespace Ant_test
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Rödljus() // Metoden kräver kod från andra delar av programmet.
+       
+        public void Rödljus() 
         {
             grönt = false;
             switch (dir) //utifrån vilken riktning måste den stänga av olika rutor
             {
                 case 2:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 2; i++) // Stänger 2 rutor innan sin egen position.
                     {
                         Form1.map_elements[pos.X, pos.Y - i] = 1; 
                     }
