@@ -849,7 +849,7 @@ namespace Ant_test
             }
 
             pictureBox.Image = mapAVC.get();
-            //new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
+            new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
 
 

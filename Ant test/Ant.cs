@@ -215,7 +215,7 @@ namespace Ant_test
                 {
                     trace.step();
                 }
-                Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
+                //Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
             try
             {
