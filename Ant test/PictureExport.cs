@@ -30,24 +30,25 @@ namespace Ant_test
             scale = scale_;
             frame = frame_;
             basePath = basePath_;
-            Export();
-            //Thread export = new Thread(Export);
-            //export.Start();
+            //Export();
+            Thread export = new Thread(Export);
+            export.Start();
         }
 
         private void Export()
         {
-            Bitmap output = new Bitmap(input.Width * scale, input.Height * scale);
+            Thread.Sleep(100);
+            Bitmap output_bitmap = new Bitmap(input.Width * scale, input.Height * scale);
             for (int x = 0; (x / scale) < input.Width; x++)
             {
                 for (int y = 0; (y / scale) < input.Height; y++)
                 {
-                    output.SetPixel(x, y, input.GetPixel(x / scale, y / scale));
+                    output_bitmap.SetPixel(x, y, input.GetPixel(x / scale, y / scale));
                 }
             }
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
-            output.Save(basePath + frame + ".png");
+            output_bitmap.Save(basePath + frame + ".png");
         }
 
     }
