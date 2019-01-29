@@ -810,10 +810,26 @@ namespace Ant_test
 
         private void render_To_Screen()
         {
+            //  //Renderar all rödöjus
+            //  for (int i = 0; i < TraficLights.Length; i++)
+            //  {
+            //      foreach (Trafikljus t in TraficLights[i])
+            //      {
+            //          if (t.grönt)
+            //          {
+            //              mapAVC.Setpixel(t.pos, Color.Green);
+            //          }
+            //          else
+            //          {
+            //              mapAVC.Setpixel(t.pos, Color.Red);
+            //          }
+            //      }
+            //  }
+
             //Renderar all rödöjus
-            for (int i = 0; i < TraficLights.Length; i++)
+            Parallel.For(0, TraficLights_Left_Turn.Length, i =>
             {
-                foreach (Trafikljus t in TraficLights[i])
+                Parallel.ForEach(TraficLights_Left_Turn[i], t =>
                 {
                     if (t.grönt)
                     {
@@ -823,29 +839,14 @@ namespace Ant_test
                     {
                         mapAVC.Setpixel(t.pos, Color.Red);
                     }
-                }
-            }
-            
-            //Renderar all rödöjus
-            for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
-            {
-                foreach (Trafikljus t in TraficLights_Left_Turn[i])
-                {
-                    if (t.grönt)
-                    {
-                        mapAVC.Setpixel(t.pos, Color.Green);
-                    }
-                    else
-                    {
-                        mapAVC.Setpixel(t.pos, Color.Red);
-                    }
-                }
-            }
+                });
+            });
+
             //Renderar myrorna
-            foreach (Ant a in ants)
+            Parallel.ForEach(ants, a =>
             {
                 mapAVC.Setpixel(a.getPos(), a.Color);
-            }
+            });
 
             pictureBox.Image = mapAVC.get();
             new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
