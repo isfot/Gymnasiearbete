@@ -808,7 +808,7 @@ namespace Ant_test
             render_To_Screen();
         }
 
-        private void render_To_Screen()
+        private void _render_To_Screen()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             //Renderar all rödöjus
@@ -838,7 +838,34 @@ namespace Ant_test
             new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
 
-
+        private void render_To_Screen()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            //Renderar all rödöjus
+            for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
+            {
+                foreach (Trafikljus t in TraficLights_Left_Turn[i])
+                {
+                    if (t.grönt)
+                    {
+                        mapAVC.Setpixel(t.pos, Color.Green);
+                    }
+                    else
+                    {
+                        mapAVC.Setpixel(t.pos, Color.Red);
+                    }
+                }
+            }
+            //Renderar myrorna
+            foreach (Ant a in ants)
+            {
+                mapAVC.Setpixel(a.getPos(), a.Color);
+            }
+            watch.Stop();
+            richTextBox1.Text = watch.Elapsed.ToString();
+            pictureBox.Image = mapAVC.get();
+            new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
+        }
 
 
 
