@@ -25,7 +25,7 @@ namespace Ant_test
 
         private static double occupiable_fields;
         private static double density;
-        private static int car_in_motion=0;
+        private static int car_in_motion = 0;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
         static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
@@ -454,7 +454,7 @@ namespace Ant_test
                 TraficLight_Toggle_Turn(3, false);
             }
             density = ants.Count / occupiable_fields;
-            Densitet_Textbox.Text = density.ToString() + "   "+car_in_motion.ToString();
+            Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
 
             tid++;
 
@@ -730,7 +730,7 @@ namespace Ant_test
             ant_check_Turn_Diagonal(a, !is_ant_in_front(ants[a]));
 
             //Tar bort myror på dödsrutor
-          //  ant_check_remove(ants);
+            //  ant_check_remove(ants);
             //renderar allt till skärmen
             // render_To_Screen();
         }
@@ -751,10 +751,10 @@ namespace Ant_test
                 {
                     for (int x = 1; x <= a.v; x++)
                     {
-                        
+
                         antstep(a);
                     }
-                    if (0 < a.v )
+                    if (0 < a.v)
                     {
                         a.v--;
                         if (a.v == 0)
@@ -765,7 +765,7 @@ namespace Ant_test
 
                 }
                 else if (step > a.v * a.v / 2.0 + 2.5 * a.v + 2 + Ant_V | !brake)
-                {  
+                {
                     for (int x = 1; x <= a.v; x++)
                     {
                         if (map_elements[a.X, a.Y] == -1)
@@ -774,15 +774,15 @@ namespace Ant_test
                         }
                         antstep(a);
                     }
-                    if (!brake && a.v!=0 )
+                    if (!brake && a.v != 0)
                     {
                         antstep(a);
                     }
-                    
-                    if (a.v < v_max && map_elements[a.X,a.Y]!=-1)
+
+                    if (a.v < v_max && map_elements[a.X, a.Y] != -1)
                     {
                         a.v++;
-                    
+
                         if (a.v == 1)
                         {
                             car_in_motion++;
@@ -793,7 +793,7 @@ namespace Ant_test
                 {
                     for (int x = 1; x < a.v; x++)
                     {
-                        
+
                         antstep(a);
                     }
                 }
@@ -801,12 +801,10 @@ namespace Ant_test
             ant_check_remove(ants);
             //Tar bort alla myror
             for (int i = 0; i < Remove.Count; i++)
-           {
-              ants.Remove(Remove[i]);
+            {
+                ants.Remove(Remove[i]);
             }
-            
-            foreach (Ant a in ants)
-                a.trace(out int stepppp, out bool assdabsdasdrake, out int Ant_V, this); // Que??
+
             render_To_Screen();
         }
 
@@ -827,6 +825,7 @@ namespace Ant_test
                     }
                 }
             }
+            
             //Renderar all rödöjus
             for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
             {

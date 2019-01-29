@@ -129,3 +129,16 @@ Q:\C SHARP\!Gymnasiearbete\HAHAHA\Ant test\obj\Debug\Ant test.csproj.GenerateRes
 Q:\C SHARP\!Gymnasiearbete\HAHAHA\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
 Q:\C SHARP\!Gymnasiearbete\HAHAHA\Ant test\obj\Debug\Ant test.exe
 Q:\C SHARP\!Gymnasiearbete\HAHAHA\Ant test\obj\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\bin\Debug\pic - Copy.png
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\bin\Debug\pic.png
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\bin\Debug\pic_old.png
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\bin\Debug\Ant test.exe.config
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\bin\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\bin\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.csprojAssemblyReference.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.Form1.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.csproj.GenerateResource.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.pdb
