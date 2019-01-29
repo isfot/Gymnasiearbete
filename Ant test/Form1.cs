@@ -810,22 +810,7 @@ namespace Ant_test
 
         private void render_To_Screen()
         {
-            //  //Renderar all rödöjus
-            //  for (int i = 0; i < TraficLights.Length; i++)
-            //  {
-            //      foreach (Trafikljus t in TraficLights[i])
-            //      {
-            //          if (t.grönt)
-            //          {
-            //              mapAVC.Setpixel(t.pos, Color.Green);
-            //          }
-            //          else
-            //          {
-            //              mapAVC.Setpixel(t.pos, Color.Red);
-            //          }
-            //      }
-            //  }
-
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             //Renderar all rödöjus
             Parallel.For(0, TraficLights_Left_Turn.Length, i =>
             {
@@ -847,7 +832,8 @@ namespace Ant_test
             {
                 mapAVC.Setpixel(a.getPos(), a.Color);
             });
-
+            watch.Stop();
+            richTextBox1.Text = watch.Elapsed.ToString();
             pictureBox.Image = mapAVC.get();
             new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
