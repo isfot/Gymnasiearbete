@@ -54,6 +54,7 @@
             this.Densitet_Textbox = new System.Windows.Forms.RichTextBox();
             this.button_Custom_Flow = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button_render_form = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -73,7 +74,7 @@
             // Timer_button
             // 
             this.Timer_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Timer_button.Location = new System.Drawing.Point(463, 80);
+            this.Timer_button.Location = new System.Drawing.Point(485, 80);
             this.Timer_button.Name = "Timer_button";
             this.Timer_button.Size = new System.Drawing.Size(86, 46);
             this.Timer_button.TabIndex = 1;
@@ -89,7 +90,7 @@
             // Ant_button
             // 
             this.Ant_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Ant_button.Location = new System.Drawing.Point(463, 132);
+            this.Ant_button.Location = new System.Drawing.Point(485, 132);
             this.Ant_button.Name = "Ant_button";
             this.Ant_button.Size = new System.Drawing.Size(86, 46);
             this.Ant_button.TabIndex = 2;
@@ -100,7 +101,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(463, 184);
+            this.button1.Location = new System.Drawing.Point(485, 184);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(86, 46);
             this.button1.TabIndex = 3;
@@ -134,7 +135,6 @@
             this.richTextBox3.Size = new System.Drawing.Size(190, 43);
             this.richTextBox3.TabIndex = 10;
             this.richTextBox3.Text = "";
-            this.richTextBox3.TextChanged += new System.EventHandler(this.richTextBox3_TextChanged);
             // 
             // richTextBox4
             // 
@@ -148,7 +148,7 @@
             // Reset_button
             // 
             this.Reset_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Reset_button.Location = new System.Drawing.Point(463, 236);
+            this.Reset_button.Location = new System.Drawing.Point(485, 236);
             this.Reset_button.Name = "Reset_button";
             this.Reset_button.Size = new System.Drawing.Size(86, 46);
             this.Reset_button.TabIndex = 12;
@@ -166,7 +166,6 @@
             this.checkBox1.TabIndex = 13;
             this.checkBox1.Text = "Random";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // button_UP
             // 
@@ -314,7 +313,7 @@
             // button_Custom_Flow
             // 
             this.button_Custom_Flow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Custom_Flow.Location = new System.Drawing.Point(463, 287);
+            this.button_Custom_Flow.Location = new System.Drawing.Point(485, 287);
             this.button_Custom_Flow.Margin = new System.Windows.Forms.Padding(2);
             this.button_Custom_Flow.Name = "button_Custom_Flow";
             this.button_Custom_Flow.Size = new System.Drawing.Size(86, 46);
@@ -333,11 +332,24 @@
             this.pictureBox1.TabIndex = 29;
             this.pictureBox1.TabStop = false;
             // 
+            // button_render_form
+            // 
+            this.button_render_form.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_render_form.Location = new System.Drawing.Point(382, 287);
+            this.button_render_form.Margin = new System.Windows.Forms.Padding(2);
+            this.button_render_form.Name = "button_render_form";
+            this.button_render_form.Size = new System.Drawing.Size(86, 46);
+            this.button_render_form.TabIndex = 30;
+            this.button_render_form.Text = "Render Screen";
+            this.button_render_form.UseVisualStyleBackColor = true;
+            this.button_render_form.Click += new System.EventHandler(this.button_render_form_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 516);
+            this.Controls.Add(this.button_render_form);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button_Custom_Flow);
             this.Controls.Add(this.Densitet_Textbox);
@@ -399,6 +411,7 @@
         private System.Windows.Forms.RichTextBox Densitet_Textbox;
         private System.Windows.Forms.Button button_Custom_Flow;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button_render_form;
     }
 }
 

@@ -79,6 +79,25 @@
     <Compile Include="PictureExport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RenderForm.Designer.cs">
+      <DependentUpon>RenderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RenderFormOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RenderFormOptions.Designer.cs">
+      <DependentUpon>RenderFormOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Settings_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings_Form.Designer.cs">
+      <DependentUpon>Settings_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Trafikljus.cs" />
     <EmbeddedResource Include="Dialogruta_CustomFlow.resx">
       <DependentUpon>Dialogruta_CustomFlow.cs</DependentUpon>
@@ -96,6 +115,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RenderForm.resx">
+      <DependentUpon>RenderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RenderFormOptions.resx">
+      <DependentUpon>RenderFormOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings_Form.resx">
+      <DependentUpon>Settings_Form.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

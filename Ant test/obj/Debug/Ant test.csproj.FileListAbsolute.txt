@@ -144,3 +144,6 @@ Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.exe
 Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant test.pdb
 C:\Users\joanil1ros\Dropbox\Programming\GIthub\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
 Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.RenderForm.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.Settings_Form.resources
