@@ -309,20 +309,16 @@ namespace Ant_test
             //for (int a = 0; a < 50; a++)
             for (int i = 0; i < Start_Fields.Length; i++)
             {
-                foreach (Point pos in Start_Fields[i])  //SÄTTER MYRA PÅ ALLA STATRFÄLT 
+                //SÄTTER MYRA PÅ ALLA STATRFÄLT 
+                foreach (Point pos in Start_Fields[i])  
                 {
                     ants.Add(new Ant(pos, i, colors[i], true));
                 }
             }
-
-            richTextBox3.Text = ants.Count.ToString();            //Skriver ut antalet aktiva myror
-
-            //Renderar alla myror
-            foreach (Ant x in ants) //GER TILLFÄLLIT NAMN FÖR VARJE MYRA
-            {
-                mapAVC.Setpixel(x.getPos(), x.Color); //MÅLAR UT MYRORNA
-            }
-            pictureBox.Image = mapAVC.get(); //DEN FIKTIVA BILDEN KOPIERAS TILL DET GRAFISKA PROGRAMMET 
+            //Skriver ut antalet aktiva myror
+            richTextBox3.Text = ants.Count.ToString();           
+            //renderar skärmen
+            render_To_Screen();
         }
 
         /// <summary>
@@ -392,7 +388,7 @@ namespace Ant_test
             v_step();
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
-            if (counter % 3 == 0 && checkBox1.Checked)
+            if (counter % 5 == 0 && checkBox1.Checked)
             {
                 for (int i = 0; i < 5; i++)
                 {
@@ -855,7 +851,6 @@ namespace Ant_test
         }
         private void render_To_Screen()
         {
-            mapAVC.reset_UP();
             List<Trafikljus>[] concatList = new List<Trafikljus>[4];
             for (int i = 0; i < concatList.Length; i++)
             {
@@ -868,10 +863,6 @@ namespace Ant_test
             //new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
 
-
-
-
-
         /// <summary>
         /// Tar bort alla myror och återställer 
         /// </summary>
@@ -881,8 +872,13 @@ namespace Ant_test
         {
             ants.Clear();
             karta = new bool[map.Width, map.Height];
-            //mapAVC.reset();
-            mapAVC.Upscale(10);
+            List<Trafikljus>[] concatList = new List<Trafikljus>[4];
+            for (int i = 0; i < concatList.Length; i++)
+            {
+                var all_products = TraficLights[i].Concat(TraficLights_Left_Turn[i]).ToList();
+                concatList[i] = all_products;
+            }
+            mapAVC.render(concatList, ants, White_Fields);
             pictureBox.Image = mapAVC.get();
             tid = 0;
         }
