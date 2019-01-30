@@ -120,6 +120,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\IKON.ico" />
+    <None Include="Resources\Close_Button_Invert.png" />
+    <None Include="Resources\Close_Button.png" />
     <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -121,4 +121,10 @@
   <data name="IKON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IKON.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Close_Button_Invert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close_Button_Invert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close_Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close_Button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -306,12 +306,6 @@ namespace Ant_test
         private static readonly Color[] colors = new Color[] { Color.Yellow, Color.HotPink, Color.Indigo, Color.DarkRed }; //Beroende på var dom börjhar får dom en viss färg
         private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
-            //////////////////////////////////////////////////////////////////////////////////////
-            // Har lagt till ytterligare funktionalitet för att spawna myror:
-            // CustomFlow_checkbox ger valet att spawna en myra på varje startfält eller att välja hur många på varje startfält man vill ha, genom att välja i en dialogruta. se nedan.
-            //////////////////////////////////////////////////////////////////////////////////////
-            if (!CustomFlow_checkbox.Checked) 
-            {
                 //for (int a = 0; a < 50; a++)
                 for (int i = 0; i < Start_Fields.Length; i++)
                 {
@@ -321,47 +315,53 @@ namespace Ant_test
                         ants.Add(new Ant(pos, i, colors[i], true));
                     }
                 }
-                
-            }
-            else
+        }
+        public void add_ants()
+        {
+            for (int i = 0; i < flow.Length; i++) // flow är en array där informationen hur många bilar man vill skicka ut sparas.
             {
-                
-                Form f = new Dialogruta_CustomFlow(); // Skapar en dialogruta enligt filen CustomFlow.cs filen
-                f.ShowDialog(this); // Öppnar dialogrutan
-                for (int i=0; i < flow.Length; i++) // flow är en array där informationen hur många bilar man vill skicka ut sparas.
+                switch (i % 4)
                 {
-                    switch (i % 4)
-                    {
-                        case 1:
-                            for (int h = 0; h < flow[i]; h++) // flow[i] är hur många bilar som skall skickas ut.
-                            {
-                                ants.Add (new Ant(Start_Fields[1][(int)(i / 4)],1, colors[i%4], true));
-                            }
-                            break;
-                        case 2:
-                            for (int h = 0; h < flow[i]; h++)
-                            {
-                                ants.Add(new Ant(Start_Fields[2][(int)(i  / 4)], 2, colors[i%4], true));
-                            }
-                            break;
-                        case 3:
-                            for (int h = 0; h < flow[i]; h++)
-                            {
-                                ants.Add(new Ant(Start_Fields[3][(int)(i  / 4)], 3, colors[i%4], true));
-                            }
-                            break;
-                        case 0:
-                            for (int h = 0; h < flow[i]; h++)
-                            {
-                                ants.Add(new Ant(Start_Fields[0][(int)(i  / 4)], 0, colors[i%4], true));
-                            }
-                            break;
-                    }
-                   
+                    case 1:
+                        for (int h = 0; h < flow[i]; h++) // flow[i] är hur många bilar som skall skickas ut.
+                        {
+                            ants.Add(new Ant(Start_Fields[1][(int)(i / 4)], 1, colors[i % 4], true));
+                        }
+                        break;
+                    case 2:
+                        for (int h = 0; h < flow[i]; h++)
+                        {
+                            ants.Add(new Ant(Start_Fields[2][(int)(i / 4)], 2, colors[i % 4], true));
+                        }
+                        break;
+                    case 3:
+                        for (int h = 0; h < flow[i]; h++)
+                        {
+                            ants.Add(new Ant(Start_Fields[3][(int)(i / 4)], 3, colors[i % 4], true));
+                        }
+                        break;
+                    case 0:
+                        for (int h = 0; h < flow[i]; h++)
+                        {
+                            ants.Add(new Ant(Start_Fields[0][(int)(i / 4)], 0, colors[i % 4], true));
+                        }
+                        break;
                 }
+
             }
+        }
+
+        private void button_Custom_Flow_Click(object sender, EventArgs e)
+        {
+            //////////////////////////////////////////////////////////////////////////////////////
+            // Har lagt till ytterligare funktionalitet för att spawna myror:
+            // CustomFlow_checkbox ger valet att spawna en myra på varje startfält eller att välja hur många på varje startfält man vill ha, genom att välja i en dialogruta. se nedan.
+            //////////////////////////////////////////////////////////////////////////////////////
+            Form f = new Dialogruta_CustomFlow(this); // Skapar en dialogruta enligt filen CustomFlow.cs filen
+            f.Show(); // Öppnar dialogrutan
+
             //Skriver ut antalet aktiva myror
-            richTextBox3.Text = ants.Count.ToString();           
+            richTextBox3.Text = ants.Count.ToString();
             //renderar skärmen
             render_To_Screen();
         }
@@ -928,14 +928,7 @@ namespace Ant_test
             tid = 0;
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ants[1].trace(out int step, out bool brake, out int Ant_V, this);
-            richTextBox1.Text = step.ToString() + "     " + brake.ToString();
-            pictureBox.Image = mapAVC.get();
-        }
-
-
+        
         #region KOD SOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
         static Ant independent;
         private void button8_Click(object sender, EventArgs e)
@@ -1017,6 +1010,7 @@ namespace Ant_test
         {
 
         }
+
 
     }
     #endregion

@@ -52,7 +52,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Densitet_Textbox = new System.Windows.Forms.RichTextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button_Custom_Flow = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.CustomFlow_checkbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -312,17 +312,17 @@
             this.Densitet_Textbox.TabIndex = 27;
             this.Densitet_Textbox.Text = "";
             // 
-            // button3
+            // button_Custom_Flow
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(463, 287);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(86, 39);
-            this.button3.TabIndex = 28;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button_Custom_Flow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Custom_Flow.Location = new System.Drawing.Point(463, 287);
+            this.button_Custom_Flow.Margin = new System.Windows.Forms.Padding(2);
+            this.button_Custom_Flow.Name = "button_Custom_Flow";
+            this.button_Custom_Flow.Size = new System.Drawing.Size(86, 46);
+            this.button_Custom_Flow.TabIndex = 28;
+            this.button_Custom_Flow.Text = "Custom Flow";
+            this.button_Custom_Flow.UseVisualStyleBackColor = true;
+            this.button_Custom_Flow.Click += new System.EventHandler(this.button_Custom_Flow_Click);
             // 
             // pictureBox1
             // 
@@ -336,12 +336,13 @@
             // 
             // CustomFlow_checkbox
             // 
+            this.CustomFlow_checkbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CustomFlow_checkbox.AutoSize = true;
-            this.CustomFlow_checkbox.Location = new System.Drawing.Point(556, 142);
+            this.CustomFlow_checkbox.Location = new System.Drawing.Point(390, 247);
             this.CustomFlow_checkbox.Name = "CustomFlow_checkbox";
-            this.CustomFlow_checkbox.Size = new System.Drawing.Size(89, 17);
+            this.CustomFlow_checkbox.Size = new System.Drawing.Size(61, 17);
             this.CustomFlow_checkbox.TabIndex = 30;
-            this.CustomFlow_checkbox.Text = "Custom_Flow";
+            this.CustomFlow_checkbox.Text = "Custom";
             this.CustomFlow_checkbox.UseVisualStyleBackColor = true;
             // 
             // Form1
@@ -351,7 +352,7 @@
             this.ClientSize = new System.Drawing.Size(583, 516);
             this.Controls.Add(this.CustomFlow_checkbox);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button_Custom_Flow);
             this.Controls.Add(this.Densitet_Textbox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -409,7 +410,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox Densitet_Textbox;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button_Custom_Flow;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox CustomFlow_checkbox;
     }
