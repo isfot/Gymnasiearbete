@@ -54,6 +54,7 @@
             this.Densitet_Textbox = new System.Windows.Forms.RichTextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.CustomFlow_checkbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -315,7 +316,7 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Location = new System.Drawing.Point(463, 287);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(86, 39);
             this.button3.TabIndex = 28;
@@ -333,11 +334,22 @@
             this.pictureBox1.TabIndex = 29;
             this.pictureBox1.TabStop = false;
             // 
+            // CustomFlow_checkbox
+            // 
+            this.CustomFlow_checkbox.AutoSize = true;
+            this.CustomFlow_checkbox.Location = new System.Drawing.Point(556, 142);
+            this.CustomFlow_checkbox.Name = "CustomFlow_checkbox";
+            this.CustomFlow_checkbox.Size = new System.Drawing.Size(89, 17);
+            this.CustomFlow_checkbox.TabIndex = 30;
+            this.CustomFlow_checkbox.Text = "Custom_Flow";
+            this.CustomFlow_checkbox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 516);
+            this.Controls.Add(this.CustomFlow_checkbox);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.Densitet_Textbox);
@@ -399,6 +411,7 @@
         private System.Windows.Forms.RichTextBox Densitet_Textbox;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox CustomFlow_checkbox;
     }
 }
 
