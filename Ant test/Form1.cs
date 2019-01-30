@@ -21,6 +21,7 @@ namespace Ant_test
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point>[] Turn_fields_Left_Diagonal = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
+        private List<Point> White_Fields = new List<Point>();
         private static readonly int v_max = 5;
 
         private static double occupiable_fields;
@@ -269,6 +270,7 @@ namespace Ant_test
                             break;
                         case -1: // Hittar alla körbara fält.
                             occupiable_fields++;
+                            White_Fields.Add(new Point(x, y));
                             break;
                     }
                 }
@@ -278,6 +280,7 @@ namespace Ant_test
         private void hide_pixel(int x, int y)  //GÖR VÄGARNA I GRAFIKEN VITA (TAR INFO FRÅN STARTFIELDFINDER)
         {
             map.SetPixel(x, y, Color.White);
+            White_Fields.Add(new Point(x, y));
         }
         /// <summary>
         /// Skalar upp kartan och sätter den i en picturebox
@@ -718,8 +721,8 @@ namespace Ant_test
 
         private void antstep(Ant s)
         {
-            mapAVC.reset();
-            mapAVC.Upscale(1);
+            //mapAVC.reset();
+            //mapAVC.Upscale(1);
 
             int a = ants.IndexOf(s);
             //Kollar ifall myran står på vänstersväng
@@ -741,8 +744,8 @@ namespace Ant_test
         private void v_step()
         {
             Remove = new List<Ant>();
-            mapAVC.reset();
-            mapAVC.Upscale(1);
+            //mapAVC.reset();
+            //mapAVC.Upscale(1);
             foreach (Ant a in ants)
             {
                 a.trace(out int step, out bool brake, out int Ant_V, this);
@@ -808,7 +811,7 @@ namespace Ant_test
             render_To_Screen();
         }
 
-        private void render_To_Screen()
+        private void render_To_Screen_old()
         {
             //Renderar all rödöjus
             for (int i = 0; i < TraficLights.Length; i++)
@@ -825,7 +828,7 @@ namespace Ant_test
                     }
                 }
             }
-            
+
             //Renderar all rödöjus
             for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
             {
@@ -850,7 +853,20 @@ namespace Ant_test
             pictureBox.Image = mapAVC.get();
             new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
+        private void render_To_Screen()
+        {
+            mapAVC.reset_UP();
+            List<Trafikljus>[] concatList = new List<Trafikljus>[4];
+            for (int i = 0; i < concatList.Length; i++)
+            {
+                var all_products = TraficLights[i].Concat(TraficLights_Left_Turn[i]).ToList();
+                concatList[i] = all_products;
+            }
+            mapAVC.render(concatList, ants, White_Fields);
 
+            pictureBox.Image = mapAVC.get();
+            //new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
+        }
 
 
 
@@ -865,7 +881,7 @@ namespace Ant_test
         {
             ants.Clear();
             karta = new bool[map.Width, map.Height];
-            mapAVC.reset();
+            //mapAVC.reset();
             mapAVC.Upscale(10);
             pictureBox.Image = mapAVC.get();
             tid = 0;
