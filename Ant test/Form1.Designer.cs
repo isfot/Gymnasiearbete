@@ -54,7 +54,6 @@
             this.Densitet_Textbox = new System.Windows.Forms.RichTextBox();
             this.button_Custom_Flow = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.CustomFlow_checkbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -334,23 +333,11 @@
             this.pictureBox1.TabIndex = 29;
             this.pictureBox1.TabStop = false;
             // 
-            // CustomFlow_checkbox
-            // 
-            this.CustomFlow_checkbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CustomFlow_checkbox.AutoSize = true;
-            this.CustomFlow_checkbox.Location = new System.Drawing.Point(390, 247);
-            this.CustomFlow_checkbox.Name = "CustomFlow_checkbox";
-            this.CustomFlow_checkbox.Size = new System.Drawing.Size(61, 17);
-            this.CustomFlow_checkbox.TabIndex = 30;
-            this.CustomFlow_checkbox.Text = "Custom";
-            this.CustomFlow_checkbox.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 516);
-            this.Controls.Add(this.CustomFlow_checkbox);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button_Custom_Flow);
             this.Controls.Add(this.Densitet_Textbox);
@@ -412,7 +399,6 @@
         private System.Windows.Forms.RichTextBox Densitet_Textbox;
         private System.Windows.Forms.Button button_Custom_Flow;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.CheckBox CustomFlow_checkbox;
     }
 }
 

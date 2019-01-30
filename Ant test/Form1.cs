@@ -355,7 +355,7 @@ namespace Ant_test
         {
             //////////////////////////////////////////////////////////////////////////////////////
             // Har lagt till ytterligare funktionalitet för att spawna myror:
-            // CustomFlow_checkbox ger valet att spawna en myra på varje startfält eller att välja hur många på varje startfält man vill ha, genom att välja i en dialogruta. se nedan.
+            // CustomFlow_checkbox (heh filip var här och tog bort den :)) ger valet att spawna en myra på varje startfält eller att välja hur många på varje startfält man vill ha, genom att välja i en dialogruta. se nedan.
             //////////////////////////////////////////////////////////////////////////////////////
             Form f = new Dialogruta_CustomFlow(this); // Skapar en dialogruta enligt filen CustomFlow.cs filen
             f.Show(); // Öppnar dialogrutan
