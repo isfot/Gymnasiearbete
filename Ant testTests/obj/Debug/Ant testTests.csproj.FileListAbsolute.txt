@@ -1,0 +1,20 @@
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic - Copy.png
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic.png
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic_old.png
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant testTests.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant testTests.pdb
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant test.exe
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant test.pdb
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant test.exe.config
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csprojAssemblyReference.cache
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csproj.CoreCompileInputs.cache
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csproj.CopyComplete
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.dll
+D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.pdb
