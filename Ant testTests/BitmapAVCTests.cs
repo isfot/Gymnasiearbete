@@ -14,7 +14,6 @@ namespace Ant_test.Tests
         [TestMethod()]
         public void BitmapAVCTest()
         {
-            Assert.Fail("Failed hehehehe");
             BitmapAVC A;
             try
             {
