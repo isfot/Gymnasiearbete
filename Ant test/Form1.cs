@@ -35,6 +35,9 @@ namespace Ant_test
         private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
+
+        public bool renderFormActive = false;
+        private RenderForm renderForm;
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -306,15 +309,15 @@ namespace Ant_test
         private static readonly Color[] colors = new Color[] { Color.Yellow, Color.HotPink, Color.Indigo, Color.DarkRed }; //Beroende på var dom börjhar får dom en viss färg
         private void Ant_button_Click(object sender, EventArgs e) // Metod som skapar myror på alla startfält
         {
-                //for (int a = 0; a < 50; a++)
-                for (int i = 0; i < Start_Fields.Length; i++)
+            //for (int a = 0; a < 50; a++)
+            for (int i = 0; i < Start_Fields.Length; i++)
+            {
+                //SÄTTER MYRA PÅ ALLA STATRFÄLT 
+                foreach (Point pos in Start_Fields[i])
                 {
-                    //SÄTTER MYRA PÅ ALLA STATRFÄLT 
-                    foreach (Point pos in Start_Fields[i])
-                    {
-                        ants.Add(new Ant(pos, i, colors[i], true));
-                    }
+                    ants.Add(new Ant(pos, i, colors[i], true));
                 }
+            }
         }
         public void add_ants()
         {
@@ -905,6 +908,10 @@ namespace Ant_test
             mapAVC.render(concatList, ants, White_Fields);
 
             pictureBox.Image = mapAVC.get();
+            if (renderFormActive)
+            {
+                renderForm.set(mapAVC.get());
+            }
             //new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
 
@@ -928,7 +935,7 @@ namespace Ant_test
             tid = 0;
         }
 
-        
+
         #region KOD SOM INTE SKA VARA MED I PUBLICERADE VERISIONEN
         static Ant independent;
         private void button8_Click(object sender, EventArgs e)
@@ -1000,18 +1007,14 @@ namespace Ant_test
         {
             pictureBox.Image = mapAVC.get();
         }
+        #endregion     
 
-        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        private void button_render_form_Click(object sender, EventArgs e)
         {
-
+            if (!renderFormActive)
+                renderForm = new RenderForm(this);
+            renderForm.Show();
         }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
-    #endregion
+    
 }

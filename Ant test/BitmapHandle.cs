@@ -12,6 +12,8 @@ namespace Ant_test
         private readonly Bitmap _Resetmap; // Ursprungskartan för återställning
         private readonly Bitmap _Resetmap_Upscale; // Ursprungskartan för återställning
         private int MAPscale = 0; // Skalningsfaktor så att rätt antal pixlar ifylls i den nyskapade bitmapen
+        public int scale { get { return MAPscale; } }
+
         /// <summary>
         /// Initierar en ny BitmapAVC
         /// </summary>
@@ -45,14 +47,14 @@ namespace Ant_test
         {
             return _bitmap;
         }
-        public void render(List<Trafikljus>[] Trafic_lights, List<Ant> ants,List<Point> White_Field)
+        public void render(List<Trafikljus>[] Trafic_lights, List<Ant> ants, List<Point> White_Field)
         {
-            
+
             unsafe
             {
                 BitmapData bitmapData = _bitmap.LockBits(new Rectangle(0, 0, _bitmap.Width, _bitmap.Height), ImageLockMode.ReadWrite, _bitmap.PixelFormat);
 
-                int bytesPerPixel = Bitmap.GetPixelFormatSize(_bitmap.PixelFormat) /8;
+                int bytesPerPixel = Bitmap.GetPixelFormatSize(_bitmap.PixelFormat) / 8;
                 int heightInPixels = _bitmap.Height;
                 int widthInBytes = bitmapData.Width * bytesPerPixel;
 
@@ -83,7 +85,7 @@ namespace Ant_test
                     {
                         if (t.grönt)
                         {
-                            for(int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
+                            for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
                             {
                                 byte* currentLine = PtrFirstPixel + (t.pos.Y * MAPscale * bitmapData.Stride) + (y_Scale * bitmapData.Stride);
                                 for (int x_Scale = 0; x_Scale < MAPscale; x_Scale++)
