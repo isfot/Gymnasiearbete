@@ -26,7 +26,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: 'AllowUnsafeBlocks="true"'
+    msbuildArgs: '/p:AllowUnsafeBlocks="true"'
 
 - task: VSTest@2
   inputs:
