@@ -147,3 +147,7 @@ Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.Dialogruta_CustomF
 Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.RenderForm.resources
 Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
 Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.Settings_Form.resources
+D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
+D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.RenderForm.resources
+D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.Settings_Form.resources

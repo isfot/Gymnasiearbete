@@ -22,21 +22,18 @@ namespace Ant_test
         {
             _bitmap = input; // Skapar en AVC bitmap enligt den bitmap input vi angett
             _Resetmap = input; // Skapar en backup av Bitmap för att kunna återställa till ursprunlig bitmap.
-            MAPscale = 10;
             _Resetmap_Upscale = privUpscale(MAPscale, _bitmap);
         }
         public BitmapAVC(Image input) // Overload, för att kunna göra som ovanstående konstruktor fast med annan input
         {
             _bitmap = new Bitmap(input);
             _Resetmap = new Bitmap(input);
-            MAPscale = 10;
             _Resetmap_Upscale = privUpscale(MAPscale, _bitmap);
         }
         public BitmapAVC(string Path)//Overload, för att kunna göra som ovanstående konstruktor fast med annan input
         {
             _bitmap = new Bitmap(Image.FromFile(Path)); // Använder string som filnamn
             _Resetmap = new Bitmap(Image.FromFile(Path));
-            MAPscale = 10;
             _Resetmap_Upscale = privUpscale(MAPscale, _bitmap);
         }
         /// <summary>
@@ -273,7 +270,7 @@ namespace Ant_test
         /// <returns></returns>
         public Color GetPixel(Point input)
         {
-            return _Resetmap.GetPixel(input.X, input.Y);
+            return _bitmap.GetPixel(input.X * MAPscale, input.Y * MAPscale);
         }
         /// <summary>
         /// Hämtar en pixelfärg från bitmapen
@@ -283,7 +280,7 @@ namespace Ant_test
         /// <returns></returns>
         public Color GetPixel(int X, int Y)
         {
-            return _bitmap.GetPixel(X, Y);
+            return _bitmap.GetPixel(X * MAPscale, Y * MAPscale);
         }
 
     }
