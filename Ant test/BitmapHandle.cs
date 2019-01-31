@@ -49,7 +49,6 @@ namespace Ant_test
         }
         public void render(List<Trafikljus>[] Trafic_lights, List<Ant> ants, List<Point> White_Field)
         {
-
             unsafe
             {
                 BitmapData bitmapData = _bitmap.LockBits(new Rectangle(0, 0, _bitmap.Width, _bitmap.Height), ImageLockMode.ReadWrite, _bitmap.PixelFormat);
@@ -57,7 +56,7 @@ namespace Ant_test
                 int bytesPerPixel = Bitmap.GetPixelFormatSize(_bitmap.PixelFormat) / 8;
                 int heightInPixels = _bitmap.Height;
                 int widthInBytes = bitmapData.Width * bytesPerPixel;
-
+                //Pointer till bitmapadressen
                 byte* PtrFirstPixel = (byte*)bitmapData.Scan0;
 
                 //Pointer [x] = Blue; [x + 1] = Green; [x + 2] = Red;
@@ -66,7 +65,9 @@ namespace Ant_test
                 {
                     for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
                     {
+                        //pointer till linen som ska fyllas i
                         byte* currentLine = PtrFirstPixel + (w.Y * MAPscale * bitmapData.Stride) + (y_Scale * bitmapData.Stride);
+                        //För varje x kordinat
                         for (int x_Scale = 0; x_Scale < MAPscale; x_Scale++)
                         {
                             int x = bytesPerPixel * ((w.X) * MAPscale + x_Scale);
