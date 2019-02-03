@@ -14,7 +14,7 @@ namespace Ant_test
         public int X { get { return _pos.X; } }
         public int Y { get { return _pos.Y; } }
         public Point Pos { get { return _pos; } }
-       // private bool affect_Fields = true; Variabeln används ej? Om så, vänligen ta bort denna rad.
+        // private bool affect_Fields = true; Variabeln används ej? Om så, vänligen ta bort denna rad.
         public int _dir;        //Variabel för myrans riktning
         public Color Color;     //Variabel för myrans färg
         private readonly Color ORGcolor; // "orginalfärgen"
@@ -142,10 +142,15 @@ namespace Ant_test
                     _pos.X--;
                     break;
             }
-            if (Form1.map_elements[getPosX(), getPosY()] == -1) // ny kod
+            try
             {
-                v = 0;
+                if (Form1.map_elements[getPosX(), getPosY()] == -1) // ny kod
+                {
+                    v = 0;
+                }
             }
+            catch { v = 0; }
+
             if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
                 Form1.karta[getPos().X, getPos().Y] = true;
