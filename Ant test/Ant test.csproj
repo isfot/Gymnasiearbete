@@ -52,6 +52,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +66,12 @@
   <ItemGroup>
     <Compile Include="Ant.cs" />
     <Compile Include="BitmapHandle.cs" />
+    <Compile Include="DataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm.Designer.cs">
+      <DependentUpon>DataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogruta_CustomFlow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +107,9 @@
       <DependentUpon>Settings_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Trafikljus.cs" />
+    <EmbeddedResource Include="DataForm.resx">
+      <DependentUpon>DataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogruta_CustomFlow.resx">
       <DependentUpon>Dialogruta_CustomFlow.cs</DependentUpon>
     </EmbeddedResource>
