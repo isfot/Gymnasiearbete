@@ -152,3 +152,7 @@ D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.RenderForm.resour
 D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
 D:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.Settings_Form.resources
 Q:\C SHARP\!Gymnasiearbete\MASTER\Ant test\obj\Debug\Ant_test.DataForm.resources
+C:\Users\joanil1ros\Dropbox\Programming\Github\Ant test\obj\Debug\Ant_test.DataForm.resources
+C:\Users\joanil1ros\Dropbox\Programming\Github\Ant test\obj\Debug\Ant_test.RenderForm.resources
+C:\Users\joanil1ros\Dropbox\Programming\Github\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+C:\Users\joanil1ros\Dropbox\Programming\Github\Ant test\obj\Debug\Ant_test.Settings_Form.resources
