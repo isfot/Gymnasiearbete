@@ -11,7 +11,7 @@ namespace Ant_test
     public class Trafikljus
     {
         public Point pos;
-        public bool grönt;
+        public int grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
         private readonly int v_max; // Globalt hastighetsmaximum
 
@@ -44,32 +44,33 @@ namespace Ant_test
 
         }
 
-       
-        public void Rödljus() 
+
+        public void Rödljus()
         {
-            grönt = false;
+
+            grönt = 0;
             switch (dir) //utifrån vilken riktning måste den stänga av olika rutor
             {
                 case 2:
-                    for (int i = 0; i <= 2; i++) // Stänger 2 rutor innan sin egen position.
+                    for (int i = 0; i <= 0; i++) // Stänger 2 rutor innan sin egen position.
                     {
-                        Form1.map_elements[pos.X, pos.Y - i] = 1; 
+                        Form1.map_elements[pos.X, pos.Y - i] = 1;
                     }
                     break;
                 case 1:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X - i, pos.Y] = 1;
                     }
                     break;
                 case 0:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X, pos.Y + i] = 1;
                     }
                     break;
                 case 3:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X + i, pos.Y] = 1;
                     }
@@ -83,29 +84,60 @@ namespace Ant_test
         }
         public void Gröntljus() // Metoden kräver kod från andra delar av programmet.
         {
-            grönt = true; 
+            grönt = 1;
             switch (dir)  //tar bort det som rött gjorde 
             {
                 case 2:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X, pos.Y - i] = 2;
                     }
                     break;
                 case 1:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X - i, pos.Y] = 2;
                     }
                     break;
                 case 0:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X, pos.Y + i] = 2;
                     }
                     break;
                 case 3:
-                    for (int i = 0; i <= 2; i++)
+                    for (int i = 0; i <= 0; i++)
+                    {
+                        Form1.map_elements[pos.X + i, pos.Y] = 2;
+                    }
+                    break;
+            }
+        }
+        public void Gultljus()
+        {
+            grönt = 2;
+            switch (dir)  //tar bort det som rött gjorde 
+            {
+                case 2:
+                    for (int i = 0; i <= 0; i++)
+                    {
+                        Form1.map_elements[pos.X, pos.Y - i] = 3;
+                    }
+                    break;
+                case 1:
+                    for (int i = 0; i <= 0; i++)
+                    {
+                        Form1.map_elements[pos.X - i, pos.Y] = 3;
+                    }
+                    break;
+                case 0:
+                    for (int i = 0; i <= 0; i++)
+                    {
+                        Form1.map_elements[pos.X, pos.Y + i] = 3;
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i <= 0; i++)
                     {
                         Form1.map_elements[pos.X + i, pos.Y] = 2;
                     }

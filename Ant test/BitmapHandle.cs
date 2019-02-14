@@ -13,6 +13,7 @@ namespace Ant_test
         private readonly Bitmap _Resetmap_Upscale; // Ursprungskartan för återställning
         private int MAPscale = 0; // Skalningsfaktor så att rätt antal pixlar ifylls i den nyskapade bitmapen
         public int scale { get { return MAPscale; } }
+        //public Bitmap get { get { return _bitmap; } }
 
         /// <summary>
         /// Initierar en ny BitmapAVC
@@ -23,27 +24,30 @@ namespace Ant_test
             _bitmap = input; // Skapar en AVC bitmap enligt den bitmap input vi angett
             _Resetmap = input; // Skapar en backup av Bitmap för att kunna återställa till ursprunlig bitmap.
             _Resetmap_Upscale = privUpscale(MAPscale, _bitmap);
+            MAPscale = 1;
         }
         public BitmapAVC(Image input) // Overload, för att kunna göra som ovanstående konstruktor fast med annan input
         {
             _bitmap = new Bitmap(input);
             _Resetmap = new Bitmap(input);
             _Resetmap_Upscale = privUpscale(MAPscale, _bitmap);
+            MAPscale = 1;
         }
         public BitmapAVC(string Path)//Overload, för att kunna göra som ovanstående konstruktor fast med annan input
         {
             _bitmap = new Bitmap(Image.FromFile(Path)); // Använder string som filnamn
             _Resetmap = new Bitmap(Image.FromFile(Path));
             _Resetmap_Upscale = privUpscale(MAPscale, _bitmap);
+            MAPscale = 1;
         }
         /// <summary>
         /// Hämtar bitmapen från klassen
         /// </summary>
         /// <returns>Upskalad Bitmap</returns>
-        public Bitmap get() // Metod för att hämta bitmapen
-        {
-            return _bitmap;
-        }
+
+
+
+
         public void render(List<Trafikljus>[] Trafic_lights, List<Ant> ants, List<Point> White_Field)
         {
             unsafe
@@ -81,7 +85,7 @@ namespace Ant_test
                 {
                     Parallel.ForEach(Trafic_lights[i], t =>
                     {
-                        if (t.grönt)
+                        if (t.grönt == 1)
                         {
                             for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
                             {
@@ -95,7 +99,7 @@ namespace Ant_test
                                 }
                             }
                         }
-                        else
+                        else if (t.grönt == 0)
                         {
                             for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
                             {
@@ -109,9 +113,22 @@ namespace Ant_test
                                 }
                             }
                         }
+                        else
+                        {
+                            for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
+                            {
+                                byte* currentLine = PtrFirstPixel + (t.pos.Y * MAPscale * bitmapData.Stride) + (y_Scale * bitmapData.Stride);
+                                for (int x_Scale = 0; x_Scale < MAPscale; x_Scale++)
+                                {
+                                    int x = bytesPerPixel * ((t.pos.X) * MAPscale + x_Scale);
+                                    currentLine[x] = 0;
+                                    currentLine[x + 1] = 255;
+                                    currentLine[x + 2] = 255;
+                                }
+                            }
+                        }
                     });
                 });
-
                 Parallel.ForEach(ants, a =>
                 {
                     for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
@@ -163,28 +180,62 @@ namespace Ant_test
         /// <summary>
         /// Skalar upp bitmap med avseende på skalan som anges
         /// </summary>
-        /// <param name="scale"></param>
+        /// <param name="scale">Skalan som bitmapen ska skalas upp med</param>
         public void Upscale(int scale) // Metod för att skala upp bitmapen (endast för grafik)
         {
             if (scale > 0)
             {
-                MAPscale = scale;
+                MAPscale *= scale;
                 Bitmap output = new Bitmap(_bitmap.Width * scale, _bitmap.Height * scale);
-                for (int x = 0; (x / scale) < _bitmap.Width; x++)
+                unsafe
                 {
-                    for (int y = 0; (y / scale) < _bitmap.Height; y++)
+                    BitmapData bitmapData_org = _bitmap.LockBits(new Rectangle(0, 0, _bitmap.Width, _bitmap.Height), ImageLockMode.ReadWrite, _bitmap.PixelFormat);
+                    BitmapData bitmapData_new = output.LockBits(new Rectangle(0, 0, output.Width, output.Height), ImageLockMode.ReadWrite, output.PixelFormat);
+                    int width = _bitmap.Width;
+                    int bytesPerPixel_org = Bitmap.GetPixelFormatSize(_bitmap.PixelFormat) / 8;
+                    int heightInPixels_org = _bitmap.Height;
+                    int widthInBytes_org = bitmapData_org.Width * bytesPerPixel_org;
+                    //Pointer till bitmapadressen org
+                    byte* PtrFirstPixel_org = (byte*)bitmapData_org.Scan0;
+
+                    int bytesPerPixel_new = Bitmap.GetPixelFormatSize(output.PixelFormat) / 8;
+                    int heightInPixels_new = output.Height;
+                    int widthInBytes_new = bitmapData_new.Width * bytesPerPixel_new;
+                    //Pointer till bitmapadressen new
+                    byte* PtrFirstPixel_new = (byte*)bitmapData_new.Scan0;
+                    Parallel.For(0, (width * heightInPixels_org), pixel =>
                     {
-                        output.SetPixel(x, y, _bitmap.GetPixel(x / scale, y / scale));
-                    }
+                        byte b = PtrFirstPixel_org[(pixel * bytesPerPixel_org)];
+                        byte g = PtrFirstPixel_org[(pixel * bytesPerPixel_org) + 1];
+                        byte r = PtrFirstPixel_org[(pixel * bytesPerPixel_org) + 2];
+                        byte* pointer_to_set = PtrFirstPixel_new + pixel * bytesPerPixel_org * MAPscale + widthInBytes_new * (pixel / width) * 9;
+                        Parallel.For(0, MAPscale, yy =>
+                        {
+                            Parallel.For(0, MAPscale, xx =>
+                            {
+                                pointer_to_set[xx * bytesPerPixel_new + yy * widthInBytes_new] = b;
+                                pointer_to_set[xx * bytesPerPixel_new + 1 + yy * widthInBytes_new] = g;
+                                pointer_to_set[xx * bytesPerPixel_new + 2 + yy * widthInBytes_new] = r;
+                                pointer_to_set[xx * bytesPerPixel_new + 3 + yy * widthInBytes_new] = 255;
+                            });
+                        });
+                    });
+
+                    _bitmap.UnlockBits(bitmapData_org);
+                    output.UnlockBits(bitmapData_new);
                 }
                 _bitmap = output;
             }
+        }
+        public Bitmap get() // Metod för att hämta bitmapen
+        {
+            return _bitmap;
         }
         /// <summary>
         /// Private upcaler for initialization !!this will be updated to new method of renering!!
         /// </summary>
         /// <param name="scale"></param>
-        private Bitmap privUpscale(int scale, Bitmap input) // Metod för att skala upp bitmapen (endast för grafik)
+        public Bitmap privUpscale(int scale, Bitmap input) // Metod för att skala upp bitmapen (endast för grafik)
         {
             if (scale > 0)
             {
