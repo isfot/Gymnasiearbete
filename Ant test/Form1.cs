@@ -36,8 +36,14 @@ namespace Ant_test
         private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
 
+        /// <summary>
+        /// Forms
+        /// </summary>
         public bool renderFormActive = false;
         private RenderForm renderForm;
+
+        public static bool dataFormActive = false;
+        private DataForm dataForm;
         /// <summary>
         /// Inititerar UI och bitmapen
         /// </summary>
@@ -135,7 +141,6 @@ namespace Ant_test
                         case -16711681:
                             Turn_fields_Left[0].Add(new Point(x, y));
                             hide_pixel(x, y);
-                            occupiable_fields++;
                             break;
                         case -13434881:
                             Turn_fields_Left[1].Add(new Point(x, y));
@@ -888,48 +893,6 @@ namespace Ant_test
             render_To_Screen();
         }
 
-        private void render_To_Screen_old()
-        {
-            //Renderar all rödöjus
-            for (int i = 0; i < TraficLights.Length; i++)
-            {
-                foreach (Trafikljus t in TraficLights[i])
-                {
-                    if (t.grönt == 1)
-                    {
-                        mapAVC.Setpixel(t.pos, Color.Green);
-                    }
-                    else
-                    {
-                        mapAVC.Setpixel(t.pos, Color.Red);
-                    }
-                }
-            }
-
-            //Renderar all rödöjus
-            for (int i = 0; i < TraficLights_Left_Turn.Length; i++)
-            {
-                foreach (Trafikljus t in TraficLights_Left_Turn[i])
-                {
-                    if (t.grönt == 1)
-                    {
-                        mapAVC.Setpixel(t.pos, Color.Green);
-                    }
-                    else
-                    {
-                        mapAVC.Setpixel(t.pos, Color.Red);
-                    }
-                }
-            }
-            //Renderar myrorna
-            foreach (Ant a in ants)
-            {
-                mapAVC.Setpixel(a.getPos(), a.Color);
-            }
-
-            pictureBox.Image = mapAVC.get();
-            new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
-        }
         private void render_To_Screen()
         {
             List<Trafikljus>[] concatList = new List<Trafikljus>[4];
@@ -944,6 +907,10 @@ namespace Ant_test
             if (renderFormActive)
             {
                 renderForm.set(mapAVC.get());
+            }
+            if (dataFormActive)
+            {
+                dataForm.updateData(ants);
             }
             //new PictureExport(mapAVC.get(), 10, tid, baseSavePath);
         }
@@ -1048,6 +1015,13 @@ namespace Ant_test
             if (!renderFormActive)
                 renderForm = new RenderForm(this);
             renderForm.Show();
+        }
+
+        private void button_Data_Form_Click(object sender, EventArgs e)
+        {
+            dataForm = new DataForm();
+            dataFormActive = true;
+            dataForm.Show();
         }
     }
 

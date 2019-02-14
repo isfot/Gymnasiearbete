@@ -149,7 +149,7 @@ namespace Ant_test
                     v = 0;
                 }
             }
-            catch { }
+            catch { v = 0; }
 
             if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
