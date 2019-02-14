@@ -165,6 +165,10 @@ namespace Ant_test
                 {
                     return false;
                 }
+                if (Form1.map_elements[i.X, i.Y] == 3 && i.v >= 3)
+                {
+                    return false;
+                }
                 if (step != 0)
                     if (Form1.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
                     {

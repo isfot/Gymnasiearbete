@@ -104,7 +104,6 @@ namespace Ant_test
 
         private void startField_Finder()  //LOOP SOM KOLLAR TILL ALLA PIXLAR INNAN PROGRAMMET VISAR NÅT OCH VAD SOM SKA VARA PÅ DOM
         {                                   // blonderar också pixlar så att do minte syns
-
             for (int x = 0; x < map.Width; x++)
             {
                 for (int y = 0; y < map.Height; y++)
@@ -299,7 +298,7 @@ namespace Ant_test
         {
             this.Icon = Properties.Resources.IKON; // Filip ville  prompt ha en ikon i programmet ......
             pictureBox1.Image = Properties.Resources.IKON.ToBitmap(); // Ikonen skulle också finnas i Form1 ......
-            mapAVC.Upscale(10); // Skala upp kartan
+            mapAVC.Upscale(10);
             pictureBox.Image = mapAVC.get(); // Sätter kartan i picturebox
         }
         private void Timer_button_Click(object sender, EventArgs e)//Sätter på timer eventet som körs med ett intervall
@@ -381,22 +380,27 @@ namespace Ant_test
         {
             int index = rand.Next(0, 4); // Random INT-variabel mellan 0 och 4
             //Ha så kul med att försöka tyda detta :)
-            if (index == 0 && checkBox_Field_3.Checked)
+            try
             {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                if (index == 0 && checkBox_Field_3.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+                if (index == 1 && checkBox_Field_4.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+                if (index == 2 && checkBox_Field_1.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+                if (index == 3 && checkBox_Field_2.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
             }
-            if (index == 1 && checkBox_Field_4.Checked)
-            {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
-            }
-            if (index == 2 && checkBox_Field_1.Checked)
-            {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
-            }
-            if (index == 3 && checkBox_Field_2.Checked)
-            {
-                ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
-            }
+            catch { }
+
 
         }
 
@@ -414,6 +418,13 @@ namespace Ant_test
                 }
             }
         }
+        private void gul_fram(int dir)
+        {
+            foreach (Trafikljus a in TraficLights[dir])
+            {
+                a.Gultljus();
+            }
+        }
         private void TraficLight_Toggle_Turn(int dir, bool on)
         {
             foreach (Trafikljus a in TraficLights_Left_Turn[dir])
@@ -428,14 +439,23 @@ namespace Ant_test
                 }
             }
         }
+        private void gul_turn(int dir)
+        {
+            foreach (Trafikljus a in TraficLights_Left_Turn[dir])
+            {
+                a.Gultljus();
+            }
+        }
         static int counter;
         /// <summary>
         /// Timer event som körs med ett fast intervall
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        System.Diagnostics.Stopwatch watch;
         private void timer1_Tick(object sender, EventArgs e)
         {
+            watch = System.Diagnostics.Stopwatch.StartNew();
             counter++;
             //antstep();
             v_step();
@@ -457,6 +477,10 @@ namespace Ant_test
                 TraficLight_Toggle_Forward(3, false);
                 //  TraficLight_Toggle_Turn(0, true);
                 //  TraficLight_Toggle_Turn(3, false);
+            }
+            if (tid % cykel == 2)
+            {
+                //gul_fram(); TBD
             }
             if (tid % cykel == (0.25 * cykel))
             {
@@ -509,7 +533,16 @@ namespace Ant_test
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
 
             tid++;
-
+            watch.Stop();
+            richTextBox2.Text = watch.ElapsedTicks.ToString() + "\n" + timer1.Interval;
+            if (watch.Elapsed.Ticks < 20000)
+            {
+                timer1.Interval = 70;
+            }
+            else
+            {
+                timer1.Interval = 1;
+            }
         }
 
         //Step
@@ -955,7 +988,8 @@ namespace Ant_test
         }
         private void colorcheck()
         {
-            richTextBox2.Text = mapAVC.GetPixel(independent.getPos()).ToArgb().ToString();
+            //  richTextBox2.Text = mapAVC.get();
+            //  Pixel(independent.getPos()).ToArgb().ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
