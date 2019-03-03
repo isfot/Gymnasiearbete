@@ -535,14 +535,14 @@ namespace Ant_test
             tid++;
             watch.Stop();
             richTextBox2.Text = watch.ElapsedTicks.ToString() + "\n" + timer1.Interval;
-            if (watch.Elapsed.Ticks < 20000)
-            {
-                timer1.Interval = 70;
-            }
-            else
-            {
-                timer1.Interval = 1;
-            }
+            //   if (watch.Elapsed.Ticks < 20000)
+            //   {
+            //       timer1.Interval = 70;
+            //   }
+            //   else
+            //   {
+            //       timer1.Interval = 1;
+            //   }
         }
 
         //Step
@@ -831,25 +831,23 @@ namespace Ant_test
             foreach (Ant a in ants)
             {
                 a.trace(out int step, out bool brake, out int Ant_V, this);
+               
+                if ((step <= Convert.ToDouble(a.v * a.v + a.v) / 2.0 + Ant_V + 2 && Ant_V > 0) || ((step <= Convert.ToDouble(a.v * a.v + a.v) / 2.0 + 1) && Ant_V == 0) && brake) { Console.WriteLine("nu blev det fel"); }
 
-                if (step < (a.v * a.v + a.v) / 2.0 + 1 + Ant_V && brake)
+                if (((step <= Convert.ToDouble(a.v * a.v) / 2.0 + 1.5 * Convert.ToDouble(a.v) + 1.0 && Ant_V > 0) || ((step <= Convert.ToDouble(a.v * a.v) / 2.0 + 1.5 * Convert.ToDouble(a.v) ) && Ant_V == 0)) && brake)
                 {
                     for (int x = 1; x <= a.v; x++)
                     {
-
                         antstep(a);
                     }
                     if (0 < a.v)
                     {
-                        a.v--;
-                        if (a.v == 0)
-                        {
-                            car_in_motion--;
-                        }
+                        a.setAcc(-1);
+                        
                     }
 
                 }
-                else if (step > a.v * a.v / 2.0 + 2.5 * a.v + 2 + Ant_V | !brake)
+                else if (step > Convert.ToDouble(a.v * a.v) / 2.0 + 2.5 * Convert.ToDouble(a.v) + 2 || !brake)
                 {
                     for (int x = 1; x <= a.v; x++)
                     {
@@ -866,22 +864,33 @@ namespace Ant_test
 
                     if (a.v < v_max && map_elements[a.X, a.Y] != -1)
                     {
-                        a.v++;
+                        a.setAcc(1); 
 
-                        if (a.v == 1)
-                        {
-                            car_in_motion++;
-                        }
+                        
                     }
                 }
                 else
                 {
-                    for (int x = 1; x < a.v; x++)
+                    a.setAcc(0);
+                    for (int x = 1; x <= a.v; x++)
                     {
 
                         antstep(a);
                     }
                 }
+            }
+            foreach (Ant a in ants)
+            {
+                if (a.v == 0 && a.getAcc() == 1)
+                {
+                    car_in_motion++;
+                }
+                a.v += a.getAcc();
+                if (a.v == 0)
+                {
+                    car_in_motion--;
+                }
+
             }
             ant_check_remove(ants);
             //Tar bort alla myror
@@ -889,7 +898,7 @@ namespace Ant_test
             {
                 ants.Remove(Remove[i]);
             }
-
+            
             render_To_Screen();
         }
 

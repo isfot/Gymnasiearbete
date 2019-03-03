@@ -16,6 +16,7 @@ namespace Ant_test
         public Point Pos { get { return _pos; } }
         // private bool affect_Fields = true; Variabeln används ej? Om så, vänligen ta bort denna rad.
         public int _dir;        //Variabel för myrans riktning
+        public int acc; // variabel för hur den ska accelerera -1 om deacc 0 om ingen acc 1 om acc
         public Color Color;     //Variabel för myrans färg
         private readonly Color ORGcolor; // "orginalfärgen"
         public int v = 0; // Hastighet
@@ -28,6 +29,7 @@ namespace Ant_test
         /// <param name="color">Färg</param>
         public Ant(Point pos, int dir, Color color, bool RF)
         {
+            acc = 0;
             _pos = pos;
             _dir = dir;
             Color = color;
@@ -49,6 +51,7 @@ namespace Ant_test
         /// <param name="color">Färg</param>
         public Ant(int X, int Y, int dir, Color color, bool RF)
         {
+            acc = 0;
             _pos = new Point(X, Y);
             _dir = dir;
             Color = color;
@@ -63,6 +66,14 @@ namespace Ant_test
         /// <summary>
         /// Resettar färgen på myran
         /// </summary>
+        public void setAcc(int _acc)
+        {
+            acc = _acc;
+        }
+        public int getAcc() 
+        {
+            return acc;
+        }
         public void resetColor()
         {
             Color = ORGcolor;
@@ -130,15 +141,21 @@ namespace Ant_test
             switch (_dir % 4) // Switch med resten av dir mod 4.
             {
                 case 0:
+                    if (Form1.karta[getPos().X, getPos().Y-1]){ Color = Color.Aqua; }
                     _pos.Y--;
                     break;
                 case 1:
+
+                    if (Form1.karta[getPos().X+1, getPos().Y ]) { Color = Color.Aqua; }
                     _pos.X++;
                     break;
                 case 2:
+
+                    if (Form1.karta[getPos().X, getPos().Y + 1]) { Color = Color.Aqua; }
                     _pos.Y++;
                     break;
                 case 3:
+                    if (Form1.karta[getPos().X-1, getPos().Y ]) { Color = Color.Aqua; }
                     _pos.X--;
                     break;
             }
