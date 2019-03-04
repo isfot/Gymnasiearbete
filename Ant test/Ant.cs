@@ -19,6 +19,7 @@ namespace Ant_test
         public Color Color;     //Variabel för myrans färg
         private readonly Color ORGcolor; // "orginalfärgen"
         public int v = 0; // Hastighet
+        public int Acc;
         private readonly bool RealAnt; // Om myran är en faktisk myra eller en "trace" dvs om den ska ändra i map.
         /// <summary>
         /// Inizialerar en ny myra

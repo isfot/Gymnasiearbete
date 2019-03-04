@@ -18,3 +18,24 @@ D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csproj.
 D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csproj.CopyComplete
 D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.dll
 D:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.pdb
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic - Copy.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic test.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\pic_old.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant testTests.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant testTests.pdb
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant test.exe
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant test.pdb
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Ant test.exe.config
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csprojAssemblyReference.cache
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csproj.CoreCompileInputs.cache
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.csproj.CopyComplete
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.dll
+E:\C Sharp\!!GymnasieArbete\Github\Ant testTests\obj\Debug\Ant testTests.pdb

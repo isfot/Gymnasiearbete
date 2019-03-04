@@ -832,7 +832,12 @@ namespace Ant_test
             {
                 a.trace(out int step, out bool brake, out int Ant_V, this);
 
-                if (step < (a.v * a.v + a.v) / 2.0 + 1 + Ant_V && brake)
+                if (step <= Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0)
+                {
+                    Console.WriteLine("nu blev det fel");
+                }
+
+                if (step <= Convert.ToDouble(a.v * a.v + 1.5 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
                 {
                     for (int x = 1; x <= a.v; x++)
                     {
@@ -841,15 +846,12 @@ namespace Ant_test
                     }
                     if (0 < a.v)
                     {
-                        a.v--;
-                        if (a.v == 0)
-                        {
-                            car_in_motion--;
-                        }
+                        a.Acc = -1;
+
                     }
 
                 }
-                else if (step > a.v * a.v / 2.0 + 2.5 * a.v + 2 + Ant_V | !brake)
+                else if (step > Convert.ToDouble(a.v * a.v - Ant_V * Ant_V - Ant_V) / 2.0 + 2.5 * a.v + 1 | !brake)
                 {
                     for (int x = 1; x <= a.v; x++)
                     {
@@ -866,21 +868,31 @@ namespace Ant_test
 
                     if (a.v < v_max && map_elements[a.X, a.Y] != -1)
                     {
-                        a.v++;
+                        a.Acc = 1;
 
-                        if (a.v == 1)
-                        {
-                            car_in_motion++;
-                        }
+
                     }
                 }
                 else
                 {
-                    for (int x = 1; x < a.v; x++)
+                    a.Acc = 0;
+                    for (int x = 1; x <= a.v; x++)
                     {
 
                         antstep(a);
                     }
+                }
+            }
+            foreach (Ant a in ants)
+            {
+                if (a.v == 0 && a.Acc == 1)
+                {
+                    car_in_motion++;
+                }
+                a.v += a.Acc;
+                if (a.v == 0)
+                {
+                    car_in_motion--;
                 }
             }
             ant_check_remove(ants);

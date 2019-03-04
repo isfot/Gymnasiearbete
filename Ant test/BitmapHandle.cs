@@ -251,23 +251,7 @@ namespace Ant_test
             }
             return null;
         }
-        public void Upscale(string scaleSTR)//Overload som tar en string istället för en siffra
-        {
-            int scale = Convert.ToInt32(scaleSTR);
-            if (scale > 0)
-            {
-                MAPscale = scale;
-                Bitmap output = new Bitmap(_bitmap.Width * scale, _bitmap.Height * scale);
-                for (int x = 0; (x / scale) < _bitmap.Width; x++)
-                {
-                    for (int y = 0; (y / scale) < _bitmap.Height; y++)
-                    {
-                        output.SetPixel(x, y, _bitmap.GetPixel(x / scale, y / scale));
-                    }
-                }
-                _bitmap = output;
-            }
-        }
+      
         /// <summary>
         /// Sätter en pixel i den potentiellt uppskalade bitmapen
 
