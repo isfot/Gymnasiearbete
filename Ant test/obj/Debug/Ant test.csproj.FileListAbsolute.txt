@@ -172,3 +172,22 @@ E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.csproj.GenerateRe
 E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
 E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.exe
 E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.pdb
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\pic - Copy.png
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\pic test.png
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\pic.png
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\pic_old.png
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\Ant test.exe.config
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\Ant test.exe
+C:\Users\joanil1ros\Desktop\New folder\Ant test\bin\Debug\Ant test.pdb
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant test.csprojAssemblyReference.cache
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.DataForm.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.Form1.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.RenderForm.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant_test.Settings_Form.resources
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant test.csproj.GenerateResource.cache
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant test.csproj.CoreCompileInputs.cache
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant test.exe
+C:\Users\joanil1ros\Desktop\New folder\Ant test\obj\Debug\Ant test.pdb

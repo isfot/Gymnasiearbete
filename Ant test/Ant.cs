@@ -166,7 +166,7 @@ namespace Ant_test
                 {
                     return false;
                 }
-                if (Form1.map_elements[i.X, i.Y] == 3 && i.v >= 3)
+                if (Form1.map_elements[i.X, i.Y] == 3 && Convert.ToDouble(i.v * i.v + i.v) / 2.0  < step) // dvs om bilen hinner bromsa in till trafikljuset.
                 {
                     return false;
                 }

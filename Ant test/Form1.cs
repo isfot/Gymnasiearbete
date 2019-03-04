@@ -480,7 +480,14 @@ namespace Ant_test
             }
             if (tid % cykel == 2)
             {
-                //gul_fram(); TBD
+                gul_fram(1); // tbd
+                gul_fram(2);
+                gul_fram(3);
+                gul_fram(0);
+            }
+            if (tid % cykel == (0.25 * cykel)-2)
+            {
+                //gul_fram(1); // tbd
             }
             if (tid % cykel == (0.25 * cykel))
             {

@@ -10,3 +10,7 @@ Medelhastighet
 Densitet					✔
 Hastighet
 trace (!)					✔ 
+
+
+2019-03-04
+Med aritmetisk summa : gör så att traffikljusen tittar så att ingen myra kan vara i ombromsbart avstånd från trafikluset innan den slår om.
