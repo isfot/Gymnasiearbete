@@ -14,6 +14,7 @@ namespace Ant_test
         public int X { get { return _pos.X; } }
         public int Y { get { return _pos.Y; } }
         public Point Pos { get { return _pos; } }
+        public bool t_ljus = false;
         // private bool affect_Fields = true; Variabeln används ej? Om så, vänligen ta bort denna rad.
         public int _dir;        //Variabel för myrans riktning
         public Color Color;     //Variabel för myrans färg
@@ -80,18 +81,18 @@ namespace Ant_test
         /// Hämtar postion som Y värde
         /// </summary>
         /// <returns>int med X position</returns>
-        public int getPosX()
-        {
-            return _pos.X;
-        }
-        /// <summary>
-        /// Hämtar postion som Y värde
-        /// </summary>
-        /// <returns>int med Y position</returns>
-        public int getPosY()
-        {
-            return _pos.Y;
-        }
+        // public int getPosX()
+        // {
+        //     return _pos.X;
+        // }
+        // /// <summary>
+        // /// Hämtar postion som Y värde
+        // /// </summary>
+        // /// <returns>int med Y position</returns>
+        // public int getPosY()
+        // {
+        //     return _pos.Y;
+        // }
         /// <summary>
         /// Sätter en position med en point som input
         /// </summary>
@@ -145,7 +146,7 @@ namespace Ant_test
             }
             try
             {
-                if (Form1.map_elements[getPosX(), getPosY()] == -1) // ny kod
+                if (Form1.map_elements[X, Y] == -1) // ny kod
                 {
                     v = 0;
                 }
@@ -162,13 +163,14 @@ namespace Ant_test
         {
             try
             {
-                if (Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1)
+                //returne
+                if ((Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1) || (Form1.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
                 {
                     return false;
                 }
-                if (Form1.map_elements[i.X, i.Y] == 3 && i.v >= 3)
+                //  if (Form1.map_elements[i.X, i.Y] == 3 && i.v >= 3)
                 {
-                    return false;
+                    //      return false;
                 }
                 if (step != 0)
                     if (Form1.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
@@ -241,6 +243,78 @@ namespace Ant_test
             }
 
         }
+        private bool ljus_stop(Ant i)
+        {
+            try
+            {
+                if (Form1.map_elements[i.X, i.Y] == 3)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+        public int ljus()
+        {
+            int steg;
+            Ant ljus = new Ant(_pos.X, _pos.Y, _dir, Color.White, false);
+            //Kollar hur många steg till det finns ett gult ljus ivägen-
+            for (steg = 0; ljus_stop(ljus); steg++)
+            {
+                if (Form1.map_elements[ljus.X, ljus.Y] == 1 || Form1.map_elements[ljus.X, ljus.Y] == 2)
+                {
+                    return -1;
+                    
+                }
+                if (Form1.map_elements[ljus.X, ljus.Y] == -1 || ljus.Y < Form1.map.Height - 1 && ljus.Y >= 0 && ljus.X < Form1.map.Width - 1 && ljus.X >= 0)
+                {
+                    return -1;
+                    
+                }
+                for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
+                {
+                    if (Form1.Turn_fields_Left[i].Contains(ljus.Pos) && ljus._dir == i)
+                    {
+                        ljus._dir--;
+                        ljus._dir = dirOverFlowCorr(ljus._dir);
+                    }
+                }
+                for (int i = 0; i < Form1.Turn_fields_Right.Length; i++)
+                {
+                    if (Form1.Turn_fields_Right[i].Contains(ljus.Pos) && ljus._dir == i)
+                    {
+                        ljus._dir++;
+                        ljus._dir = dirOverFlowCorr(ljus._dir);
+                    }
+                }
+                //Sväng diagonalt
+                if (Form1.Turn_fields_Right_Diagonal.Contains(ljus.getPos()))
+                {
+                    ljus.step();
+                    ljus._dir = dirOverFlowCorr(ljus._dir + 1);
+                    ljus.step();
+                    ljus._dir = dirOverFlowCorr(ljus._dir - 1);
+                }
+                else if (Form1.Turn_fields_Left_Diagonal[ljus._dir].Contains(ljus.getPos()) && !Form1.is_ant_to_side_right(ljus))
+                {
+                    ljus.step();
+                    ljus._dir = dirOverFlowCorr(ljus._dir - 1);
+                    ljus.step();
+                    ljus._dir = dirOverFlowCorr(ljus._dir + 1);
+                }
+                else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
+                {
+                    ljus.step();
+                }
+            }
+            return steg;
+        }
+
         /// <summary>
         /// Korrigerar överflöden i riktningen
         /// </summary>

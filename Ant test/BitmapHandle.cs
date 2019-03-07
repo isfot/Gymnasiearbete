@@ -85,6 +85,7 @@ namespace Ant_test
                 {
                     Parallel.ForEach(Trafic_lights[i], t =>
                     {
+                        //1 är status där trafikljuset är rött
                         if (t.grönt == 1)
                         {
                             for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
@@ -99,6 +100,7 @@ namespace Ant_test
                                 }
                             }
                         }
+                        //2 är status där trafikljuset är grönt
                         else if (t.grönt == 0)
                         {
                             for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
@@ -113,7 +115,8 @@ namespace Ant_test
                                 }
                             }
                         }
-                        else
+                        //2 är status där trafikljuset är gult
+                        else if (t.grönt == 2)
                         {
                             for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
                             {
@@ -251,7 +254,7 @@ namespace Ant_test
             }
             return null;
         }
-      
+
         /// <summary>
         /// Sätter en pixel i den potentiellt uppskalade bitmapen
 
