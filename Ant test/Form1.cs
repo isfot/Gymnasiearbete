@@ -32,8 +32,8 @@ namespace Ant_test
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
         private int tid = 0; // Variabel för tid- I programmet motsvarar 1 tidsenhet=1 sekund
-        private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
-        private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
+        public static List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
+        public static List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
 
         /// <summary>
@@ -480,9 +480,9 @@ namespace Ant_test
             }
             if (tid % cykel == 2)
             {
-                gul_fram(1); // tbd
+               // gul_fram(1); // tbd
                 gul_fram(2);
-                gul_fram(3);
+                //gul_fram(3);
                 gul_fram(0);
             }
             if (tid % cykel == (0.25 * cykel)-2)
@@ -554,12 +554,100 @@ namespace Ant_test
 
         //Step
         static List<int> ClearList = new List<int>();
+        int count = 0;
+        bool s = false;
+        bool odd = false;
         private void Steg_Button_Click(object sender, EventArgs e)
         {
+            
             v_step();
             richTextBox2.Text = ants[3]._dir.ToString();
             richTextBox4.Text = tid.ToString();
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
+
+            
+            if (count == 0 && !odd)
+            {
+                TraficLight_Toggle_Forward(0, true);
+                TraficLight_Toggle_Forward(2, true);
+                TraficLight_Toggle_Forward(1, false);
+                TraficLight_Toggle_Forward(3, false);
+                //  TraficLight_Toggle_Turn(0, true);
+                //  TraficLight_Toggle_Turn(3, false);
+            }
+            if (count==0 && odd)
+            {
+                TraficLight_Toggle_Forward(0, false);
+                TraficLight_Toggle_Forward(2, false);
+                TraficLight_Toggle_Forward(1, true);
+                TraficLight_Toggle_Forward(3, true);
+                
+            }
+
+            if (count == 50 && !odd)
+            {
+                gul_fram(3);
+                gul_fram(1);
+                for (int i = 0; i < TraficLights[1].Count; i++)
+                {
+
+                    if (!TraficLights[1][i].toggle || !TraficLights[3][i].toggle)
+                    {
+                        s = false;
+                        break;
+
+                    }
+
+                }
+                if (s)
+                {
+                    count = -1;
+                }
+                else
+                {
+                    count = 49;
+                }
+            }
+            if (count == 50 && odd)
+            {
+                gul_fram(2);
+                gul_fram(0);
+                for (int i = 0; i < TraficLights[0].Count; i++)
+                {
+
+                    if (!TraficLights[0][i].toggle || !TraficLights[2][i].toggle)
+                    {
+                        s = false;
+                        break;
+
+                    }
+
+                }
+                if (s)
+                {
+                    count = -1;
+                }
+                else
+                {
+                    count = 49;
+                }
+                
+            }
+
+            
+            
+            
+
+            
+            count++;
+
+          //  if (tid % cykel == 2)
+            {
+                // gul_fram(1); // tbd
+             //   gul_fram(2);
+                //gul_fram(3);
+               // gul_fram(0);
+            }
             #region kommentar
             //          if (tid % 100 == 0)
             //          {
@@ -826,6 +914,41 @@ namespace Ant_test
             //renderar allt till skärmen
             // render_To_Screen();
         }
+        public void deACC(Ant b)
+        {
+            for (int x = 1; x <= b.v; x++)
+            {
+
+                antstep(b);
+            }
+            if (0 < b.v)
+            {
+                b.Acc = -1;
+
+            }
+        }
+        public void ACC (Ant a, bool brake)
+        {
+            for (int x = 1; x <= a.v; x++)
+            {
+                if (map_elements[a.X, a.Y] == -1)
+                {
+                    a.v = 0;
+                }
+                antstep(a);
+            }
+            if (!brake && a.v != 0)
+            {
+                antstep(a);
+            }
+
+            if (a.v < v_max && map_elements[a.X, a.Y] != -1)
+            {
+                a.Acc = 1;
+
+
+            }
+        }
 
         /// <summary>
         /// Funktion som tar gör att alla myror tar ett steg med sin acceleration
@@ -837,58 +960,68 @@ namespace Ant_test
             //mapAVC.Upscale(1);
             foreach (Ant a in ants)
             {
-                a.trace(out int step, out bool brake, out int Ant_V, this);
+                a.trace(out int step,out int step_t, out bool brake, out int Ant_V,out bool Ant_pass,out Point t_pos, this);
 
-                if (step <= Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0)
+                if (step <= Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0 && map_elements[a.X,a.Y]!=1)
                 {
                     Console.WriteLine("nu blev det fel");
                 }
-
-                if (step <= Convert.ToDouble(a.v * a.v + 1.5 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
+                if (!Ant_pass&& step_t != -1 && step_t> Convert.ToDouble(a.v * a.v + a.v) / 2.0 )
                 {
-                    for (int x = 1; x <= a.v; x++)
+                    
+                    for (int i=0; i<TraficLights[a._dir].Count;i++)
                     {
-
-                        antstep(a);
-                    }
-                    if (0 < a.v)
-                    {
-                        a.Acc = -1;
-
-                    }
-
-                }
-                else if (step > Convert.ToDouble(a.v * a.v - Ant_V * Ant_V - Ant_V) / 2.0 + 2.5 * a.v + 1 | !brake)
-                {
-                    for (int x = 1; x <= a.v; x++)
-                    {
-                        if (map_elements[a.X, a.Y] == -1)
+                        if (TraficLights[a._dir][i].pos == t_pos)
                         {
-                            a.v = 0;
+                            if (TraficLights[a._dir][i].toggle == true)
+                            {
+                                break;
+                            }
+                            TraficLights[a._dir][i].toggle = true;
+                            deACC(a);
                         }
-                        antstep(a);
+                       
+
                     }
-                    if (!brake && a.v != 0)
+                    
+                    
+                    if (TraficLights_Left_Turn[a._dir][0].pos==t_pos)
                     {
-                        antstep(a);
+                        if (TraficLights_Left_Turn[a._dir][0].toggle == true)
+                        {
+                            break;
+                        }
+                        TraficLights_Left_Turn[a._dir][0].toggle = true;
+                        deACC(a);
                     }
-
-                    if (a.v < v_max && map_elements[a.X, a.Y] != -1)
-                    {
-                        a.Acc = 1;
-
-
-                    }
+                    
+                    
                 }
-                else
+                else if ((map_elements[a.X,a.Y]==3 || map_elements[a.X,a.Y]==1) && a.v==0)
                 {
-                    a.Acc = 0;
-                    for (int x = 1; x <= a.v; x++)
+                    Console.WriteLine("Nu ska du stå still");
+                }
+                else {
+                    if (step <= Convert.ToDouble(a.v * a.v + 1.5 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
                     {
+                        deACC(a);
 
-                        antstep(a);
+                    }
+                    else if (step > Convert.ToDouble(a.v * a.v - Ant_V * Ant_V - Ant_V) / 2.0 + 2.5 * a.v + 1 | !brake)
+                    {
+                        ACC(a, brake);
+                    }
+                    else
+                    {
+                        a.Acc = 0;
+                        for (int x = 1; x <= a.v; x++)
+                        {
+
+                            antstep(a);
+                        }
                     }
                 }
+                
             }
             foreach (Ant a in ants)
             {
@@ -897,7 +1030,7 @@ namespace Ant_test
                     car_in_motion++;
                 }
                 a.v += a.Acc;
-                if (a.v == 0)
+                if (a.v == 0 && a.Acc==-1)
                 {
                     car_in_motion--;
                 }
@@ -1018,7 +1151,7 @@ namespace Ant_test
             bool is_ant;
             int length;
             //Kolla länken ifall man inte förstår https://www.dotnetperls.com/multiple-return-values kollade upp detta för en sekund sedan
-            independent.trace(out length, out is_ant, out int Ant_V, this);
+            independent.trace(out length, out int step_t,out is_ant, out int Ant_V,out bool Ant_pass,out Point t_pos, this);
             richTextBox1.Text = length.ToString() + "     " + is_ant.ToString();
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();

@@ -14,7 +14,7 @@ namespace Ant_test
         public int grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
         private readonly int v_max; // Globalt hastighetsmaximum
-
+        public bool toggle = false;
 
         /// <summary>
         /// Inizialerar ett nytt trafikljus
@@ -47,7 +47,7 @@ namespace Ant_test
 
         public void Rödljus()
         {
-
+            
             grönt = 0;
             switch (dir) //utifrån vilken riktning måste den stänga av olika rutor
             {
@@ -115,6 +115,7 @@ namespace Ant_test
         }
         public void Gultljus()
         {
+            toggle = false;
             grönt = 2;
             switch (dir)  //tar bort det som rött gjorde 
             {

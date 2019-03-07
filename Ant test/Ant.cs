@@ -21,6 +21,7 @@ namespace Ant_test
         public int v = 0; // Hastighet
         public int Acc;
         private readonly bool RealAnt; // Om myran är en faktisk myra eller en "trace" dvs om den ska ändra i map.
+        public bool t_pass = false;// en variabel för att titta om myran har passerat trafikljus.
         /// <summary>
         /// Inizialerar en ny myra
         /// </summary>
@@ -34,6 +35,7 @@ namespace Ant_test
             Color = color;
             ORGcolor = color;
             RealAnt = RF;
+           
             if (RealAnt)
             {
                 Form1.karta[pos.X, pos.Y] = true;
@@ -55,6 +57,7 @@ namespace Ant_test
             Color = color;
             ORGcolor = color;
             RealAnt = RF;
+            
             if (RealAnt)
             {
                 Form1.karta[X, Y] = true;
@@ -151,6 +154,16 @@ namespace Ant_test
                 }
             }
             catch { v = 0; }
+            try
+            {
+                if (Form1.map_elements[getPosX(), getPosY()] == 3)
+                {
+
+                    t_pass = true;
+                }
+            }
+            catch { }
+           
 
             if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
@@ -182,8 +195,26 @@ namespace Ant_test
                 return false;
             }
         }
+        private bool trace_stop_ljus (Ant i, int step)
+        {try
+            {
+                switch (Form1.map_elements[i.X, i.Y])
+                {
+                    case 1:
+                        return false;
+                    case 2:
+                        return false;
+                    case 3:
+                        return false;
+                    default:
+                        return true;
+                }
+            }
+            catch { return false; }
+            
+        }
         private static Form1 forms;
-        public void trace(out int step, out bool need_brake, out int Ant_V, Form1 inputform)
+        public void trace(out int step, out int step_t, out bool need_brake, out int Ant_V,out bool Ant_pass,out Point t_pos, Form1 inputform)
         {
             forms = inputform;
             need_brake = true;
@@ -225,11 +256,76 @@ namespace Ant_test
                 {
                     trace.step();
                 }
+                
+                }
+            step_t = -1;
+            if (!t_pass) {
+            
+            Ant trace_t = new Ant(_pos.X, _pos.Y, _dir, Color.White, false);
+            for (step_t = 0; trace_stop_ljus(trace_t, step_t); step_t++)
+            {
+                for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
+                {
+                    if (Form1.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
+                    {
+                        trace_t._dir--;
+                        trace_t._dir = dirOverFlowCorr(trace_t._dir);
+                    }
+                }
+                for (int i = 0; i < Form1.Turn_fields_Right.Length; i++)
+                {
+                    if (Form1.Turn_fields_Right[i].Contains(trace_t.Pos) && trace_t._dir == i)
+                    {
+                        trace_t._dir++;
+                        trace_t._dir = dirOverFlowCorr(trace_t._dir);
+                    }
+                }
+                //Sväng diagonalt
+                if (Form1.Turn_fields_Right_Diagonal.Contains(trace_t.getPos()))
+                {
+                    trace_t.step();
+                    trace_t._dir = dirOverFlowCorr(trace_t._dir + 1);
+                    trace_t.step();
+                    trace_t._dir = dirOverFlowCorr(trace_t._dir - 1);
+                }
+                else if (Form1.Turn_fields_Left_Diagonal[trace_t._dir].Contains(trace_t.getPos()) && !Form1.is_ant_to_side_right(trace_t))
+                {
+                    trace.step();
+                    trace_t._dir = dirOverFlowCorr(trace_t._dir - 1);
+                    trace_t.step();
+                    trace_t._dir = dirOverFlowCorr(trace_t._dir + 1);
+                }
+                else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
+                {
+                    trace_t.step();
+                }
+                    try
+                    {
+                        if (Form1.map_elements[trace_t.X, trace_t.Y] == 1 || Form1.map_elements[trace_t.X, trace_t.Y] == 2)
+                        {
+                            step_t = -1;
+                        }
+                    }
+                    catch { }
+                    
+                }
                 //Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
+            }
+            
+            if (step_t != -1 && t_pass)
+            {
+                Ant_pass = Form1.ants[Form1.ants.IndexOf(trace)].t_pass;
+                t_pos = trace.Pos;
+            }
+            else
+            {
+                Ant_pass = true;
+                t_pos = new Point(-1, -1);
             }
             try
             {
                 Ant_V = Form1.ants[Form1.ants.IndexOf(trace)].v;
+
                 if (Form1.map_elements[trace.X, trace.Y] == -1)
                 {
                     need_brake = false;
@@ -237,6 +333,7 @@ namespace Ant_test
             }
             catch
             {
+                
                 Ant_V = -1;
             }
 
