@@ -51,7 +51,6 @@ namespace Ant_test
         private double flow_ö;
 
 
-        private Bitmap graph; // en bitmap för att rita ut en graf
         private int counter = 0;
         private void graphUpdateValue(double[] value_speed, double[] value_ants)
         {

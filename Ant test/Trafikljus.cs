@@ -13,8 +13,7 @@ namespace Ant_test
         public Point pos;
         public int grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
-        private readonly int v_max; // Globalt hastighetsmaximum
-
+        public bool stop = false;
 
         /// <summary>
         /// Inizialerar ett nytt trafikljus
@@ -115,6 +114,7 @@ namespace Ant_test
         }
         public void Gultljus()
         {
+            stop = true;
             grönt = 2;
             switch (dir)  //tar bort det som rött gjorde 
             {
@@ -139,10 +139,59 @@ namespace Ant_test
                 case 3:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X + i, pos.Y] = 2;
+                        Form1.map_elements[pos.X + i, pos.Y] = 3;
                     }
                     break;
             }
+        }
+       
+        public bool slaom()
+        {
+            
+            Point p = pos;
+            while (true)
+            {
+                for (int i = 0; i < Form1.ants.Count; i++)
+                {
+                    if (Form1.ants[i].Pos == p)
+                    {
+                        
+                        if (Form1.ants[i].t_ljus)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                
+                {
+
+                    if (Form1.Start_Fields[dir].Contains(p))
+                    {
+                        return true;
+                    }
+                }
+                switch ((dir+2)%4) // Switch med resten av dir mod 4.
+                {
+                    case 0:
+                        p.Y--;
+                        break;
+                    case 1:
+                        p.X++;
+                        break;
+                    case 2:
+                        p.Y++;
+                        break;
+                    case 3:
+                        p.X--;
+                        break;
+                }
+                
+               
+                
+            }
+            
+
         }
     }
 }

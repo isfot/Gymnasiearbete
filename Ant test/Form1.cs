@@ -16,7 +16,7 @@ namespace Ant_test
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         public static List<Ant> ants = new List<Ant>(); // En lista med alla myror
         public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
-        private static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
+        public static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point>[] Turn_fields_Left_Diagonal = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
@@ -32,8 +32,8 @@ namespace Ant_test
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
         private int tid = 0; // Variabel för tid- I programmet motsvarar 1 tidsenhet=1 sekund
-        private List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
-        private List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
+        public List<Trafikljus>[] TraficLights = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
+        public List<Trafikljus>[] TraficLights_Left_Turn = new List<Trafikljus>[4] { new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>(), new List<Trafikljus>() };
         private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
 
         /// <summary>
@@ -404,13 +404,17 @@ namespace Ant_test
 
         }
 
-        private void TraficLight_Toggle_Forward(int dir, bool on)
+        private void TraficLight_Toggle_Forward(int dir, int grönt)
         {
             foreach (Trafikljus a in TraficLights[dir])
             {
-                if (on)
+                if (grönt==1)
                 {
                     a.Gröntljus();
+                }
+                else if (grönt == 2)
+                {
+                    a.Gultljus();
                 }
                 else
                 {
@@ -453,8 +457,93 @@ namespace Ant_test
         /// <param name="sender"></param>
         /// <param name="e"></param>
         System.Diagnostics.Stopwatch watch;
+       public  bool gul = false;
+       public bool odd=false;
+        public int c=0;
+        public void trafikljus()
+        {
+            if (tid == 0 && !gul)
+            {
+                if (!odd)
+                {
+                    TraficLight_Toggle_Forward(0, 1);
+                    TraficLight_Toggle_Forward(2, 1);
+                    TraficLight_Toggle_Forward(1, 0);
+                    TraficLight_Toggle_Forward(3, 0);
+
+                }
+                else
+                {
+                    TraficLight_Toggle_Forward(0, 0);
+                    TraficLight_Toggle_Forward(2, 0);
+                    TraficLight_Toggle_Forward(1, 1);
+                    TraficLight_Toggle_Forward(3, 1);
+                }
+
+                //  TraficLight_Toggle_Turn(0, true);
+                //  TraficLight_Toggle_Turn(3, false);
+            }
+            if (gul)
+            {
+                gul = false;
+                for (int i = Convert.ToInt32(odd); i < 4; i = i + 2)
+                {
+                    foreach (Trafikljus t in TraficLights[i])
+                    {
+                        if (  !t.slaom())
+                        {
+                            gul = true;
+                            break;
+                        }
+                    }
+                }
+                if (!gul)
+                {
+                    switch (odd)
+                    {
+                        case true:
+                            TraficLight_Toggle_Forward(1, 0);
+                            TraficLight_Toggle_Forward(3, 0);
+                            TraficLight_Toggle_Forward(0, 1);
+                            TraficLight_Toggle_Forward(2, 1);
+                            odd = false;
+                            break;
+                        default:
+                            TraficLight_Toggle_Forward(1, 1);
+                            TraficLight_Toggle_Forward(3, 1);
+                            TraficLight_Toggle_Forward(0, 0);
+                            TraficLight_Toggle_Forward(2, 0);
+                            odd = true;
+                            break;
+                    }
+                    c = 0;
+                }
+
+            }
+            
+
+            if (c == 50)
+            {
+                gul = true;
+                if (odd)
+                {
+                    TraficLight_Toggle_Forward(1, 2);
+                    TraficLight_Toggle_Forward(3, 2);
+                    
+                }
+                else
+                {
+                    TraficLight_Toggle_Forward(0, 2);
+                    TraficLight_Toggle_Forward(2, 2);
+                   
+                }
+            }
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
+            trafikljus();
+            if (!gul) { c++; }
+           
             watch = System.Diagnostics.Stopwatch.StartNew();
             counter++;
             //antstep();
@@ -468,70 +557,19 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-            double cykel = 200;
-            if (tid % cykel == 0)
-            {
-                TraficLight_Toggle_Forward(0, true);
-                TraficLight_Toggle_Forward(2, true);
-                TraficLight_Toggle_Forward(1, false);
-                TraficLight_Toggle_Forward(3, false);
-                //  TraficLight_Toggle_Turn(0, true);
-                //  TraficLight_Toggle_Turn(3, false);
-            }
-            if (tid % cykel == 2)
-            {
-                //gul_fram(); TBD
-            }
-            if (tid % cykel == (0.25 * cykel))
-            {
-                TraficLight_Toggle_Forward(0, false);
-                TraficLight_Toggle_Forward(2, false);
-                TraficLight_Toggle_Forward(1, false);
-                TraficLight_Toggle_Forward(3, false);
-                //  TraficLight_Toggle_Turn(1, true);
-                //  TraficLight_Toggle_Turn(0, false);
-            }
-            if (tid % cykel == (0.27 * cykel))
-            {
-                TraficLight_Toggle_Turn(0, true);
-                TraficLight_Toggle_Turn(2, true);
-            }
-            if (tid % cykel == (0.47 * cykel))
-            {
-                TraficLight_Toggle_Turn(0, false);
-                TraficLight_Toggle_Turn(2, false);
-            }
-            if (tid % cykel == (0.5 * cykel))
-            {
-                TraficLight_Toggle_Forward(0, false);
-                TraficLight_Toggle_Forward(2, false);
-                TraficLight_Toggle_Forward(1, true);
-                TraficLight_Toggle_Forward(3, true);
-                //TraficLight_Toggle_Turn(2, true);
-                //TraficLight_Toggle_Turn(1, false);
-            }
-            if (tid % cykel == (0.75 * cykel))
-            {
-                TraficLight_Toggle_Forward(0, false);
-                TraficLight_Toggle_Forward(2, false);
-                TraficLight_Toggle_Forward(1, false);
-                TraficLight_Toggle_Forward(3, false);
-                //TraficLight_Toggle_Turn(3, true);
-                //TraficLight_Toggle_Turn(2, false);
-            }
-            if (tid % cykel == (0.77 * cykel))
-            {
-                TraficLight_Toggle_Turn(1, true);
-                TraficLight_Toggle_Turn(3, true);
-            }
-            if (tid % cykel == (0.97 * cykel))
-            {
-                TraficLight_Toggle_Turn(1, false);
-                TraficLight_Toggle_Turn(3, false);
-            }
+            
+
+            
+
+            
+           
+               
+
+             
+
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
-
+            
             tid++;
             watch.Stop();
             richTextBox2.Text = watch.ElapsedTicks.ToString() + "\n" + timer1.Interval;
@@ -543,14 +581,21 @@ namespace Ant_test
             {
                 timer1.Interval = 1;
             }
+            render_To_Screen();
         }
 
         //Step
         static List<int> ClearList = new List<int>();
         private void Steg_Button_Click(object sender, EventArgs e)
         {
+            trafikljus();
+            if (!gul) { c++; }
             v_step();
-            richTextBox2.Text = ants[3]._dir.ToString();
+            if (ants.Count > 3)
+            {
+                richTextBox2.Text = ants[3]._dir.ToString();
+            }
+
             richTextBox4.Text = tid.ToString();
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
             #region kommentar
@@ -608,6 +653,7 @@ namespace Ant_test
             //
             //          }
             #endregion
+            
             tid++;
         }
         public void updateText(string text)
@@ -678,16 +724,16 @@ namespace Ant_test
             switch (Orvar._dir)
             {
                 case 0:
-                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() - 1];
+                    output = karta[Orvar.X + 1, Orvar.Y - 1];
                     break;
                 case 1:
-                    output = karta[Orvar.getPosX() + 1, Orvar.getPosY() + 1];
+                    output = karta[Orvar.X + 1, Orvar.Y + 1];
                     break;
                 case 2:
-                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() + 1];
+                    output = karta[Orvar.X - 1, Orvar.Y + 1];
                     break;
                 case 3:
-                    output = karta[Orvar.getPosX() - 1, Orvar.getPosY() - 1];
+                    output = karta[Orvar.X - 1, Orvar.Y - 1];
                     break;
             }
 
@@ -768,7 +814,7 @@ namespace Ant_test
                 passthrough = false;
             }
             //Tar steg ifall den får
-            else if (passthrough && ants[a].getPosX() < map.Width && ants[a].getPosX() > 0 && ants[a].getPosY() < map.Height && ants[a].getPosY() > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
+            else if (passthrough && ants[a].X < map.Width && ants[a].X > 0 && ants[a].Y < map.Height && ants[a].Y > 0 && !Turn_fields_Right_Diagonal.Contains(ants[a].getPos()) && map_elements[ants[a].getPos().X, ants[a].getPos().Y] != 1)
             {
                 ants[a].step();
                 ants[a].resetColor();
@@ -784,15 +830,15 @@ namespace Ant_test
         {
             foreach (Ant a in ants)
             {
-                switch (map_elements[a.getPosX(), a.getPosY()])
+                switch (map_elements[a.X, a.Y])
                 {
                     //Case röd har ihjäl myran
                     case -1://Röd
-                        karta[a.getPosX(), a.getPosY()] = false;
+                        karta[a.X, a.Y] = false;
                         Remove.Add(a);
                         break;
                 }
-                if (a.getPosX() > map.Width || a.getPosX() < 0 || a.getPosY() > map.Height || a.getPosY() < 0)
+                if (a.X > map.Width || a.X < 0 || a.Y > map.Height || a.Y < 0)
                 {
                     Remove.Add(a);
                 }
@@ -819,7 +865,56 @@ namespace Ant_test
             //renderar allt till skärmen
             // render_To_Screen();
         }
+        private void ACC(Ant a, bool brake)
+        {
+            for (int x = 1; x <= a.v; x++)
+            {
+                if (map_elements[a.X, a.Y] == -1)
+                {
+                    a.v = 0;
+                }
+                antstep(a);
+            }
+            if (!brake && a.v != 0)
+            {
+              //  antstep(a);
+            }
 
+            if (a.v < v_max && map_elements[a.X, a.Y] != -1)
+            {
+                a.Acc = 1;
+
+
+            }
+        }
+        private void DEACC(Ant a)
+        {
+            for (int x = 1; x <= a.v; x++)
+            {
+                if (map_elements[a.X, a.Y] == -1)
+                {
+                    a.v = 0;
+                }
+                antstep(a);
+            }
+            if (0 < a.v)
+            {
+                a.Acc = -1;
+
+            }
+        }
+        private void konstant(Ant a)
+        {
+            a.Acc = 0;
+            for (int x = 1; x <= a.v; x++)
+            {
+                if (map_elements[a.X, a.Y] == -1)
+                {
+                    a.v = 0;
+                }
+                antstep(a);
+            }
+        }
         /// <summary>
         /// Funktion som tar gör att alla myror tar ett steg med sin acceleration
         /// </summary>
@@ -831,57 +926,49 @@ namespace Ant_test
             foreach (Ant a in ants)
             {
                 a.trace(out int step, out bool brake, out int Ant_V, this);
-
-                if (step <= Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0)
+                if (step < Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0 && brake)
                 {
                     Console.WriteLine("nu blev det fel");
                 }
+                int steg = a.ljus();
 
-                if (step <= Convert.ToDouble(a.v * a.v + 1.5 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
+
+                if (steg == -1  || step + Convert.ToDouble((a.v * a.v) + a.v) / 2.0 > steg)
                 {
-                    for (int x = 1; x <= a.v; x++)
+                    a.t_ljus = false;
+
+                    if (step <= Convert.ToDouble(a.v * a.v + 1.5 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
                     {
 
-                        antstep(a);
+                        DEACC(a);
                     }
-                    if (0 < a.v)
+                    else if (step > Convert.ToDouble(a.v * a.v - (Ant_V * Ant_V) - Ant_V) / 2.0 + 2.5 * a.v + 1 || !brake)
                     {
-                        a.Acc = -1;
-
+                        ACC(a, brake);
                     }
-
-                }
-                else if (step > Convert.ToDouble(a.v * a.v - Ant_V * Ant_V - Ant_V) / 2.0 + 2.5 * a.v + 1 | !brake)
-                {
-                    for (int x = 1; x <= a.v; x++)
+                    else
                     {
-                        if (map_elements[a.X, a.Y] == -1)
-                        {
-                            a.v = 0;
-                        }
-                        antstep(a);
-                    }
-                    if (!brake && a.v != 0)
-                    {
-                        antstep(a);
-                    }
-
-                    if (a.v < v_max && map_elements[a.X, a.Y] != -1)
-                    {
-                        a.Acc = 1;
-
-
+                        konstant(a);
                     }
                 }
                 else
                 {
-                    a.Acc = 0;
-                    for (int x = 1; x <= a.v; x++)
+                    a.t_ljus = true;
+                    if (steg < Convert.ToDouble(a.v * a.v + 1.5 * a.v) / 2.0)
                     {
-
-                        antstep(a);
+                        DEACC(a);
+                    }
+                    else if (steg > Convert.ToDouble(a.v * a.v+5.0*a.v) / 2.0 + 1 | !brake)
+                    {
+                        ACC(a, brake);
+                    }
+                    else
+                    {
+                        konstant(a);
                     }
                 }
+
+
             }
             foreach (Ant a in ants)
             {
@@ -934,6 +1021,9 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Reset_button_Click(object sender, EventArgs e)
         {
+            gul = false;
+            odd = false;
+            c = 0;
             ants.Clear();
             karta = new bool[map.Width, map.Height];
             List<Trafikljus>[] concatList = new List<Trafikljus>[4];
@@ -960,7 +1050,7 @@ namespace Ant_test
             mapAVC.reset();
             mapAVC.Upscale(2);
             independent._dir = 0;
-            independent.setPos(new Point(independent.getPosX(), independent.getPosY() - 1));
+            independent.setPos(new Point(independent.X, independent.Y - 1));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
             colorcheck();
@@ -971,7 +1061,7 @@ namespace Ant_test
             mapAVC.reset();
             mapAVC.Upscale(2);
             independent._dir = 1;
-            independent.setPos(new Point(independent.getPosX() + 1, independent.getPosY()));
+            independent.setPos(new Point(independent.X + 1, independent.Y));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
             colorcheck();
@@ -982,7 +1072,7 @@ namespace Ant_test
             mapAVC.reset();
             mapAVC.Upscale(2);
             independent._dir = 3;
-            independent.setPos(new Point(independent.getPosX() - 1, independent.getPosY()));
+            independent.setPos(new Point(independent.X - 1, independent.Y));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
             colorcheck();
@@ -993,7 +1083,7 @@ namespace Ant_test
             mapAVC.reset();
             mapAVC.Upscale(2);
             independent._dir = 2;
-            independent.setPos(new Point(independent.getPosX(), independent.getPosY() + 1));
+            independent.setPos(new Point(independent.X, independent.Y + 1));
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
             colorcheck();
@@ -1016,7 +1106,7 @@ namespace Ant_test
             mapAVC.Setpixel(independent.getPos(), independent.Color);
             pictureBox.Image = mapAVC.get();
         }
-        public void Update()
+        public void update()
         {
             pictureBox.Image = mapAVC.get();
         }

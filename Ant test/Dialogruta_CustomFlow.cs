@@ -32,7 +32,7 @@ namespace Ant_test
                 {
                     flow[i] = Convert.ToInt32(this.Controls.Find("textbox" + (i + 1), true)[0].Text);
                 }
-                catch (Exception ex)
+                catch
                 {
                     flow[i] = 1;
                 }
