@@ -404,13 +404,17 @@ namespace Ant_test
 
         }
 
-        private void TraficLight_Toggle_Forward(int dir, bool on)
+        private void TraficLight_Toggle_Forward(int dir, int grönt)
         {
             foreach (Trafikljus a in TraficLights[dir])
             {
-                if (on)
+                if (grönt==1)
                 {
                     a.Gröntljus();
+                }
+                else if (grönt == 2)
+                {
+                    a.Gultljus();
                 }
                 else
                 {
@@ -453,6 +457,9 @@ namespace Ant_test
         /// <param name="sender"></param>
         /// <param name="e"></param>
         System.Diagnostics.Stopwatch watch;
+        bool gul = false;
+        bool odd;
+        public int c=0;
         private void timer1_Tick(object sender, EventArgs e)
         {
             watch = System.Diagnostics.Stopwatch.StartNew();
@@ -468,31 +475,90 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-            double cykel = 200;
-          
-               if (tid % cykel == 0)
-              {
-                   TraficLight_Toggle_Forward(0, true);
-                  TraficLight_Toggle_Forward(2, true);
-                  TraficLight_Toggle_Forward(1, false);
-                  TraficLight_Toggle_Forward(3, false);
-                  //  TraficLight_Toggle_Turn(0, true);
-                  //  TraficLight_Toggle_Turn(3, false);
-               }
-              if (tid % cykel == 2)
-              {
-                   gul_fram(0);
-                  gul_fram(2);
-              }
-              if (tid % cykel == (0.25 * cykel))
-              {
-                 TraficLight_Toggle_Forward(0, false);
-                 TraficLight_Toggle_Forward(2, false);
-               TraficLight_Toggle_Forward(1, false);
-                  TraficLight_Toggle_Forward(3, false);
-            //       //  TraficLight_Toggle_Turn(1, true);
-            //       //  TraficLight_Toggle_Turn(0, false);
+            
+
+            if (tid == 0 && !gul)
+            {
+                if (!odd)
+                {
+                    TraficLight_Toggle_Forward(0, 1);
+                    TraficLight_Toggle_Forward(2, 1);
+                    TraficLight_Toggle_Forward(1, 0);
+                    TraficLight_Toggle_Forward(3, 0);
+
+                }
+                else
+                {
+                    TraficLight_Toggle_Forward(0, 0);
+                    TraficLight_Toggle_Forward(2, 0);
+                    TraficLight_Toggle_Forward(1, 1);
+                    TraficLight_Toggle_Forward(3, 1);
+                }
+
+                //  TraficLight_Toggle_Turn(0, true);
+                //  TraficLight_Toggle_Turn(3, false);
             }
+            if (c == 50)
+            {
+                gul = true;
+                if (odd)
+                {
+                    TraficLight_Toggle_Forward(1, 2);
+                    TraficLight_Toggle_Forward(3, 2);
+                    
+                }
+                else
+                {
+                    TraficLight_Toggle_Forward(0, 2);
+                    TraficLight_Toggle_Forward(2, 2);
+                   
+                }
+            }
+
+            if (gul)
+            { gul = false;
+                for (int i=Convert.ToInt32(odd); i<4; i=i+2)
+                {
+                    foreach (Trafikljus t in TraficLights[i])
+                    {
+                        if (!t.slaom())
+                        {
+                            gul = true;
+                            break;
+                        }
+                    }
+                }
+                if (!gul)
+                {
+                    switch (odd)
+                    {
+                        case true:
+                            TraficLight_Toggle_Forward(1, 0);
+                            TraficLight_Toggle_Forward(3, 0);
+                            TraficLight_Toggle_Forward(0, 1);
+                            TraficLight_Toggle_Forward(2, 1);
+                            odd = false;
+                            break;
+                        default:
+                            TraficLight_Toggle_Forward(1, 0);
+                            TraficLight_Toggle_Forward(3, 0);
+                            TraficLight_Toggle_Forward(0, 1);
+                            TraficLight_Toggle_Forward(2, 1);
+                            odd = true;
+                            break;
+                    }
+                    c = 0;
+                }
+                
+            }
+            else
+            {
+                c++;
+            }
+           
+               
+
+             
             //   if (tid % cykel == (0.27 * cykel))
             //   {
             //       TraficLight_Toggle_Turn(0, true);
@@ -533,7 +599,7 @@ namespace Ant_test
             //   }
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
-
+            
             tid++;
             watch.Stop();
             richTextBox2.Text = watch.ElapsedTicks.ToString() + "\n" + timer1.Interval;
@@ -545,6 +611,7 @@ namespace Ant_test
             {
                 timer1.Interval = 1;
             }
+            
         }
 
         //Step
@@ -981,6 +1048,9 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Reset_button_Click(object sender, EventArgs e)
         {
+            gul = false;
+
+            c = 0;
             ants.Clear();
             karta = new bool[map.Width, map.Height];
             List<Trafikljus>[] concatList = new List<Trafikljus>[4];

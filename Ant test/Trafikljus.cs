@@ -144,13 +144,34 @@ namespace Ant_test
                     break;
             }
         }
-        private static Form1 forms;
+       
         public bool slaom()
         {
+            
             Point p = pos;
             for (; ; )
             {
-                switch (dir + 2 % 4) // Switch med resten av dir mod 4.
+                for (int i = 0; i < Form1.ants.Count; i++)
+                {
+                    if (Form1.ants[i].Pos == p)
+                    {
+                        
+                        if (Form1.ants[i].t_ljus)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                
+                {
+
+                    if (Form1.Start_Fields[dir].Contains(p))
+                    {
+                        return true;
+                    }
+                }
+                switch ((dir+2)%4) // Switch med resten av dir mod 4.
                 {
                     case 0:
                         p.Y--;
@@ -165,20 +186,12 @@ namespace Ant_test
                         p.X--;
                         break;
                 }
-                for (int i=0; i<Form1.ants.Count;i++)
-                {
-                    if (Form1.ants[i].Pos == p)
-                    {
-                        if (Form1.ants[i].t_ljus)
-                        {
-                            return true;
-                        }
-                        
-                    }
-                }
-                return false;
+                
+               
+                
             }
             
+
         }
     }
 }
