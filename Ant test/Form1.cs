@@ -457,26 +457,11 @@ namespace Ant_test
         /// <param name="sender"></param>
         /// <param name="e"></param>
         System.Diagnostics.Stopwatch watch;
-        bool gul = false;
-        bool odd;
+       public  bool gul = false;
+       public bool odd=false;
         public int c=0;
-        private void timer1_Tick(object sender, EventArgs e)
+        public void trafikljus()
         {
-            watch = System.Diagnostics.Stopwatch.StartNew();
-            counter++;
-            //antstep();
-            v_step();
-            richTextBox3.Text = ants.Count.ToString();
-            richTextBox4.Text = tid.ToString();
-            if (counter % 5 == 0 && checkBox1.Checked)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    spawnrandom();
-                }
-            }
-            
-
             if (tid == 0 && !gul)
             {
                 if (!odd)
@@ -498,30 +483,14 @@ namespace Ant_test
                 //  TraficLight_Toggle_Turn(0, true);
                 //  TraficLight_Toggle_Turn(3, false);
             }
-            if (c == 50)
-            {
-                gul = true;
-                if (odd)
-                {
-                    TraficLight_Toggle_Forward(1, 2);
-                    TraficLight_Toggle_Forward(3, 2);
-                    
-                }
-                else
-                {
-                    TraficLight_Toggle_Forward(0, 2);
-                    TraficLight_Toggle_Forward(2, 2);
-                   
-                }
-            }
-
             if (gul)
-            { gul = false;
-                for (int i=Convert.ToInt32(odd); i<4; i=i+2)
+            {
+                gul = false;
+                for (int i = Convert.ToInt32(odd); i < 4; i = i + 2)
                 {
                     foreach (Trafikljus t in TraficLights[i])
                     {
-                        if (!t.slaom())
+                        if (  !t.slaom())
                         {
                             gul = true;
                             break;
@@ -540,63 +509,64 @@ namespace Ant_test
                             odd = false;
                             break;
                         default:
-                            TraficLight_Toggle_Forward(1, 0);
-                            TraficLight_Toggle_Forward(3, 0);
-                            TraficLight_Toggle_Forward(0, 1);
-                            TraficLight_Toggle_Forward(2, 1);
+                            TraficLight_Toggle_Forward(1, 1);
+                            TraficLight_Toggle_Forward(3, 1);
+                            TraficLight_Toggle_Forward(0, 0);
+                            TraficLight_Toggle_Forward(2, 0);
                             odd = true;
                             break;
                     }
                     c = 0;
                 }
-                
+
             }
-            else
+            
+
+            if (c == 50)
             {
-                c++;
+                gul = true;
+                if (odd)
+                {
+                    TraficLight_Toggle_Forward(1, 2);
+                    TraficLight_Toggle_Forward(3, 2);
+                    
+                }
+                else
+                {
+                    TraficLight_Toggle_Forward(0, 2);
+                    TraficLight_Toggle_Forward(2, 2);
+                   
+                }
             }
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            trafikljus();
+            if (!gul) { c++; }
+           
+            watch = System.Diagnostics.Stopwatch.StartNew();
+            counter++;
+            //antstep();
+            v_step();
+            richTextBox3.Text = ants.Count.ToString();
+            richTextBox4.Text = tid.ToString();
+            if (counter % 5 == 0 && checkBox1.Checked)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    spawnrandom();
+                }
+            }
+            
+
+            
+
+            
            
                
 
              
-            //   if (tid % cykel == (0.27 * cykel))
-            //   {
-            //       TraficLight_Toggle_Turn(0, true);
-            //       TraficLight_Toggle_Turn(2, true);
-            //   }
-            //   if (tid % cykel == (0.47 * cykel))
-            //   {
-            //       TraficLight_Toggle_Turn(0, false);
-            //       TraficLight_Toggle_Turn(2, false);
-            //   }
-            //   if (tid % cykel == (0.5 * cykel))
-            //   {
-            //       TraficLight_Toggle_Forward(0, false);
-            //       TraficLight_Toggle_Forward(2, false);
-            //       TraficLight_Toggle_Forward(1, true);
-            //       TraficLight_Toggle_Forward(3, true);
-            //       //TraficLight_Toggle_Turn(2, true);
-            //       //TraficLight_Toggle_Turn(1, false);
-            //   }
-            //   if (tid % cykel == (0.75 * cykel))
-            //   {
-            //       TraficLight_Toggle_Forward(0, false);
-            //       TraficLight_Toggle_Forward(2, false);
-            //       TraficLight_Toggle_Forward(1, false);
-            //       TraficLight_Toggle_Forward(3, false);
-            //       //TraficLight_Toggle_Turn(3, true);
-            //       //TraficLight_Toggle_Turn(2, false);
-            //   }
-            //   if (tid % cykel == (0.77 * cykel))
-            //   {
-            //       TraficLight_Toggle_Turn(1, true);
-            //       TraficLight_Toggle_Turn(3, true);
-            //   }
-            //   if (tid % cykel == (0.97 * cykel))
-            //   {
-            //       TraficLight_Toggle_Turn(1, false);
-            //       TraficLight_Toggle_Turn(3, false);
-            //   }
+
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
             
@@ -611,13 +581,15 @@ namespace Ant_test
             {
                 timer1.Interval = 1;
             }
-            
+            render_To_Screen();
         }
 
         //Step
         static List<int> ClearList = new List<int>();
         private void Steg_Button_Click(object sender, EventArgs e)
         {
+            trafikljus();
+            if (!gul) { c++; }
             v_step();
             if (ants.Count > 3)
             {
@@ -681,6 +653,7 @@ namespace Ant_test
             //
             //          }
             #endregion
+            
             tid++;
         }
         public void updateText(string text)
@@ -1049,7 +1022,7 @@ namespace Ant_test
         private void Reset_button_Click(object sender, EventArgs e)
         {
             gul = false;
-
+            odd = false;
             c = 0;
             ants.Clear();
             karta = new bool[map.Width, map.Height];

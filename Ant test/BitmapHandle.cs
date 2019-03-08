@@ -116,7 +116,7 @@ namespace Ant_test
                             }
                         }
                         //2 är status där trafikljuset är gult
-                        else if (t.grönt == 2)
+                        else 
                         {
                             for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
                             {

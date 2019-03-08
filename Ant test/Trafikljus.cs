@@ -149,7 +149,7 @@ namespace Ant_test
         {
             
             Point p = pos;
-            for (; ; )
+            while (true)
             {
                 for (int i = 0; i < Form1.ants.Count; i++)
                 {
