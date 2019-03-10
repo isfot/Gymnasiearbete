@@ -173,7 +173,7 @@ namespace Ant_test
 
         private void DataForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Form1.dataFormActive = false;
+            MainForm.dataFormActive = false;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;

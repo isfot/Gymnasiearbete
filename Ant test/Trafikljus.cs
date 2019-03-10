@@ -11,6 +11,8 @@ namespace Ant_test
     public class Trafikljus
     {
         public Point pos;
+        public int X { get { return pos.X} }
+        public int Y { get { return pos.Y} }
         public int grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
         public bool stop = false;
@@ -53,25 +55,25 @@ namespace Ant_test
                 case 2:
                     for (int i = 0; i <= 0; i++) // Stänger 2 rutor innan sin egen position.
                     {
-                        Form1.map_elements[pos.X, pos.Y - i] = 1;
+                        MainForm.map_elements[pos.X, pos.Y - i] = 1;
                     }
                     break;
                 case 1:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X - i, pos.Y] = 1;
+                        MainForm.map_elements[pos.X - i, pos.Y] = 1;
                     }
                     break;
                 case 0:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X, pos.Y + i] = 1;
+                        MainForm.map_elements[pos.X, pos.Y + i] = 1;
                     }
                     break;
                 case 3:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X + i, pos.Y] = 1;
+                        MainForm.map_elements[pos.X + i, pos.Y] = 1;
                     }
                     break;
             }
@@ -89,25 +91,25 @@ namespace Ant_test
                 case 2:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X, pos.Y - i] = 2;
+                        MainForm.map_elements[pos.X, pos.Y - i] = 2;
                     }
                     break;
                 case 1:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X - i, pos.Y] = 2;
+                        MainForm.map_elements[pos.X - i, pos.Y] = 2;
                     }
                     break;
                 case 0:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X, pos.Y + i] = 2;
+                        MainForm.map_elements[pos.X, pos.Y + i] = 2;
                     }
                     break;
                 case 3:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X + i, pos.Y] = 2;
+                        MainForm.map_elements[pos.X + i, pos.Y] = 2;
                     }
                     break;
             }
@@ -121,57 +123,53 @@ namespace Ant_test
                 case 2:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X, pos.Y - i] = 3;
+                        MainForm.map_elements[pos.X, pos.Y - i] = 3;
                     }
                     break;
                 case 1:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X - i, pos.Y] = 3;
+                        MainForm.map_elements[pos.X - i, pos.Y] = 3;
                     }
                     break;
                 case 0:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X, pos.Y + i] = 3;
+                        MainForm.map_elements[pos.X, pos.Y + i] = 3;
                     }
                     break;
                 case 3:
                     for (int i = 0; i <= 0; i++)
                     {
-                        Form1.map_elements[pos.X + i, pos.Y] = 3;
+                        MainForm.map_elements[pos.X + i, pos.Y] = 3;
                     }
                     break;
             }
         }
-       
+
         public bool slaom()
         {
-            
             Point p = pos;
             while (true)
             {
-                for (int i = 0; i < Form1.ants.Count; i++)
+                for (int i = 0; i < MainForm.ants.Count; i++)
                 {
-                    if (Form1.ants[i].Pos == p)
+                    if (MainForm.ants[i].Pos == p)
                     {
-                        
-                        if (Form1.ants[i].t_ljus)
+
+                        if (MainForm.ants[i].t_ljus)
                         {
                             return true;
                         }
                         return false;
                     }
                 }
-                
+                if (MainForm.Start_Fields[dir].Contains(p))
                 {
-
-                    if (Form1.Start_Fields[dir].Contains(p))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-                switch ((dir+2)%4) // Switch med resten av dir mod 4.
+
+                switch ((dir + 2) % 4) // Switch med resten av dir mod 4.
                 {
                     case 0:
                         p.Y--;
@@ -186,12 +184,7 @@ namespace Ant_test
                         p.X--;
                         break;
                 }
-                
-               
-                
             }
-            
-
         }
     }
 }

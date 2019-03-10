@@ -12,14 +12,14 @@ namespace Ant_test
 {
     public partial class Dialogruta_CustomFlow : Form
     {
-        private readonly Form1 initform;
-        public Dialogruta_CustomFlow(Form1 caller)
+        private readonly MainForm initform;
+        public Dialogruta_CustomFlow(MainForm caller)
         {
             initform = caller;
             InitializeComponent();
-            for (int i = 0; i < Form1.flow.Length; i++)
+            for (int i = 0; i < MainForm.flow.Length; i++)
             {
-                this.Controls.Find("textbox" + (i + 1), true)[0].Text = Form1.flow[i].ToString();
+                this.Controls.Find("textbox" + (i + 1), true)[0].Text = MainForm.flow[i].ToString();
             }
         }
 
@@ -40,7 +40,7 @@ namespace Ant_test
             }
             for (int i = 0; i < flow.Length; i++)
             {
-                Form1.flow[i] = flow[i];
+                MainForm.flow[i] = flow[i];
             }
 
             initform.add_ants();

@@ -37,7 +37,7 @@ namespace Ant_test
             RealAnt = RF;
             if (RealAnt)
             {
-                Form1.karta[pos.X, pos.Y] = true;
+                MainForm.karta[pos.X, pos.Y] = true;
             }
 
 
@@ -58,7 +58,7 @@ namespace Ant_test
             RealAnt = RF;
             if (RealAnt)
             {
-                Form1.karta[X, Y] = true;
+                MainForm.karta[X, Y] = true;
             }
 
         }
@@ -110,11 +110,7 @@ namespace Ant_test
         {
             _pos = new Point(X, Y);
         }
-        public bool getRealAnt()
-        {
-            return RealAnt;
-        }
-
+       
         //  int mod(int x, int m)
         //  {       
         //      return (x % m + m) % m;
@@ -126,7 +122,7 @@ namespace Ant_test
         {
             if (RealAnt)
             {
-                Form1.karta[getPos().X, getPos().Y] = false; //gamla ruta blir false, nya blire true
+                MainForm.karta[getPos().X, getPos().Y] = false; //gamla ruta blir false, nya blire true
             }
 
             switch (_dir % 4) // Switch med resten av dir mod 4.
@@ -146,25 +142,26 @@ namespace Ant_test
             }
             try
             {
-                if (Form1.map_elements[X, Y] == -1) // ny kod
+                if (MainForm.map_elements[X, Y] == -1) // ny kod
                 {
                     v = 0;
                 }
             }
             catch { v = 0; }
 
-            if (RealAnt && _pos.Y < Form1.map.Height - 1 && _pos.Y > 0 && _pos.X < Form1.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
+            if (RealAnt && _pos.Y < MainForm.map.Height - 1 && _pos.Y > 0 && _pos.X < MainForm.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
             {
-                Form1.karta[getPos().X, getPos().Y] = true;
+                MainForm.karta[getPos().X, getPos().Y] = true;
             }
         }
 
+        #region trace
         private bool trace_stop(Ant i, int step)  // Ska myran som räknar steg sluta bestämms av denna funktion.
         {
             try
             {
                 //returne
-                if ((Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1) || (Form1.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
+                if ((MainForm.map_elements[i.X, i.Y] == 1 || MainForm.map_elements[i.X, i.Y] == -1) || (MainForm.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
                 {
                     return false;
                 }
@@ -173,7 +170,7 @@ namespace Ant_test
                     //      return false;
                 }
                 if (step != 0)
-                    if (Form1.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
+                    if (MainForm.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
                     {
                         return false;
                     }
@@ -184,39 +181,39 @@ namespace Ant_test
                 return false;
             }
         }
-        private static Form1 forms;
-        public void trace(out int step, out bool need_brake, out int Ant_V, Form1 inputform)
+        private static MainForm forms;
+        public void trace(out int step, out bool need_brake, out int Ant_V, MainForm inputform)
         {
             forms = inputform;
             need_brake = true;
-            Ant trace = new Ant(_pos.X, _pos.Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
+            Ant trace = new Ant(X, Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
             for (step = 0; trace_stop(trace, step); step++) // En for-loop som ökar antalet steg tills logiken blir false se metod trace_stop ovan.
             {
-                for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
+                for (int i = 0; i < MainForm.Turn_fields_Left.Length; i++)
                 {
-                    if (Form1.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
+                    if (MainForm.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
                     {
                         trace._dir--;
                         trace._dir = dirOverFlowCorr(trace._dir);
                     }
                 }
-                for (int i = 0; i < Form1.Turn_fields_Right.Length; i++)
+                for (int i = 0; i < MainForm.Turn_fields_Right.Length; i++)
                 {
-                    if (Form1.Turn_fields_Right[i].Contains(trace.Pos) && trace._dir == i)
+                    if (MainForm.Turn_fields_Right[i].Contains(trace.Pos) && trace._dir == i)
                     {
                         trace._dir++;
                         trace._dir = dirOverFlowCorr(trace._dir);
                     }
                 }
                 //Sväng diagonalt
-                if (Form1.Turn_fields_Right_Diagonal.Contains(trace.getPos()))
+                if (MainForm.Turn_fields_Right_Diagonal.Contains(trace.getPos()))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
                 }
-                else if (Form1.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !Form1.is_ant_to_side_right(trace))
+                else if (MainForm.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !MainForm.is_ant_to_side_right(trace))
                 {
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
@@ -231,8 +228,8 @@ namespace Ant_test
             }
             try
             {
-                Ant_V = Form1.ants[Form1.ants.IndexOf(trace)].v;
-                if (Form1.map_elements[trace.X, trace.Y] == -1)
+                Ant_V = MainForm.ants[MainForm.ants.IndexOf(trace)].v;
+                if (MainForm.map_elements[trace.X, trace.Y] == -1)
                 {
                     need_brake = false;
                 }
@@ -243,11 +240,78 @@ namespace Ant_test
             }
 
         }
+        #endregion
+
+        #region trace t
+        private Trafikljus findFromCord(int antX, int antY, MainForm inputform)
+        {
+            foreach (Trafikljus traf in inputform.TraficLights_all[this._dir])
+                if (traf.X == this.X && traf.Y == this.Y)
+                    return traf;
+            return null;
+        }
+        private bool trace_t_stop(MainForm inputform)
+        {
+            foreach (Trafikljus traf in inputform.TraficLights_all[this._dir])
+            {
+                if (this.X == traf.X && this.Y == traf.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public Trafikljus trace_t(MainForm inputform, out int step)
+        {
+            Ant trace = new Ant(X, Y, _dir, Color.White, false);
+            //Rörelse logik
+            for (step = 0; !trace_t_stop(inputform); step++)
+            {
+                for (int i = 0; i < MainForm.Turn_fields_Left.Length; i++)
+                {
+                    if (MainForm.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
+                    {
+                        trace._dir--;
+                        trace._dir = dirOverFlowCorr(trace._dir);
+                    }
+                }
+                for (int i = 0; i < MainForm.Turn_fields_Right.Length; i++)
+                {
+                    if (MainForm.Turn_fields_Right[i].Contains(trace.Pos) && trace._dir == i)
+                    {
+                        trace._dir++;
+                        trace._dir = dirOverFlowCorr(trace._dir);
+                    }
+                }
+                //Sväng diagonalt
+                if (MainForm.Turn_fields_Right_Diagonal.Contains(trace.getPos()))
+                {
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir + 1);
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir - 1);
+                }
+                else if (MainForm.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !MainForm.is_ant_to_side_right(trace))
+                {
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir - 1);
+                    trace.step();
+                    trace._dir = dirOverFlowCorr(trace._dir + 1);
+                }
+                else// Gör tillsammans med if-sats i början att trace myra dör på killfields.
+                {
+                    trace.step();
+                }
+            }
+            return findFromCord(X, Y, inputform);
+        }
+        #endregion
+
         private bool ljus_stop(Ant i)
         {
             try
             {
-                if (Form1.map_elements[i.X, i.Y] == 3)
+                if (MainForm.map_elements[i.X, i.Y] == 3)
                 {
                     return false;
                 }
@@ -266,41 +330,41 @@ namespace Ant_test
             //Kollar hur många steg till det finns ett gult ljus ivägen-
             for (steg = 0; ljus_stop(ljus); steg++)
             {
-                if (Form1.map_elements[ljus.X, ljus.Y] == 1 || Form1.map_elements[ljus.X, ljus.Y] == 2)
+                if (MainForm.map_elements[ljus.X, ljus.Y] == 1 || MainForm.map_elements[ljus.X, ljus.Y] == 2)
                 {
                     return -1;
-                    
+
                 }
-                if (Form1.map_elements[ljus.X, ljus.Y] == -1 || ljus.Y < Form1.map.Height - 1 && ljus.Y >= 0 && ljus.X < Form1.map.Width - 1 && ljus.X >= 0)
+                if (MainForm.map_elements[ljus.X, ljus.Y] == -1 || ljus.Y < MainForm.map.Height - 1 && ljus.Y >= 0 && ljus.X < MainForm.map.Width - 1 && ljus.X >= 0)
                 {
                     return -1;
-                    
+
                 }
-                for (int i = 0; i < Form1.Turn_fields_Left.Length; i++)
+                for (int i = 0; i < MainForm.Turn_fields_Left.Length; i++)
                 {
-                    if (Form1.Turn_fields_Left[i].Contains(ljus.Pos) && ljus._dir == i)
+                    if (MainForm.Turn_fields_Left[i].Contains(ljus.Pos) && ljus._dir == i)
                     {
                         ljus._dir--;
                         ljus._dir = dirOverFlowCorr(ljus._dir);
                     }
                 }
-                for (int i = 0; i < Form1.Turn_fields_Right.Length; i++)
+                for (int i = 0; i < MainForm.Turn_fields_Right.Length; i++)
                 {
-                    if (Form1.Turn_fields_Right[i].Contains(ljus.Pos) && ljus._dir == i)
+                    if (MainForm.Turn_fields_Right[i].Contains(ljus.Pos) && ljus._dir == i)
                     {
                         ljus._dir++;
                         ljus._dir = dirOverFlowCorr(ljus._dir);
                     }
                 }
                 //Sväng diagonalt
-                if (Form1.Turn_fields_Right_Diagonal.Contains(ljus.getPos()))
+                if (MainForm.Turn_fields_Right_Diagonal.Contains(ljus.getPos()))
                 {
                     ljus.step();
                     ljus._dir = dirOverFlowCorr(ljus._dir + 1);
                     ljus.step();
                     ljus._dir = dirOverFlowCorr(ljus._dir - 1);
                 }
-                else if (Form1.Turn_fields_Left_Diagonal[ljus._dir].Contains(ljus.getPos()) && !Form1.is_ant_to_side_right(ljus))
+                else if (MainForm.Turn_fields_Left_Diagonal[ljus._dir].Contains(ljus.getPos()) && !MainForm.is_ant_to_side_right(ljus))
                 {
                     ljus.step();
                     ljus._dir = dirOverFlowCorr(ljus._dir - 1);
@@ -314,7 +378,6 @@ namespace Ant_test
             }
             return steg;
         }
-
         /// <summary>
         /// Korrigerar överflöden i riktningen
         /// </summary>
@@ -332,19 +395,6 @@ namespace Ant_test
             }
             return _dir;
         }
-        /// <summary>
-        /// En metod för att myran ej skall få en odefinierad riktning. dir är enbart definierad för 0-3.
-        /// </summary>
-        private void dirOverFlowCorr() //enbart riktningarna 0,1,2,3
-        {
-            if (_dir > 3)
-            {
-                _dir = 0;
-            }
-            else if (_dir < 0)
-            {
-                _dir = 3;
-            }
-        }
+       
     }
 }

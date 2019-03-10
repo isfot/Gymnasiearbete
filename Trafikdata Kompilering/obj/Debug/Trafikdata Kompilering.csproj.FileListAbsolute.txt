@@ -1,0 +1,10 @@
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\bin\Debug\Trafikdata Kompilering.exe.config
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\bin\Debug\Trafikdata Kompilering.exe
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\bin\Debug\Trafikdata Kompilering.pdb
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata Kompilering.csprojAssemblyReference.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata_Kompilering.Properties.Resources.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata_Kompilering.TrafikForm.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata Kompilering.csproj.GenerateResource.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata Kompilering.csproj.CoreCompileInputs.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata Kompilering.exe
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Trafikdata Kompilering\obj\Debug\Trafikdata Kompilering.pdb

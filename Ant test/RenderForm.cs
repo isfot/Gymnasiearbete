@@ -12,8 +12,8 @@ namespace Ant_test
 {
     public partial class RenderForm : Form
     {
-        Form1 initform;
-        public RenderForm(Form1 caller)
+        MainForm initform;
+        public RenderForm(MainForm caller)
         {
             initform = caller;
             InitializeComponent();

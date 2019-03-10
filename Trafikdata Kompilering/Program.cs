@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Ant_test
+namespace Trafikdata_Kompilering
 {
     static class Program
     {
@@ -12,18 +12,11 @@ namespace Ant_test
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (args == null || args.Length == 0)
-            {
-                Application.Run(new MainForm());
-            }
-            else
-            {
-                Application.Run(new MainForm(args));
-            }
+            Application.Run(new TrafikForm());
         }
     }
 }

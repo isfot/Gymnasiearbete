@@ -17,7 +17,7 @@ namespace Ant_test.Tests
             string[] args = new string[] { Environment.CurrentDirectory + @"\pic.png" };
             try
             {
-                Form1 form = new Form1(args);
+                MainForm form = new MainForm(args);
             }
             catch(Exception ex)
             {
@@ -25,7 +25,7 @@ namespace Ant_test.Tests
             }
             try
             {
-                Form1 form = new Form1();
+                MainForm form = new MainForm();
             }
             catch
             {
@@ -34,7 +34,7 @@ namespace Ant_test.Tests
             args = new string[] { Environment.CurrentDirectory + @"\picNOT_A_PICTURE_IN_PATH_HAHAH.png" };
             try
             {
-                Form1 form = new Form1(args);
+                MainForm form = new MainForm(args);
                 Assert.Fail("Form1 import picture fail: LET INVALID PICTURE THROUGH");
             }
             catch{    }

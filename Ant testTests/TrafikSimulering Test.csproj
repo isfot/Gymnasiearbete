@@ -65,9 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ant test\Ant test.csproj">
+    <ProjectReference Include="..\Ant test\_TrafikSimulering.csproj">
       <Project>{FA2E70E9-3CF8-4258-ACFD-93EB57AC5E8F}</Project>
-      <Name>Ant test</Name>
+      <Name>_TrafikSimulering</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

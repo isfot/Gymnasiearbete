@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ant test", "Ant test\Ant test.csproj", "{FA2E70E9-3CF8-4258-ACFD-93EB57AC5E8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_TrafikSimulering", "Ant test\_TrafikSimulering.csproj", "{FA2E70E9-3CF8-4258-ACFD-93EB57AC5E8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ant testTests", "Ant testTests\Ant testTests.csproj", "{88353663-81B1-48F2-BEE1-22B687128725}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafikSimulering Test", "Ant testTests\TrafikSimulering Test.csproj", "{88353663-81B1-48F2-BEE1-22B687128725}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trafikdata Kompilering", "Trafikdata Kompilering\Trafikdata Kompilering.csproj", "{8DBF5F86-F32C-413F-8A85-D81C0659CB00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{88353663-81B1-48F2-BEE1-22B687128725}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88353663-81B1-48F2-BEE1-22B687128725}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88353663-81B1-48F2-BEE1-22B687128725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DBF5F86-F32C-413F-8A85-D81C0659CB00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DBF5F86-F32C-413F-8A85-D81C0659CB00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DBF5F86-F32C-413F-8A85-D81C0659CB00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DBF5F86-F32C-413F-8A85-D81C0659CB00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

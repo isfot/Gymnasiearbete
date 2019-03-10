@@ -1,0 +1,19 @@
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\pic - Copy.png
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\pic test.png
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\pic.png
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\pic_old.png
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\Ant test.exe.config
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.DataForm.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.MainForm.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.RenderForm.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant_test.Settings_Form.resources
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\_TrafikSimulering.csproj.GenerateResource.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\_TrafikSimulering.csproj.CoreCompileInputs.cache
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant test.exe
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\_TrafikSimulering.csprojAssemblyReference.cache

@@ -49,7 +49,7 @@ namespace Ant_test.Tests
          //   if (A.GetPixel(pos.X, pos.Y).ToArgb() == System.Drawing.Color.FromArgb(55, 55, 55).ToArgb())
          //       Assert.Fail("Fail when getting and setting pixel after upscale");
 
-            Form1 F = new Form1();
+            MainForm F = new MainForm();
             pos = new System.Drawing.Point(4, 4);
             A = new BitmapAVC(new System.Drawing.Bitmap(10, 10));
             List<Ant> ants = new List<Ant>();
