@@ -11,8 +11,8 @@ namespace Ant_test
     public class Trafikljus
     {
         public Point pos;
-        public int X { get { return pos.X} }
-        public int Y { get { return pos.Y} }
+        public int X { get { return pos.X; } }
+        public int Y { get { return pos.Y; } }
         public int grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
         public bool stop = false;
