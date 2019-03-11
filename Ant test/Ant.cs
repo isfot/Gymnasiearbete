@@ -164,7 +164,7 @@ namespace Ant_test
             try
             {
                 //returne
-                if ((Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1) || (Form1.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
+                if ((Form1.map_elements[i.X, i.Y] == 1 || Form1.map_elements[i.X, i.Y] == -1 || (Form1.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(v * v + v) / 2.0)))
                 {
                     return false;
                 }

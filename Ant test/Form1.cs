@@ -396,7 +396,7 @@ namespace Ant_test
                 }
                 if (index == 3 && checkBox_Field_2.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                  ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
                 }
             }
             catch { }
@@ -541,13 +541,15 @@ namespace Ant_test
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            trafikljus();
-            if (!gul) { c++; }
+           
            
             watch = System.Diagnostics.Stopwatch.StartNew();
             counter++;
             //antstep();
+            trafikljus();
+            if (!gul) { c++; }
             v_step();
+           
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
             if (counter % 5 == 0 && checkBox1.Checked)
