@@ -46,6 +46,7 @@ namespace Ant_test
                 return output;
             }
         }
+        public List<Trafikljus> trafikljus = new List<Trafikljus>();
         private readonly string baseSavePath = @"C:\ANTS\" + Convert.ToString(DateTime.Now.ToString("MM-dd-yyyy__HH_mm")) + @"\";
 
         /// <summary>
@@ -179,48 +180,56 @@ namespace Ant_test
                         case -39786:
                             hide_pixel(x, y);
                             TraficLights[0].Add(new Trafikljus(x, y, 0, v_max));
+                            trafikljus.Add(TraficLights[0].Last());
                             occupiable_fields++;
                             break;
                         //1
                         case -39736:
                             hide_pixel(x, y);
                             TraficLights[1].Add(new Trafikljus(x, y, 1, v_max));
+                            trafikljus.Add(TraficLights[1].Last());
                             occupiable_fields++;
                             break;
                         //2
                         case -39886:
                             hide_pixel(x, y);
                             TraficLights[2].Add(new Trafikljus(x, y, 2, v_max));
+                            trafikljus.Add(TraficLights[2].Last());
                             occupiable_fields++;
                             break;
                         //3
                         case -39836:
                             hide_pixel(x, y);
                             TraficLights[3].Add(new Trafikljus(x, y, 3, v_max));
+                            trafikljus.Add(TraficLights[3].Last());
                             occupiable_fields++;
                             break;
                         //Trafikljus vänstersväng
                         //0
                         case -26986:
-                            TraficLights_Left_Turn[0].Add(new Trafikljus(x, y, 0, v_max));
+                            TraficLights_Left_Turn[0].Add(new Trafikljus(x, y, 0, v_max, true));
+                            trafikljus.Add(TraficLights_Left_Turn[0].Last());
                             occupiable_fields++;
                             hide_pixel(x, y);
                             break;
                         //1
                         case -26936:
-                            TraficLights_Left_Turn[1].Add(new Trafikljus(x, y, 1, v_max));
+                            TraficLights_Left_Turn[1].Add(new Trafikljus(x, y, 1, v_max, true));
+                            trafikljus.Add(TraficLights_Left_Turn[1].Last());
                             hide_pixel(x, y);
                             occupiable_fields++;
                             break;
                         //2
                         case -27086:
-                            TraficLights_Left_Turn[2].Add(new Trafikljus(x, y, 2, v_max));
+                            TraficLights_Left_Turn[2].Add(new Trafikljus(x, y, 2, v_max, true));
+                            trafikljus.Add(TraficLights_Left_Turn[2].Last());
                             hide_pixel(x, y);
                             occupiable_fields++;
                             break;
                         //3
                         case -27036:
-                            TraficLights_Left_Turn[3].Add(new Trafikljus(x, y, 3, v_max));
+                            TraficLights_Left_Turn[3].Add(new Trafikljus(x, y, 3, v_max, true));
+                            trafikljus.Add(TraficLights_Left_Turn[3].Last());
                             hide_pixel(x, y);
                             occupiable_fields++;
                             break;
@@ -471,155 +480,15 @@ namespace Ant_test
         public int odd = 0;
 
         public int counter_ = 0;
-        public void trafikljus()
-        {
-            if (tid == 0 && !gul)
-            {
-                if (odd == 0)
-                {
-                    TraficLight_Toggle_Forward(0, 1);
-                    TraficLight_Toggle_Forward(2, 1);
-                    TraficLight_Toggle_Forward(1, 0);
-                    TraficLight_Toggle_Forward(3, 0);
-                    TraficLight_Toggle_Turn(0, 0);
-                    TraficLight_Toggle_Turn(1, 0);
-                    TraficLight_Toggle_Turn(2, 0);
-                    TraficLight_Toggle_Turn(3, 0);
 
-                }
-                else
-                {
-                    TraficLight_Toggle_Forward(0, 0);
-                    TraficLight_Toggle_Forward(2, 0);
-                    TraficLight_Toggle_Forward(1, 1);
-                    TraficLight_Toggle_Forward(3, 1);
-                    TraficLight_Toggle_Turn(0, 0);
-                    TraficLight_Toggle_Turn(1, 0);
-                    TraficLight_Toggle_Turn(2, 0);
-                    TraficLight_Toggle_Turn(3, 0);
-                }
-
-
-                //  TraficLight_Toggle_Turn(0, true);
-                //  TraficLight_Toggle_Turn(3, false);
-            }
-            if (gul)
-            {
-                gul = false;
-                switch (odd % 2)
-                {
-                    case 0:
-                        for (int i = odd; i < 4; i = i + 2)
-                        {
-                            foreach (Trafikljus t in TraficLights[i])
-                            {
-                                if (!t.slaom())
-                                {
-                                    gul = true;
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    case 1:
-                        for (int i = odd % 2; i < 4; i = i + 2)
-                        {
-                            foreach (Trafikljus t in TraficLights_Left_Turn[i])
-                            {
-                                if (!t.slaom())
-                                {
-                                    gul = true;
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                if (!gul)
-                {
-                    switch (odd)
-                    {
-                        case 0:
-                            TraficLight_Toggle_Forward(1, 0);
-                            TraficLight_Toggle_Forward(3, 0);
-                            TraficLight_Toggle_Turn(1, 0);
-                            TraficLight_Toggle_Turn(3, 0);
-                            TraficLight_Toggle_Turn(0, 0);
-                            TraficLight_Toggle_Turn(2, 0);
-                            TraficLight_Toggle_Forward(0, 1);
-                            TraficLight_Toggle_Forward(2, 1);
-                            odd = 1;
-                            break;
-                        case 1:
-
-
-                            TraficLight_Toggle_Forward(1, 0);
-                            TraficLight_Toggle_Forward(3, 0);
-                            TraficLight_Toggle_Turn(1, 0);
-                            TraficLight_Toggle_Turn(3, 0);
-                            TraficLight_Toggle_Turn(0, 1);
-                            TraficLight_Toggle_Turn(2, 1);
-                            TraficLight_Toggle_Forward(0, 0);
-                            TraficLight_Toggle_Forward(2, 0);
-                            odd = 2;
-                            break;
-                        case 2:
-                            TraficLight_Toggle_Forward(0, 0);
-                            TraficLight_Toggle_Forward(2, 0);
-                            TraficLight_Toggle_Turn(0, 0);
-                            TraficLight_Toggle_Turn(2, 0);
-                            TraficLight_Toggle_Turn(1, 0);
-                            TraficLight_Toggle_Turn(3, 0);
-                            TraficLight_Toggle_Forward(1, 1);
-                            TraficLight_Toggle_Forward(3, 1);
-                            odd = 3;
-                            break;
-                        case 3:
-                            TraficLight_Toggle_Forward(0, 0);
-                            TraficLight_Toggle_Forward(2, 0);
-                            TraficLight_Toggle_Turn(0, 0);
-                            TraficLight_Toggle_Turn(2, 0);
-                            TraficLight_Toggle_Turn(1, 1);
-                            TraficLight_Toggle_Turn(3, 1);
-                            TraficLight_Toggle_Forward(1, 0);
-                            TraficLight_Toggle_Forward(3, 0);
-                            odd = 0;
-                            break;
-                    }
-
-                    counter_ = 0;
-                }
-            }
-
-            if (counter_ == 50)
-            {
-                gul = true;
-                switch (odd)
-                {
-                    case 0:
-                        TraficLight_Toggle_Forward(1, 2);
-                        TraficLight_Toggle_Forward(3, 2);
-                        break;
-                    case 1:
-                        TraficLight_Toggle_Turn(1, 2);
-                        TraficLight_Toggle_Turn(3, 2);
-                        break;
-                    case 2:
-                        TraficLight_Toggle_Forward(0, 2);
-                        TraficLight_Toggle_Forward(2, 2);
-                        break;
-                    case 3:
-                        TraficLight_Toggle_Turn(0, 2);
-                        TraficLight_Toggle_Turn(2, 2);
-                        break;
-                }
-            }
-        }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            trafikljus();
-            if (!gul) { counter_++; }
+            //trafikljus();
+            foreach (Trafikljus x in trafikljus)
+            {
+                x.tick(counter);
+            }
+            // if (!gul) { counter_++; }
 
             watch = System.Diagnostics.Stopwatch.StartNew();
             counter++;
@@ -634,15 +503,6 @@ namespace Ant_test
                     spawnrandom();
                 }
             }
-
-
-
-
-
-
-
-
-
 
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
@@ -665,8 +525,8 @@ namespace Ant_test
         static List<int> ClearList = new List<int>();
         private void Steg_Button_Click(object sender, EventArgs e)
         {
-            trafikljus();
-            if (!gul) { counter_++; }
+            //trafikljus();
+            // if (!gul) { counter_++; }
             v_step();
             if (ants.Count > 3)
             {
@@ -956,8 +816,6 @@ namespace Ant_test
             if (a.v < v_max && map_elements[a.X, a.Y] != -1)
             {
                 a.Acc = 1;
-
-
             }
         }
         private void DEACC(Ant a)
