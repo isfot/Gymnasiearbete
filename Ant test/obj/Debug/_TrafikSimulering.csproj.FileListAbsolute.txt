@@ -17,3 +17,22 @@ Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\_TrafikSimulering.c
 Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant test.exe
 Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\Ant test.pdb
 Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\obj\Debug\_TrafikSimulering.csprojAssemblyReference.cache
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic - Copy.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic test.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\pic_old.png
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\Ant test.exe.config
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\Ant test.exe
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\bin\Debug\Ant test.pdb
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\_TrafikSimulering.csprojAssemblyReference.cache
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.DataForm.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.MainForm.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.RenderForm.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant_test.Settings_Form.resources
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\_TrafikSimulering.csproj.GenerateResource.cache
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\_TrafikSimulering.csproj.CoreCompileInputs.cache
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.exe
+E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.pdb

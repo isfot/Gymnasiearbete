@@ -16,6 +16,7 @@ namespace Ant_test
         public int grönt;
         private readonly int dir;   //vilket håll den ska släppa igenom bilar
         public bool stop = false;
+        private bool is_left_turn = false;
 
         /// <summary>
         /// Inizialerar ett nytt trafikljus
@@ -26,9 +27,20 @@ namespace Ant_test
         public Trafikljus(Point pos, int dir, int v_max) //När programmet ser en ruta med en viss färg intieras ett nytt trafikljus
         {
             this.pos = pos;
-
             this.dir = dir;
-
+            is_left_turn = false;
+        }
+        public Trafikljus(Point pos, int dir, int v_max, bool is_left) //När programmet ser en ruta med en viss färg intieras ett nytt trafikljus
+        {
+            this.pos = pos;
+            this.dir = dir;
+            is_left_turn = is_left;
+        }
+        public Trafikljus(int x, int y, int dir, int v_max, bool is_left) //När programmet ser en ruta med en viss färg intieras ett nytt trafikljus
+        {
+            this.pos = new Point(x, y);
+            this.dir = dir;
+            is_left_turn = is_left;
         }
         /// <summary>
         ///  Inizialerar en ny trafikljus
@@ -45,106 +57,81 @@ namespace Ant_test
 
         }
 
+        public void tick(int time)
+        {
+            switch (time % 144)
+            {
+                //Rött Vänster 1 3
+                //Grönt 0 2
+                case 0:
+                    if ((this.dir == 0 | this.dir == 2) && !this.is_left_turn)
+                        this.Gröntljus();
+                    if ((this.dir == 1 || this.dir == 3) && this.is_left_turn)
+                        this.Rödljus();
+                    break;
+                //Gult 0 2
+                case 30:
+                    if ((this.dir == 0 | this.dir == 2) && !this.is_left_turn)
+                        this.Gultljus();
+                    break;
+                //Rött 0 2
+                //Grönt vänster 0 2
+                case 36:
+                    if ((this.dir == 0 | this.dir == 2) && !this.is_left_turn)
+                        this.Rödljus();
+                    if ((this.dir == 0 | this.dir == 2) && this.is_left_turn)
+                        this.Gröntljus();
+                    break;
+                //Gult vänster 0 2
+                case 66:
+                    if ((this.dir == 0 | this.dir == 2) && this.is_left_turn)
+                        this.Gultljus();
+                    break;
+                //Rött vänster 0 2
+                //Grönt 1 3
+                case 72:
+                    if ((this.dir == 0 | this.dir == 2) && this.is_left_turn)
+                        this.Rödljus();
+                    if ((this.dir == 1 | this.dir == 3) && !this.is_left_turn)
+                        this.Gröntljus();
+                    break;
+                //Gult 1 3
+                case 102:
+                    if ((this.dir == 1 | this.dir == 3) && !this.is_left_turn)
+                        this.Gultljus();
+                    break;
+                //Rött 1 3
+                //Grönt vänster 1 3
+                case 108:
+                    if ((this.dir == 1 | this.dir == 3) && !this.is_left_turn)
+                        this.Rödljus();
+                    if ((this.dir == 1 | this.dir == 3) && this.is_left_turn)
+                        this.Gröntljus();
+                    break;
+                //Gult vänster 1 3
+                case 138:
+                    if ((this.dir == 1 | this.dir == 3) && this.is_left_turn)
+                        this.Gultljus();
+                    break;
+
+            }
+        }
 
         public void Rödljus()
         {
-
             grönt = 0;
-            switch (dir) //utifrån vilken riktning måste den stänga av olika rutor
-            {
-                case 2:
-                    for (int i = 0; i <= 0; i++) // Stänger 2 rutor innan sin egen position.
-                    {
-                        MainForm.map_elements[pos.X, pos.Y - i] = 1;
-                    }
-                    break;
-                case 1:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X - i, pos.Y] = 1;
-                    }
-                    break;
-                case 0:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X, pos.Y + i] = 1;
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X + i, pos.Y] = 1;
-                    }
-                    break;
-            }
-
-
-
-
-
+            MainForm.map_elements[X, Y] = 1;
         }
         public void Gröntljus() // Metoden kräver kod från andra delar av programmet.
         {
             grönt = 1;
-            switch (dir)  //tar bort det som rött gjorde 
-            {
-                case 2:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X, pos.Y - i] = 2;
-                    }
-                    break;
-                case 1:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X - i, pos.Y] = 2;
-                    }
-                    break;
-                case 0:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X, pos.Y + i] = 2;
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X + i, pos.Y] = 2;
-                    }
-                    break;
-            }
+            MainForm.map_elements[X, Y] = 2;
         }
         public void Gultljus()
         {
             stop = true;
             grönt = 2;
-            switch (dir)  //tar bort det som rött gjorde 
-            {
-                case 2:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X, pos.Y - i] = 3;
-                    }
-                    break;
-                case 1:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X - i, pos.Y] = 3;
-                    }
-                    break;
-                case 0:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X, pos.Y + i] = 3;
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i <= 0; i++)
-                    {
-                        MainForm.map_elements[pos.X + i, pos.Y] = 3;
-                    }
-                    break;
-            }
+            MainForm.map_elements[X, Y] = 3;
         }
 
         public bool slaom()
