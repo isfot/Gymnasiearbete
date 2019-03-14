@@ -132,6 +132,7 @@ namespace Ant_test
                         }
                     });
                 });
+                //Pointer [x] = Blue; [x + 1] = Green; [x + 2] = Red;
                 Parallel.ForEach(ants, a =>
                 {
                     for (int y_Scale = 0; y_Scale < MAPscale; y_Scale++)
@@ -140,9 +141,10 @@ namespace Ant_test
                         for (int x_Scale = 0; x_Scale < MAPscale; x_Scale++)
                         {
                             int x = bytesPerPixel * ((a.X) * MAPscale + x_Scale);
-                            currentLine[x] = 0;
-                            currentLine[x + 1] = 0;
-                            currentLine[x + 2] = 0;
+                            currentLine[x] = a.Color.B;
+                            currentLine[x + 1] = a.Color.G;
+                            currentLine[x + 2] = a.Color.R
+                            ;
                         }
                     }
                 });

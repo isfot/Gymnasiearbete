@@ -150,6 +150,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pic Loopyloop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pic Fungerar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pic - Copy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -165,6 +171,10 @@
     <None Include="Resources\IKON.ico" />
     <None Include="Resources\Close_Button_Invert.png" />
     <None Include="Resources\Close_Button.png" />
+    <None Include="Resources\3.txt" />
+    <None Include="Resources\0.txt" />
+    <None Include="Resources\1.txt" />
+    <None Include="Resources\2.txt" />
     <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
