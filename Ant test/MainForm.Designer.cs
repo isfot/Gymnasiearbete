@@ -39,7 +39,7 @@
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.richTextBox4 = new System.Windows.Forms.RichTextBox();
             this.Reset_button = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox_random = new System.Windows.Forms.CheckBox();
             this.button_UP = new System.Windows.Forms.Button();
             this.button_RIGHT = new System.Windows.Forms.Button();
             this.button_LEFT = new System.Windows.Forms.Button();
@@ -56,6 +56,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button_render_form = new System.Windows.Forms.Button();
             this.button_Data_Form = new System.Windows.Forms.Button();
+            this.label_renderTime = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label_fps = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBox_real = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -157,16 +162,16 @@
             this.Reset_button.UseVisualStyleBackColor = true;
             this.Reset_button.Click += new System.EventHandler(this.Reset_button_Click);
             // 
-            // checkBox1
+            // checkBox_random
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(383, 213);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(66, 17);
-            this.checkBox1.TabIndex = 13;
-            this.checkBox1.Text = "Random";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox_random.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_random.AutoSize = true;
+            this.checkBox_random.Location = new System.Drawing.Point(383, 213);
+            this.checkBox_random.Name = "checkBox_random";
+            this.checkBox_random.Size = new System.Drawing.Size(66, 17);
+            this.checkBox_random.TabIndex = 13;
+            this.checkBox_random.Text = "Random";
+            this.checkBox_random.UseVisualStyleBackColor = true;
             // 
             // button_UP
             // 
@@ -326,12 +331,13 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(463, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(509, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(62, 62);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 29;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // button_render_form
             // 
@@ -357,11 +363,67 @@
             this.button_Data_Form.UseVisualStyleBackColor = true;
             this.button_Data_Form.Click += new System.EventHandler(this.button_Data_Form_Click);
             // 
-            // Form1
+            // label_renderTime
+            // 
+            this.label_renderTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_renderTime.AutoSize = true;
+            this.label_renderTime.Location = new System.Drawing.Point(382, 13);
+            this.label_renderTime.Name = "label_renderTime";
+            this.label_renderTime.Size = new System.Drawing.Size(13, 13);
+            this.label_renderTime.TabIndex = 32;
+            this.label_renderTime.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(429, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 13);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "ms";
+            // 
+            // label_fps
+            // 
+            this.label_fps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_fps.AutoSize = true;
+            this.label_fps.Location = new System.Drawing.Point(383, 35);
+            this.label_fps.Name = "label_fps";
+            this.label_fps.Size = new System.Drawing.Size(13, 13);
+            this.label_fps.TabIndex = 34;
+            this.label_fps.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(429, 35);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(21, 13);
+            this.label4.TabIndex = 35;
+            this.label4.Text = "fps";
+            // 
+            // checkBox_real
+            // 
+            this.checkBox_real.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_real.AutoSize = true;
+            this.checkBox_real.Location = new System.Drawing.Point(383, 194);
+            this.checkBox_real.Name = "checkBox_real";
+            this.checkBox_real.Size = new System.Drawing.Size(48, 17);
+            this.checkBox_real.TabIndex = 36;
+            this.checkBox_real.Text = "Real";
+            this.checkBox_real.UseVisualStyleBackColor = true;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 516);
+            this.Controls.Add(this.checkBox_real);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label_fps);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label_renderTime);
             this.Controls.Add(this.button_Data_Form);
             this.Controls.Add(this.button_render_form);
             this.Controls.Add(this.pictureBox1);
@@ -378,7 +440,7 @@
             this.Controls.Add(this.button_LEFT);
             this.Controls.Add(this.button_RIGHT);
             this.Controls.Add(this.button_UP);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.checkBox_random);
             this.Controls.Add(this.Reset_button);
             this.Controls.Add(this.richTextBox4);
             this.Controls.Add(this.richTextBox3);
@@ -388,7 +450,7 @@
             this.Controls.Add(this.Ant_button);
             this.Controls.Add(this.Timer_button);
             this.Controls.Add(this.pictureBox);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Trafik simulering";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
@@ -410,7 +472,7 @@
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.RichTextBox richTextBox4;
         private System.Windows.Forms.Button Reset_button;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox_random;
         private System.Windows.Forms.Button button_UP;
         private System.Windows.Forms.Button button_RIGHT;
         private System.Windows.Forms.Button button_LEFT;
@@ -427,6 +489,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_render_form;
         private System.Windows.Forms.Button button_Data_Form;
+        private System.Windows.Forms.Label label_renderTime;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_fps;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBox_real;
     }
 }
 

@@ -11,11 +11,10 @@ namespace Ant_test
 {
     public partial class MainForm : Form
     {
-        private static readonly string path = Environment.CurrentDirectory + @"\pic.png"; // Sökväg i hårdisken till kartan
+        private static readonly string path = Environment.CurrentDirectory + @"\pic Fungerar.png"; // Sökväg i hårdisken till kartan
         public static Bitmap map; // Kartan som en bitmap   VArje pixel
         public static BitmapAVC mapAVC; // Kartan som en AVC bitmap
         public static List<Ant> ants = new List<Ant>(); // En lista med alla myror
-        public static readonly int hastighet_max = 3; // Maxhastighet för alla myror dvs hastighetsbegränsningen.
         public static List<Point>[] Start_Fields = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar startfält för myrorna
         public static List<Point>[] Turn_fields_Left = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger vänster 
         public static List<Point>[] Turn_fields_Right = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
@@ -26,9 +25,9 @@ namespace Ant_test
         public static int[] flow = new int[16];
         private static double occupiable_fields;
         private static double density;
+        
         private static int car_in_motion = 0;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
-        static Random rand = new Random();
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
         private int tid = 0; // Variabel för tid- I programmet motsvarar 1 tidsenhet=1 sekund
@@ -397,6 +396,8 @@ namespace Ant_test
         /// <summary>
         /// Startar myror ramdomiserat
         /// </summary>
+        /// 
+        static Random rand = new Random();
         private void spawnrandom()
         {
             int index = rand.Next(0, 4); // Random INT-variabel mellan 0 och 4
@@ -421,8 +422,31 @@ namespace Ant_test
                 }
             }
             catch { }
-
-
+        }
+        private void spawnrandom(int dir)
+        {
+            //Ha så kul med att försöka tyda detta :)
+            int index = dir;
+            try
+            {
+                if (index == 0 && checkBox_Field_3.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+                if (index == 1 && checkBox_Field_4.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+                if (index == 2 && checkBox_Field_1.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+                if (index == 3 && checkBox_Field_2.Checked)
+                {
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                }
+            }
+            catch { }
         }
 
         private void TraficLight_Toggle_Forward(int dir, int grönt)
@@ -462,25 +486,109 @@ namespace Ant_test
                 }
             }
         }
-        private void gul_turn(int dir)
-        {
-            foreach (Trafikljus a in TraficLights_Left_Turn[dir])
-            {
-                a.Gultljus();
-            }
-        }
-        static int counter;
+        static int counter = 0;
         /// <summary>
         /// Timer event som körs med ett fast intervall
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         System.Diagnostics.Stopwatch watch;
-        public bool gul = false;
-        public int odd = 0;
+        System.Diagnostics.Stopwatch watch_fps = new System.Diagnostics.Stopwatch();
 
-        public int counter_ = 0;
+        double amountN = 0;
+        double amountS = 0;
+        double amountV = 0;
+        double amountÖ = 0;
+        double amountN_tick = 0;
+        double amountS_tick = 0;
+        double amountV_tick = 0;
+        double amountÖ_tick = 0;
+        double[] amountN_arr;
+        double[] amountS_arr;
+        double[] amountV_arr;
+        double[] amountÖ_arr;
+        bool init_spawnSchedule = true;
+        string[] ReadAllResourceLines(string resourceText)
+        {
+            using (System.IO.StringReader reader = new System.IO.StringReader(resourceText))
+            {
+                return EnumerateLines(reader).ToArray();
+            }
+        }
+        IEnumerable<string> EnumerateLines(System.IO.TextReader reader)
+        {
+            string line;
 
+            while ((line = reader.ReadLine()) != null)
+            {
+                yield return line;
+            }
+        }
+        private void spawnSchedule(int time)
+        {
+            if (init_spawnSchedule)
+            {
+                init_spawnSchedule = false;
+
+                string[] amountN_arr_str;
+                string[] amountS_arr_str;
+                string[] amountV_arr_str;
+                string[] amountÖ_arr_str;
+
+                amountN_arr_str = ReadAllResourceLines(Properties.Resources._0);
+                amountV_arr_str = ReadAllResourceLines(Properties.Resources._1);
+                amountS_arr_str = ReadAllResourceLines(Properties.Resources._2);
+                amountÖ_arr_str = ReadAllResourceLines(Properties.Resources._3);
+
+                amountN_arr = new double[amountN_arr_str.Length];
+                amountS_arr = new double[amountS_arr_str.Length];
+                amountV_arr = new double[amountV_arr_str.Length];
+                amountÖ_arr = new double[amountÖ_arr_str.Length];
+
+                for (int i = 0; i < amountN_arr_str.Length; i++)
+                    amountN_arr[i] = Convert.ToDouble(amountN_arr_str[i]);
+                for (int i = 0; i < amountS_arr_str.Length; i++)
+                    amountS_arr[i] = Convert.ToDouble(amountS_arr_str[i]);
+                for (int i = 0; i < amountV_arr_str.Length; i++)
+                    amountV_arr[i] = Convert.ToDouble(amountV_arr_str[i]);
+                for (int i = 0; i < amountÖ_arr_str.Length; i++)
+                    amountÖ_arr[i] = Convert.ToDouble(amountÖ_arr_str[i]);
+            }
+            if (time % 3600 == 0)
+            {
+                amountN_tick = amountN_arr[time / 3600] / 3600;
+                amountS_tick = amountS_arr[time / 3600] / 3600;
+                amountV_tick = amountV_arr[time / 3600] / 3600;
+                amountÖ_tick = amountÖ_arr[time / 3600] / 3600;
+            }
+            amountN += amountN_tick;
+            amountS += amountS_tick;
+            amountV += amountV_tick;
+            amountÖ += amountÖ_tick;
+            if (amountN > 1)
+            {
+                amountN--;
+                spawnrandom(0);
+            }
+            if (amountS > 1)
+            {
+                amountS--;
+                spawnrandom(2);
+            }
+            if (amountV > 1)
+            {
+                amountV--;
+                spawnrandom(1);
+            }
+            if (amountÖ > 1)
+            {
+                amountÖ--;
+                spawnrandom(3);
+            }
+        }
+
+        private int fpscounter = 0;
+        private double[] fps = new double[100];
         private void timer1_Tick(object sender, EventArgs e)
         {
             //trafikljus();
@@ -489,109 +597,53 @@ namespace Ant_test
                 x.tick(counter);
             }
             // if (!gul) { counter_++; }
-
             watch = System.Diagnostics.Stopwatch.StartNew();
             counter++;
             //antstep();
             v_step();
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
-            if (counter % 5 == 0 && checkBox1.Checked)
+            if (counter % 5 == 0 && checkBox_random.Checked)
             {
                 for (int i = 0; i < 5; i++)
                 {
                     spawnrandom();
                 }
             }
+            if (checkBox_real.Checked)
+            {
+                spawnSchedule(tid);
+            }
 
+            tid++;
             density = ants.Count / occupiable_fields;
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
 
-            tid++;
+
             watch.Stop();
-            richTextBox2.Text = watch.ElapsedTicks.ToString() + "\n" + timer1.Interval;
-            //  if (watch.Elapsed.Ticks < 20000)
-            //  {
-            //      timer1.Interval = 200;
-            //  }
-            //  else
-            //  {
-            //      timer1.Interval = 1;
-            //  }
-            render_To_Screen();
+            watch_fps.Stop();
+            label_renderTime.Text = watch_fps.Elapsed.TotalMilliseconds.ToString();
+            fpscounter++;
+            fps[fpscounter % 100] = watch_fps.Elapsed.TotalMilliseconds;
+            double fpstotal = 0;
+            for (int i = 0; i < fps.Length; i++)
+            {
+                fpstotal += fps[i];
+            }
+            fpstotal = fpstotal / 100.0;
+            try
+            {
+                label_fps.Text = Convert.ToInt32((1.0 / (fpstotal / 1000.0))).ToString();
+            }
+            catch { }
+            watch_fps = new System.Diagnostics.Stopwatch();
+            watch_fps.Start();
         }
 
         //Step
-        static List<int> ClearList = new List<int>();
         private void Steg_Button_Click(object sender, EventArgs e)
         {
-            //trafikljus();
-            // if (!gul) { counter_++; }
-            v_step();
-            if (ants.Count > 3)
-            {
-                richTextBox2.Text = ants[3]._dir.ToString();
-            }
-
-            richTextBox4.Text = tid.ToString();
-            Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
-            #region kommentar
-            //          if (tid % 100 == 0)
-            //          {
-            //              TraficLights[2, 0].Gröntljus();
-            //              TraficLights[2, 1].Gröntljus();
-            //              TraficLights[0, 1].Gröntljus();
-            //              TraficLights[0, 2].Gröntljus();
-            //
-            //              TraficLights[1, 1].Rödljus();
-            //              TraficLights[1, 2].Rödljus();
-            //              TraficLights[3, 0].Rödljus();
-            //              TraficLights[3, 1].Rödljus();
-            //
-            //          }
-            //          if (tid % 100 == 25)
-            //          {
-            //              TraficLights[2, 0].Rödljus();
-            //              TraficLights[2, 1].Rödljus();
-            //              TraficLights[0, 1].Rödljus();
-            //              TraficLights[0, 2].Rödljus();
-            //
-            //              TraficLights[1, 1].Rödljus();
-            //              TraficLights[1, 2].Rödljus();
-            //              TraficLights[3, 0].Rödljus();
-            //              TraficLights[3, 1].Rödljus();
-            //
-            //
-            //          }
-            //          if (tid % 100 == 50)
-            //          {
-            //              TraficLights[2, 0].Rödljus();
-            //              TraficLights[2, 1].Rödljus();
-            //              TraficLights[0, 1].Rödljus();
-            //              TraficLights[0, 2].Rödljus();
-            //
-            //              TraficLights[1, 1].Gröntljus();
-            //              TraficLights[1, 2].Gröntljus();
-            //              TraficLights[3, 0].Gröntljus();
-            //              TraficLights[3, 1].Gröntljus();
-            //          }
-            //          if (tid % 100 == 75)
-            //          {
-            //              TraficLights[2, 0].Rödljus();
-            //              TraficLights[2, 1].Rödljus();
-            //              TraficLights[0, 1].Rödljus();
-            //              TraficLights[0, 2].Rödljus();
-            //
-            //              TraficLights[1, 1].Rödljus();
-            //              TraficLights[1, 2].Rödljus();
-            //              TraficLights[3, 0].Rödljus();
-            //              TraficLights[3, 1].Rödljus();
-            //
-            //
-            //          }
-            #endregion
-
-            tid++;
+            timer1_Tick(null, null);
         }
         /// <summary>
         /// Funktion som avgör ifall en int är större är 3 och sätter till 0 ifall det är så, eller ifall den är mindre en 0 och sätter till 3 ifall det är så
@@ -776,8 +828,21 @@ namespace Ant_test
                     Remove.Add(a);
                 }
             }
-            //Tar bort alla myror
-
+        }
+        private void ant_check_remove(Ant ant)
+        {
+                switch (map_elements[ant.X, ant.Y])
+                {
+                    //Case röd har ihjäl myran
+                    case -1://Röd
+                        karta[ant.X, ant.Y] = false;
+                        Remove.Add(ant);
+                        break;
+                }
+                if (ant.X > map.Width || ant.X < 0 || ant.Y > map.Height || ant.Y < 0)
+                {
+                    Remove.Add(ant);
+                }
         }
 
         private void antstep(Ant s)
@@ -794,7 +859,7 @@ namespace Ant_test
             ant_check_Turn_Diagonal(a, !is_ant_in_front(ants[a]));
 
             //Tar bort myror på dödsrutor
-            //  ant_check_remove(ants);
+            ant_check_remove(s);
             //renderar allt till skärmen
             // render_To_Screen();
         }
@@ -808,15 +873,18 @@ namespace Ant_test
                 }
                 antstep(a);
             }
-            if (!brake && a.v != 0)
-            {
-                //  antstep(a);
-            }
+          //  if (!brake && a.v != 0)
+          //  {
+          //      //  antstep(a);
+          //  }
 
             if (a.v < v_max && map_elements[a.X, a.Y] != -1)
             {
                 a.Acc = 1;
             }
+            ant_check_remove(ants);
+            //Tar bort alla myror
+          
         }
         private void DEACC(Ant a)
         {
@@ -862,15 +930,13 @@ namespace Ant_test
                     Console.WriteLine("nu blev det fel");
                 }
                 int steg = a.ljus();
-
-
+                
                 if (steg == -1 || step + Convert.ToDouble((a.v * a.v) + a.v) / 2.0 > steg)
                 {
                     a.t_ljus = false;
 
-                    if (step <= Convert.ToDouble(a.v * a.v + 1.5 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
+                    if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
                     {
-
                         DEACC(a);
                     }
                     else if (step > Convert.ToDouble(a.v * a.v - (Ant_V * Ant_V) - Ant_V) / 2.0 + 2.5 * a.v + 1 || !brake)
@@ -884,8 +950,8 @@ namespace Ant_test
                 }
                 else
                 {
-                    a.t_ljus = true;
-                    if (steg < Convert.ToDouble(a.v * a.v + 1.5 * a.v) / 2.0)
+                    
+                    if (steg < Convert.ToDouble(a.v * a.v + 3.0 * a.v) / 2.0 && brake)
                     {
                         DEACC(a);
                     }
@@ -914,7 +980,6 @@ namespace Ant_test
                 }
             }
             ant_check_remove(ants);
-            //Tar bort alla myror
             for (int i = 0; i < Remove.Count; i++)
             {
                 ants.Remove(Remove[i]);
@@ -952,9 +1017,8 @@ namespace Ant_test
         /// <param name="e"></param>
         private void Reset_button_Click(object sender, EventArgs e)
         {
-            gul = false;
-            odd = 0;
-            counter_ = 0;
+            counter = 0;
+            tid = 0;
             ants.Clear();
             karta = new bool[map.Width, map.Height];
             List<Trafikljus>[] concatList = new List<Trafikljus>[4];
@@ -1055,6 +1119,15 @@ namespace Ant_test
             dataForm = new DataForm();
             dataFormActive = true;
             dataForm.Show();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Reset_button_Click(null, null);
+            while (tid < 60 * 60 * 24)
+            {
+                timer1_Tick(null, null);
+            }
         }
     }
 

@@ -110,7 +110,28 @@ namespace Ant_test
         {
             _pos = new Point(X, Y);
         }
-       
+
+
+        public Point step_calc(Point q)
+        {
+            Point p = q;
+            switch (_dir % 4) // Switch med resten av dir mod 4.
+            {
+                case 0:
+                    p.Y--;
+                    break;
+                case 1:
+                    p.X++;
+                    break;
+                case 2:
+                    p.Y++;
+                    break;
+                case 3:
+                    p.X--;
+                    break;
+            }
+            return p;
+        }
         //  int mod(int x, int m)
         //  {       
         //      return (x % m + m) % m;
@@ -145,16 +166,16 @@ namespace Ant_test
                 if (MainForm.map_elements[X, Y] == -1) // ny kod
                 {
                     v = 0;
+                    
                 }
             }
             catch { v = 0; }
 
-            if (RealAnt && _pos.Y < MainForm.map.Height - 1 && _pos.Y > 0 && _pos.X < MainForm.map.Width - 1 && _pos.X > 0)  //håller myran innaför spelplanen
+            if (RealAnt && _pos.Y < MainForm.map.Height - 1 && _pos.Y > 0 && _pos.X < MainForm.map.Width - 1 && _pos.X > 0 )  //håller myran innaför spelplanen
             {
                 MainForm.karta[getPos().X, getPos().Y] = true;
             }
         }
-
         #region trace
         private bool trace_stop(Ant i, int step)  // Ska myran som räknar steg sluta bestämms av denna funktion.
         {
@@ -162,18 +183,10 @@ namespace Ant_test
             {
                 //returne
                 if ((MainForm.map_elements[i.X, i.Y] == 1 || MainForm.map_elements[i.X, i.Y] == -1) || (MainForm.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
-                {
                     return false;
-                }
-                //  if (Form1.map_elements[i.X, i.Y] == 3 && i.v >= 3)
-                {
-                    //      return false;
-                }
                 if (step != 0)
                     if (MainForm.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
-                    {
                         return false;
-                    }
                 return true;
             }
             catch
@@ -189,6 +202,10 @@ namespace Ant_test
             Ant trace = new Ant(X, Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
             for (step = 0; trace_stop(trace, step); step++) // En for-loop som ökar antalet steg tills logiken blir false se metod trace_stop ovan.
             {
+                if (MainForm.map_elements[trace.X, trace.Y] == -1)
+                {
+                    need_brake = false;
+                }
                 for (int i = 0; i < MainForm.Turn_fields_Left.Length; i++)
                 {
                     if (MainForm.Turn_fields_Left[i].Contains(trace.Pos) && trace._dir == i)
@@ -212,6 +229,7 @@ namespace Ant_test
                     trace._dir = dirOverFlowCorr(trace._dir + 1);
                     trace.step();
                     trace._dir = dirOverFlowCorr(trace._dir - 1);
+
                 }
                 else if (MainForm.Turn_fields_Left_Diagonal[trace._dir].Contains(trace.getPos()) && !MainForm.is_ant_to_side_right(trace))
                 {
@@ -224,15 +242,20 @@ namespace Ant_test
                 {
                     trace.step();
                 }
-                //Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             }
             try
             {
+                bool hey = MainForm.karta[trace.X, trace.Y]; // Om vi får true här är den nuvarande positionen okuperad av en myra
+            }
+            catch
+            {
+                need_brake = false;
+            }
+            //Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
+            try
+            {
                 Ant_V = MainForm.ants[MainForm.ants.IndexOf(trace)].v;
-                if (MainForm.map_elements[trace.X, trace.Y] == -1)
-                {
-                    need_brake = false;
-                }
+                
             }
             catch
             {
@@ -395,6 +418,6 @@ namespace Ant_test
             }
             return _dir;
         }
-       
+
     }
 }

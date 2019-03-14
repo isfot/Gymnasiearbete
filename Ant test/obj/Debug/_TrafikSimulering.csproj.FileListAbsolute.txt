@@ -36,3 +36,5 @@ E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\_TrafikSimulering.csproj.G
 E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\_TrafikSimulering.csproj.CoreCompileInputs.cache
 E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.exe
 E:\C Sharp\!!GymnasieArbete\Github\Ant test\obj\Debug\Ant test.pdb
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\pic Fungerar.png
+Q:\C SHARP\!Gymnasiearbete\MASTER_CURRENT\Ant test\bin\Debug\pic Loopyloop.png
