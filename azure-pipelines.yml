@@ -28,7 +28,7 @@ steps:
     configuration: '$(buildConfiguration)'
     msbuildArgs: '/p:AllowUnsafeBlocks="true"'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+#- task: VSTest@2
+#  inputs:
+#    platform: '$(buildPlatform)'
+#    configuration: '$(buildConfiguration)'
