@@ -182,8 +182,9 @@ namespace Ant_test
             try
             {
                 //returne
-                if ((MainForm.map_elements[i.X, i.Y] == 1 || MainForm.map_elements[i.X, i.Y] == -1) || (MainForm.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
+                if ((MainForm.map_elements[i.X, i.Y] == 1 ) || (MainForm.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
                     return false;
+                
                 if (step != 0)
                     if (MainForm.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
                         return false;
@@ -205,6 +206,7 @@ namespace Ant_test
                 if (MainForm.map_elements[trace.X, trace.Y] == -1)
                 {
                     need_brake = false;
+                    break;
                 }
                 for (int i = 0; i < MainForm.Turn_fields_Left.Length; i++)
                 {
@@ -242,14 +244,15 @@ namespace Ant_test
                 {
                     trace.step();
                 }
+               
             }
-            try
+          //  try
             {
-                bool hey = MainForm.karta[trace.X, trace.Y]; // Om vi får true här är den nuvarande positionen okuperad av en myra
+            //    bool hey = MainForm.karta[trace.X, trace.Y]; // Om vi får true här är den nuvarande positionen okuperad av en myra
             }
-            catch
+           // catch
             {
-                need_brake = false;
+             //   need_brake = false;
             }
             //Form1.mapAVC.Setpixel(trace.X, trace.Y, Color.Aqua);
             try
@@ -260,6 +263,7 @@ namespace Ant_test
             catch
             {
                 Ant_V = -1;
+                
             }
 
         }
