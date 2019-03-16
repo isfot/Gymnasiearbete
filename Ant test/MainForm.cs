@@ -21,12 +21,18 @@ namespace Ant_test
         public static List<Point>[] Turn_fields_Left_Diagonal = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
         private List<Point> White_Fields = new List<Point>();
-        private static readonly int v_max = 5;
+        private static  int v_max = 5;
         public static int[] flow = new int[16];
         private static double occupiable_fields;
         private static double density;
-        
-        private static int car_in_motion = 0;
+        private static int counter2 = 0;
+       
+        public static long tot_flow=0; // totala flödet
+        private static long tot_hastighet = 0; // totala hastighet av alla bilar.
+        private static long ant_tot = 0;
+        public static double[]hastighet = new double[60 * 60*24];
+        public static double[] myror = new double[60 * 60 * 24];
+        public static long car_in_motion = 0;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
         public static bool[,] karta;// Initieraren skall ändras så att den matchar kartans storlek.  MAP
         public static int[,] map_elements; //POSITIONERAR TRAFIKLJUS OCH KILLFIELDS
@@ -591,6 +597,7 @@ namespace Ant_test
         private double[] fps = new double[100];
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
             //trafikljus();
             foreach (Trafikljus x in trafikljus)
             {
@@ -600,7 +607,11 @@ namespace Ant_test
             watch = System.Diagnostics.Stopwatch.StartNew();
             counter++;
             //antstep();
+            ant_tot += ants.Count;
+            
+            tot_hastighet = 0;
             v_step();
+          
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
             if (counter % 5 == 0 && checkBox_random.Checked)
@@ -617,6 +628,8 @@ namespace Ant_test
 
             tid++;
             density = ants.Count / occupiable_fields;
+             // som räknar ut flöde över hela dygnet.
+
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
 
 
@@ -821,11 +834,13 @@ namespace Ant_test
                     case -1://Röd
                         karta[a.X, a.Y] = false;
                         Remove.Add(a);
+                       
                         break;
                 }
                 if (a.X > map.Width || a.X < 0 || a.Y > map.Height || a.Y < 0)
                 {
                     Remove.Add(a);
+                    
                 }
             }
         }
@@ -924,22 +939,30 @@ namespace Ant_test
             //mapAVC.Upscale(1);
             foreach (Ant a in ants)
             {
+                if (a.v != 0) { tot_flow++; }
+               
                 a.trace(out int step, out bool brake, out int Ant_V, this);
                 if (step < Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0 && brake)
                 {
                     Console.WriteLine("nu blev det fel");
                 }
                 int steg = a.ljus();
-                
-                if (steg == -1 || step + Convert.ToDouble((a.v * a.v) + a.v) / 2.0 > steg)
+                tot_hastighet += a.v;
+                if (steg < 0 || step + Convert.ToDouble((a.v * a.v) + a.v) / 2.0 > steg)
                 {
-                    a.t_ljus = false;
 
-                    if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
+                    if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 +1 && brake && !a.t_ljus  )
+                    {
+
+                        DEACC(a);
+                    }
+                    else if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0  && brake )
                     {
                         DEACC(a);
                     }
-                    else if (step > Convert.ToDouble(a.v * a.v - (Ant_V * Ant_V) - Ant_V) / 2.0 + 2.5 * a.v + 1 || !brake)
+                     
+                   
+                   else if (step > Convert.ToDouble(a.v * a.v - (Ant_V * Ant_V) - Ant_V) / 2.0 + 2.5 * a.v +1 || !brake)
                     {
                         ACC(a, brake);
                     }
@@ -967,19 +990,32 @@ namespace Ant_test
 
 
             }
+            if (ants.Count != 0)
+            {
+                hastighet[counter2] = tot_hastighet;
+                myror[counter2] = ants.Count;
+                counter2++;
+            }
             foreach (Ant a in ants)
             {
+
                 if (a.v == 0 && a.Acc == 1)
                 {
                     car_in_motion++;
                 }
-                a.v += a.Acc;
-                if (a.v == 0)
+                tot_hastighet += a.v;
+                if (a.v == 1 && a.Acc==-1)
                 {
                     car_in_motion--;
                 }
+                
+                a.v += a.Acc;
+                
+               
+                a.Acc = 0;
             }
             ant_check_remove(ants);
+           
             for (int i = 0; i < Remove.Count; i++)
             {
                 ants.Remove(Remove[i]);
@@ -1019,7 +1055,29 @@ namespace Ant_test
         {
             counter = 0;
             tid = 0;
+            tot_flow = 0;
+            tot_hastighet = 0;
+            ant_tot = 0;
+            counter2 = 0;
+            myror = new double[3600 * 24];
+            hastighet = new double[3600 * 24];
             ants.Clear();
+            foreach (List<Trafikljus> y in TraficLights) // Alla vanliga trafikljus
+            {
+                foreach (Trafikljus a in y)
+                {
+                    a.Rödljus(); // Gör alla trafikljus till röda vid programmets start
+                   
+                }
+            }
+            foreach (List<Trafikljus> y in TraficLights_Left_Turn) // Alla trafikljus som svänger vänster
+            {
+                foreach (Trafikljus a in y)
+                {
+                    a.Rödljus();// Gör alla trafikljus till röda vid programmets start
+                   
+                }
+            }
             karta = new bool[map.Width, map.Height];
             List<Trafikljus>[] concatList = new List<Trafikljus>[4];
             for (int i = 0; i < concatList.Length; i++)
@@ -1120,14 +1178,41 @@ namespace Ant_test
             dataFormActive = true;
             dataForm.Show();
         }
-
+        private int körningar = 0;
+        string[] resultat = new string[400];
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Reset_button_Click(null, null);
-            while (tid < 60 * 60 * 24)
+            while (körningar < 400)
             {
-                timer1_Tick(null, null);
+                
+                Reset_button_Click(null, null);
+                while (tid < 60 * 60 * 24)
+                {
+                    timer1_Tick(null, null);
+                }
+                tot_hastighet = 0;
+                ant_tot = 0;
+
+
+                for (int i = 0; i < counter2; i++)
+                {
+                    tot_hastighet += (int)hastighet[i];
+                    ant_tot += (int)myror[i];
+
+                }
+                resultat [körningar]=(körningar + ": "+(double)tot_flow / ant_tot + "," + ((double)tot_hastighet / ant_tot) + ","+ (ant_tot / (occupiable_fields * counter2))+ ","+v_max);
+            }   // flöde , medelhastighet, och densitet
+            if (körningar % 100 ==0 && körningar!=0) { 
+                {
+                    v_max--;
+                }
             }
+            System.IO.File.WriteAllLines(Environment.CurrentDirectory + @"\resultat.txt", resultat);
+
+
+
+
+            MessageBox.Show("totalt flöde (antal gånger bilar har flyttat sig / antal bilar): " + (double)tot_flow/ant_tot  + " medelhastighet" + Convert.ToDouble((double)tot_hastighet/ant_tot) + "totalt med myror: " + (double)ant_tot/(occupiable_fields*counter2));
         }
     }
 
