@@ -166,7 +166,7 @@ namespace Ant_test
                 if (MainForm.map_elements[X, Y] == -1) // ny kod
                 {
                     v = 0;
-                    
+                    MainForm.car_in_motion --;
                 }
             }
             catch { v = 0; }
@@ -181,9 +181,15 @@ namespace Ant_test
         {
             try
             {
-                //returne
-                if ((MainForm.map_elements[i.X, i.Y] == 1 ) || (MainForm.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
+               
+                    //returne
+                    if ((MainForm.map_elements[i.X, i.Y] == 1 ) || (MainForm.map_elements[i.X, i.Y] == 3 && step >= Convert.ToDouble(i.v * i.v + i.v) / 2.0))
+                {
+                    if (!MainForm.karta[i.X, i.Y] && step!=0) { t_ljus = true; }
+                   
                     return false;
+                }
+                   
                 
                 if (step != 0)
                     if (MainForm.karta[i.X, i.Y]) // Om vi får true här är den nuvarande positionen okuperad av en myra
@@ -198,6 +204,7 @@ namespace Ant_test
         private static MainForm forms;
         public void trace(out int step, out bool need_brake, out int Ant_V, MainForm inputform)
         {
+            t_ljus = false;
             forms = inputform;
             need_brake = true;
             Ant trace = new Ant(X, Y, _dir, Color.White, false); // Skapar en lokal myra som får springa till den stöter på något.
@@ -359,7 +366,7 @@ namespace Ant_test
             {
                 if (MainForm.map_elements[ljus.X, ljus.Y] == 1 || MainForm.map_elements[ljus.X, ljus.Y] == 2)
                 {
-                    return -1;
+                    return -2;
 
                 }
                 if (MainForm.map_elements[ljus.X, ljus.Y] == -1 || ljus.Y < MainForm.map.Height - 1 && ljus.Y >= 0 && ljus.X < MainForm.map.Width - 1 && ljus.X >= 0)

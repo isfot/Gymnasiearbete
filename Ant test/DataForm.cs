@@ -25,6 +25,8 @@ namespace Ant_test
             dt.Columns.Add("Y_Value_Speed_S", typeof(double));
             dt.Columns.Add("Y_Value_Speed_V", typeof(double));
             dt.Columns.Add("Y_Value_Speed_Ö", typeof(double));
+            
+
         }
         private List<Ant> local_Ants;
         public void updateData(List<Ant> ants)
@@ -49,8 +51,10 @@ namespace Ant_test
         private double flow_s;
         private double flow_v;
         private double flow_ö;
-
-
+        private double avg_speed_tot;
+        public static int coutn = 0;
+        private long[] speed = new long[3600*24]; // kom ihåg att ändra denna.
+        private  long[] counts = new long[3600 * 24]; // kom ihåg att ändra denna.
         private int counter = 0;
         private void graphUpdateValue(double[] value_speed, double[] value_ants)
         {
@@ -75,6 +79,9 @@ namespace Ant_test
             chart1.Series["Count"].XValueMember = "X";
             chart1.Series["Count"].YValueMembers = "Value_Count";
             chart1.Series["Count"].ChartType = SeriesChartType.Line;
+           // chart1.Series["Y_Speed_Tot_AVG"].XValueMember = "X";
+           // chart1.Series["Y_Speed_Tot_AVG"].YValueMembers = "Y_Speed_Tot_AVG";
+           // chart1.Series["Y_Speed_Tot_AVG"].ChartType = SeriesChartType.Line;
             chart1.ChartAreas[0].AxisY.LabelStyle.Format = "";
 
             counter++;
@@ -136,16 +143,37 @@ namespace Ant_test
                     flow++;
                 }
             }
+            if (local_Ants.Count != 0)
+            {
+               this.speed[coutn] =(int)avg_speed;
+               // MainForm.hastighet[coutn] = avg_speed;
+                counts[coutn] = local_Ants.Count;
+               // MainForm.myror[coutn] = local_Ants.Count;
+                coutn++;
+            }
+
             avg_speed = avg_speed / local_Ants.Count;
             avg_speed_n = avg_speed_n / num_n;
             avg_speed_s = avg_speed_s / num_s;
             avg_speed_v = avg_speed_v / num_v;
             avg_speed_ö = avg_speed_ö / num_ö;
             flow /= num;
+            
+            
             flow_n /= num_n;
             flow_s /= num_s;
             flow_v /= num_v;
             flow_ö /= num_ö;
+           
+           
+
+            avg_speed_tot = 0;
+            for (int i=0; i <= coutn; i++)
+            {
+                if (counts[i] != 0) { avg_speed_tot += this.speed[i] / counts[i]; }
+               
+            }
+                        avg_speed_tot /= coutn+1;
             double[] speed = new double[] { avg_speed, avg_speed_n, avg_speed_s, avg_speed_v, avg_speed_ö };
             double[] cocosnötter = new double[] { local_Ants.Count, num_n, num_s, num_v, num_ö };
             double[] flows = new double[] { flow, flow_n, flow_s, flow_v, flow_ö };
@@ -169,6 +197,7 @@ namespace Ant_test
             label_flow_S.Text = flows[2].ToString();
             label_flow_V.Text = flows[3].ToString();
             label_flow_Ö.Text = flows[4].ToString();
+            label7.Text = avg_speed_tot.ToString();
         }
 
         private void DataForm_FormClosing(object sender, FormClosingEventArgs e)
