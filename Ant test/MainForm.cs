@@ -21,16 +21,16 @@ namespace Ant_test
         public static List<Point>[] Turn_fields_Left_Diagonal = new List<Point>[4] { new List<Point>(), new List<Point>(), new List<Point>(), new List<Point>() }; //Array av listor som indikerar var myrorna svänger höger
         public static List<Point> Turn_fields_Right_Diagonal = new List<Point>(); //Array av listor som indikerar var myrorna svänger diagonalt höger
         private List<Point> White_Fields = new List<Point>();
-        private static  int v_max = 5;
+        private static int v_max = 5;
         public static int[] flow = new int[16];
         private static double occupiable_fields;
         private static double density;
         private static int counter2 = 0;
-       
-        public static long tot_flow=0; // totala flödet
+
+        public static long tot_flow = 0; // totala flödet
         private static long tot_hastighet = 0; // totala hastighet av alla bilar.
         private static long ant_tot = 0;
-        public static double[]hastighet = new double[60 * 60*24];
+        public static double[] hastighet = new double[60 * 60 * 24];
         public static double[] myror = new double[60 * 60 * 24];
         public static long car_in_motion = 0;
         private static List<Point> Kill_Fields = new List<Point>(); //ha ihjäl myror vid rätt rutor
@@ -597,7 +597,7 @@ namespace Ant_test
         private double[] fps = new double[100];
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
+
             //trafikljus();
             foreach (Trafikljus x in trafikljus)
             {
@@ -608,10 +608,10 @@ namespace Ant_test
             counter++;
             //antstep();
             ant_tot += ants.Count;
-            
+
             tot_hastighet = 0;
             v_step();
-          
+
             richTextBox3.Text = ants.Count.ToString();
             richTextBox4.Text = tid.ToString();
             if (counter % 5 == 0 && checkBox_random.Checked)
@@ -628,7 +628,7 @@ namespace Ant_test
 
             tid++;
             density = ants.Count / occupiable_fields;
-             // som räknar ut flöde över hela dygnet.
+            // som räknar ut flöde över hela dygnet.
 
             Densitet_Textbox.Text = density.ToString() + "   " + car_in_motion.ToString();
 
@@ -834,30 +834,30 @@ namespace Ant_test
                     case -1://Röd
                         karta[a.X, a.Y] = false;
                         Remove.Add(a);
-                       
+
                         break;
                 }
                 if (a.X > map.Width || a.X < 0 || a.Y > map.Height || a.Y < 0)
                 {
                     Remove.Add(a);
-                    
+
                 }
             }
         }
         private void ant_check_remove(Ant ant)
         {
-                switch (map_elements[ant.X, ant.Y])
-                {
-                    //Case röd har ihjäl myran
-                    case -1://Röd
-                        karta[ant.X, ant.Y] = false;
-                        Remove.Add(ant);
-                        break;
-                }
-                if (ant.X > map.Width || ant.X < 0 || ant.Y > map.Height || ant.Y < 0)
-                {
+            switch (map_elements[ant.X, ant.Y])
+            {
+                //Case röd har ihjäl myran
+                case -1://Röd
+                    karta[ant.X, ant.Y] = false;
                     Remove.Add(ant);
-                }
+                    break;
+            }
+            if (ant.X > map.Width || ant.X < 0 || ant.Y > map.Height || ant.Y < 0)
+            {
+                Remove.Add(ant);
+            }
         }
 
         private void antstep(Ant s)
@@ -888,10 +888,10 @@ namespace Ant_test
                 }
                 antstep(a);
             }
-          //  if (!brake && a.v != 0)
-          //  {
-          //      //  antstep(a);
-          //  }
+            //  if (!brake && a.v != 0)
+            //  {
+            //      //  antstep(a);
+            //  }
 
             if (a.v < v_max && map_elements[a.X, a.Y] != -1)
             {
@@ -899,7 +899,7 @@ namespace Ant_test
             }
             ant_check_remove(ants);
             //Tar bort alla myror
-          
+
         }
         private void DEACC(Ant a)
         {
@@ -940,7 +940,7 @@ namespace Ant_test
             foreach (Ant a in ants)
             {
                 if (a.v != 0) { tot_flow++; }
-               
+
                 a.trace(out int step, out bool brake, out int Ant_V, this);
                 if (step < Convert.ToDouble(a.v * a.v + a.v) / 2.0 - Convert.ToDouble(Ant_V * Ant_V + Ant_V) / 2.0 && brake)
                 {
@@ -951,18 +951,18 @@ namespace Ant_test
                 if (steg < 0 || step + Convert.ToDouble((a.v * a.v) + a.v) / 2.0 > steg)
                 {
 
-                    if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 +1 && brake && !a.t_ljus  )
+                    if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 + 1 && brake && !a.t_ljus)
                     {
 
                         DEACC(a);
                     }
-                    else if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0  && brake )
+                    else if (step < Convert.ToDouble(a.v * a.v + 3.0 * a.v - Ant_V * Ant_V - Ant_V) / 2.0 && brake)
                     {
                         DEACC(a);
                     }
-                     
-                   
-                   else if (step > Convert.ToDouble(a.v * a.v - (Ant_V * Ant_V) - Ant_V) / 2.0 + 2.5 * a.v +1 || !brake)
+
+
+                    else if (step > Convert.ToDouble(a.v * a.v - (Ant_V * Ant_V) - Ant_V) / 2.0 + 2.5 * a.v + 1 || !brake)
                     {
                         ACC(a, brake);
                     }
@@ -973,7 +973,7 @@ namespace Ant_test
                 }
                 else
                 {
-                    
+
                     if (steg < Convert.ToDouble(a.v * a.v + 3.0 * a.v) / 2.0 && brake)
                     {
                         DEACC(a);
@@ -1004,18 +1004,18 @@ namespace Ant_test
                     car_in_motion++;
                 }
                 tot_hastighet += a.v;
-                if (a.v == 1 && a.Acc==-1)
+                if (a.v == 1 && a.Acc == -1)
                 {
                     car_in_motion--;
                 }
-                
+
                 a.v += a.Acc;
-                
-               
+
+
                 a.Acc = 0;
             }
             ant_check_remove(ants);
-           
+
             for (int i = 0; i < Remove.Count; i++)
             {
                 ants.Remove(Remove[i]);
@@ -1067,7 +1067,7 @@ namespace Ant_test
                 foreach (Trafikljus a in y)
                 {
                     a.Rödljus(); // Gör alla trafikljus till röda vid programmets start
-                   
+
                 }
             }
             foreach (List<Trafikljus> y in TraficLights_Left_Turn) // Alla trafikljus som svänger vänster
@@ -1075,7 +1075,7 @@ namespace Ant_test
                 foreach (Trafikljus a in y)
                 {
                     a.Rödljus();// Gör alla trafikljus till röda vid programmets start
-                   
+
                 }
             }
             karta = new bool[map.Width, map.Height];
@@ -1179,12 +1179,14 @@ namespace Ant_test
             dataForm.Show();
         }
         private int körningar = 0;
-        string[] resultat = new string[400];
+        string[] resultat = new string[1];
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            while (körningar < 400)
+            körningar = 0;
+            
+            while (körningar < 100)
             {
-                
+                resultat = new string[1];
                 Reset_button_Click(null, null);
                 while (tid < 60 * 60 * 24)
                 {
@@ -1200,19 +1202,26 @@ namespace Ant_test
                     ant_tot += (int)myror[i];
 
                 }
-                resultat [körningar]=(körningar + ": "+(double)tot_flow / ant_tot + "," + ((double)tot_hastighet / ant_tot) + ","+ (ant_tot / (occupiable_fields * counter2))+ ","+v_max);
-            }   // flöde , medelhastighet, och densitet
-            if (körningar % 100 ==0 && körningar!=0) { 
+                resultat[0] = ((double)tot_flow / ant_tot + ";" + ((double)tot_hastighet / ant_tot) + ";" + (ant_tot / (occupiable_fields * counter2)) + ";" + v_max);
+                körningar++;
+                int filecount = 0;
+                string path = Environment.CurrentDirectory;
+                for (int i = 0; System.IO.File.Exists(path + @"\output_" + i + ".txt"); i++)
                 {
-                    v_max--;
+                    filecount = i + 1;
                 }
+                System.IO.File.WriteAllLines(Environment.CurrentDirectory + @"\output_" + filecount + ".txt", resultat);
+            }   // flöde , medelhastighet, och densitet
+            if (körningar % 100 == 0 && körningar != 0)
+            {
+                v_max--;
             }
-            System.IO.File.WriteAllLines(Environment.CurrentDirectory + @"\resultat.txt", resultat);
+           
 
 
 
 
-            MessageBox.Show("totalt flöde (antal gånger bilar har flyttat sig / antal bilar): " + (double)tot_flow/ant_tot  + " medelhastighet" + Convert.ToDouble((double)tot_hastighet/ant_tot) + "totalt med myror: " + (double)ant_tot/(occupiable_fields*counter2));
+           // MessageBox.Show("totalt flöde (antal gånger bilar har flyttat sig / antal bilar): " + (double)tot_flow / ant_tot + " medelhastighet" + Convert.ToDouble((double)tot_hastighet / ant_tot) + "totalt med myror: " + (double)ant_tot / (occupiable_fields * counter2));
         }
     }
 
