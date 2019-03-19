@@ -1182,9 +1182,32 @@ namespace Ant_test
         string[] resultat = new string[1];
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            string path = Environment.CurrentDirectory;
+            for (int i = 0; System.IO.File.Exists(path + @"\output_" + i + ".txt"); i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        v_max = 5;
+                        break;
+                    case 99:
+                        v_max = 4;
+                        break;
+                    case 199:
+                        v_max = 3;
+                        break;
+                    case 299:
+                        v_max = 2;
+                        break;
+                    case 399:
+                        v_max = 1;
+                        break;
+                }
+            }
+            this.BackColor = Color.Red;
             körningar = 0;
             
-            while (körningar < 100)
+            while (körningar < 1000)
             {
                 resultat = new string[1];
                 Reset_button_Click(null, null);
@@ -1205,10 +1228,32 @@ namespace Ant_test
                 resultat[0] = ((double)tot_flow / ant_tot + ";" + ((double)tot_hastighet / ant_tot) + ";" + (ant_tot / (occupiable_fields * counter2)) + ";" + v_max);
                 körningar++;
                 int filecount = 0;
-                string path = Environment.CurrentDirectory;
                 for (int i = 0; System.IO.File.Exists(path + @"\output_" + i + ".txt"); i++)
                 {
                     filecount = i + 1;
+                    switch (i)
+                    {
+                        case 0:
+                            v_max = 5;
+                            break;
+                        case 99:
+                            v_max = 4;
+                            break;
+                        case 199:
+                            v_max = 3;
+                            break;
+                        case 299:
+                            v_max = 2;
+                            break;
+                        case 399:
+                            v_max = 1;
+                            break;
+                    }
+                }
+                if (filecount > 520)
+                {
+                    this.BackColor = Color.Green;
+                    break;
                 }
                 System.IO.File.WriteAllLines(Environment.CurrentDirectory + @"\output_" + filecount + ".txt", resultat);
             }   // flöde , medelhastighet, och densitet
