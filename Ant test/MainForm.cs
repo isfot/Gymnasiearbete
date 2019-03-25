@@ -562,10 +562,10 @@ namespace Ant_test
             }
             if (time % 3600 == 0)
             {
-                amountN_tick = amountN_arr[time / 3600] / 3600;
-                amountS_tick = amountS_arr[time / 3600] / 3600;
-                amountV_tick = amountV_arr[time / 3600] / 3600;
-                amountÖ_tick = amountÖ_arr[time / 3600] / 3600;
+                amountN_tick = amountN_arr[(time / 3600) % amountN_arr.Length] / 3600;
+                amountS_tick = amountS_arr[(time / 3600) % amountS_arr.Length] / 3600;
+                amountV_tick = amountV_arr[(time / 3600) % amountV_arr.Length] / 3600;
+                amountÖ_tick = amountÖ_arr[(time / 3600) % amountÖ_arr.Length] / 3600;
             }
             amountN += amountN_tick;
             amountS += amountS_tick;
