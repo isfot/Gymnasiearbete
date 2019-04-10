@@ -345,7 +345,7 @@ namespace Ant_test
                 //SÄTTER MYRA PÅ ALLA STATRFÄLT 
                 foreach (Point pos in Start_Fields[i])
                 {
-                    ants.Add(new Ant(pos, i, colors[i], true));
+                    ants.Add(new Ant(pos, i, Color.Black, true));
                 }
             }
         }
@@ -358,25 +358,25 @@ namespace Ant_test
                     case 1:
                         for (int h = 0; h < flow[i]; h++) // flow[i] är hur många bilar som skall skickas ut.
                         {
-                            ants.Add(new Ant(Start_Fields[1][(int)(i / 4)], 1, colors[i % 4], true));
+                            ants.Add(new Ant(Start_Fields[1][(int)(i / 4)], 1, Color.Black, true));
                         }
                         break;
                     case 2:
                         for (int h = 0; h < flow[i]; h++)
                         {
-                            ants.Add(new Ant(Start_Fields[2][(int)(i / 4)], 2, colors[i % 4], true));
+                            ants.Add(new Ant(Start_Fields[2][(int)(i / 4)], 2, Color.Black, true));
                         }
                         break;
                     case 3:
                         for (int h = 0; h < flow[i]; h++)
                         {
-                            ants.Add(new Ant(Start_Fields[3][(int)(i / 4)], 3, colors[i % 4], true));
+                            ants.Add(new Ant(Start_Fields[3][(int)(i / 4)], 3, Color.Black, true));
                         }
                         break;
                     case 0:
                         for (int h = 0; h < flow[i]; h++)
                         {
-                            ants.Add(new Ant(Start_Fields[0][(int)(i / 4)], 0, colors[i % 4], true));
+                            ants.Add(new Ant(Start_Fields[0][(int)(i / 4)], 0, Color.Black, true));
                         }
                         break;
                 }
@@ -412,19 +412,19 @@ namespace Ant_test
             {
                 if (index == 0 && checkBox_Field_3.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
                 if (index == 1 && checkBox_Field_4.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
                 if (index == 2 && checkBox_Field_1.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
                 if (index == 3 && checkBox_Field_2.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
             }
             catch { }
@@ -437,19 +437,19 @@ namespace Ant_test
             {
                 if (index == 0 && checkBox_Field_3.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
                 if (index == 1 && checkBox_Field_4.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
                 if (index == 2 && checkBox_Field_1.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
                 if (index == 3 && checkBox_Field_2.Checked)
                 {
-                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, colors[index], true));
+                    ants.Add(new Ant(Start_Fields[index][rand.Next(0, Start_Fields[index].Count)], index, Color.Black, true));
                 }
             }
             catch { }
