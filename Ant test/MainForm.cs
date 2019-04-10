@@ -635,9 +635,9 @@ namespace Ant_test
 
             watch.Stop();
             watch_fps.Stop();
-            label_renderTime.Text = watch_fps.Elapsed.TotalMilliseconds.ToString();
             fpscounter++;
             fps[fpscounter % 100] = watch_fps.Elapsed.TotalMilliseconds;
+            label_renderTime.Text = rendertimeSum(fps).ToString();
             double fpstotal = 0;
             for (int i = 0; i < fps.Length; i++)
             {
@@ -651,6 +651,15 @@ namespace Ant_test
             catch { }
             watch_fps = new System.Diagnostics.Stopwatch();
             watch_fps.Start();
+        }
+        private double rendertimeSum(double[] input)
+        {
+            double output = 0;
+            foreach(double x in input)
+            {
+                output += x;
+            }
+            return output / input.Length;
         }
 
         //Step
