@@ -1277,6 +1277,11 @@ namespace Ant_test
 
            // MessageBox.Show("totalt flöde (antal gånger bilar har flyttat sig / antal bilar): " + (double)tot_flow / ant_tot + " medelhastighet" + Convert.ToDouble((double)tot_hastighet / ant_tot) + "totalt med myror: " + (double)ant_tot / (occupiable_fields * counter2));
         }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(pictureBox.Image);
+        }
     }
 
 }
