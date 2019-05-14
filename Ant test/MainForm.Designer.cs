@@ -443,6 +443,7 @@
             // 
             // textBox_speed
             // 
+            this.textBox_speed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_speed.Location = new System.Drawing.Point(578, 86);
             this.textBox_speed.Name = "textBox_speed";
             this.textBox_speed.Size = new System.Drawing.Size(100, 26);
