@@ -329,6 +329,7 @@ namespace Ant_test
         }
         private void Timer_button_Click(object sender, EventArgs e)//Sätter på timer eventet som körs med ett intervall
         {
+            timer1.Interval = Convert.ToInt32(textBox_speed.Text);
             timer1.Enabled = !timer1.Enabled;
         }
         /// <summary>

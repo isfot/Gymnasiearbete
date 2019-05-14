@@ -80,3 +80,24 @@ C:\Users\Filip\Desktop\GYA\Ant test\obj\Debug\_TrafikSimulering.csproj.GenerateR
 C:\Users\Filip\Desktop\GYA\Ant test\obj\Debug\_TrafikSimulering.csproj.CoreCompileInputs.cache
 C:\Users\Filip\Desktop\GYA\Ant test\obj\Debug\Ant test.exe
 C:\Users\Filip\Desktop\GYA\Ant test\obj\Debug\Ant test.pdb
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\pic Loopyloop.png
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\pic Fungerar.png
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\pic - Copy.png
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\pic test.png
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\pic.png
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\pic_old.png
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\Ant test.exe.config
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\Ant test.exe
+C:\Users\Filip\Desktop\New folder\Ant test\bin\Debug\Ant test.pdb
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\_TrafikSimulering.csprojAssemblyReference.cache
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.DataForm.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.Dialogruta_CustomFlow.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.MainForm.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.Properties.Resources.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.RenderForm.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.RenderFormOptions.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant_test.Settings_Form.resources
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\_TrafikSimulering.csproj.GenerateResource.cache
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\_TrafikSimulering.csproj.CoreCompileInputs.cache
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant test.exe
+C:\Users\Filip\Desktop\New folder\Ant test\obj\Debug\Ant test.pdb
